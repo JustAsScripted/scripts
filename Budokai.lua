@@ -3,6 +3,21 @@ local player = game.Players.LocalPlayer
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
 local venyx = library.new("Budokai", 5013109572)
 
+getgenv().Auto6 = false
+function Mastery()
+    spawn(function()
+    while getgenv().Auto6 == true do
+        if game:GetService("Workspace").SpawnedCharacters.NooblyNoobylgton.Core.StatValues.PlayerStatValues.WhichTransformation.Value ~= 6
+    then 
+        local args = {
+            [1] = "6"}
+        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
+        end
+        wait()
+    end
+    end)
+end
+
 getgenv().Autom1 = false
 function Autoclick()
     spawn(function()
@@ -44,6 +59,7 @@ TextColor = Color3.fromRGB(255, 255, 255)
 local page1 = venyx:addPage("Main", 5012544693)
 local page2 = venyx:addPage("Teleports", 5012544693)
 local page3 = venyx:addPage("Combat", 5012544693)
+local page4 = venyx:addPage("Mobility", 5012544693)
 local section1 = page1:addSection("Main")
 section1:addToggle("Autovitals", default, function(bool)
     getgenv().AutoN = bool
@@ -77,11 +93,28 @@ pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").SpawnedCharacters["Evil Saiyan"].HumanoidRootPart.CFrame
         end)
 end)
-local section3 = page3:addSection("Combat")
+local section21 = page2:addSection("Safe Places")
+section21:addButton("Polaris", function()
+pcall( function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1950, 431, 10029)
+        end)
+end)
+section21:addButton("Sadala", function()
+pcall( function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
+        end)
+end)
+local section3 = page3:addSection("Automation")
 section3:addToggle("Autoattack", default, function(bool)
     getgenv().Autom1 = bool
     if bool then
         Autoclick()
+    end
+end)
+section3:addToggle("Automastery", default, function(bool)
+    getgenv().Auto6 = bool
+    if bool then
+        Mastery()
     end
 end)
 venyx:SelectPage(venyx.pages[1], true)
