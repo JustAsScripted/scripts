@@ -57,8 +57,8 @@ TextColor = Color3.fromRGB(255, 255, 255)
 }
 
 local page1 = venyx:addPage("Main", 5012544693)
-local page2 = venyx:addPage("Automation", 5012544693)
-local page3 = venyx:addPage("Combat", 5012544693)
+local page2 = venyx:addPage("Teleports", 5012544693)
+local page3 = venyx:addPage("Automation", 5012544693)
 local page4 = venyx:addPage("Mobility", 5012544693)
 
 local section1 = page1:addSection("Main")
