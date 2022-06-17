@@ -57,10 +57,16 @@ TextColor = Color3.fromRGB(255, 255, 255)
 }
 
 local page1 = venyx:addPage("Main", 5012544693)
-local page2 = venyx:addPage("Teleports", 5012544693)
+local page2 = venyx:addPage("Automation", 5012544693)
 local page3 = venyx:addPage("Combat", 5012544693)
 local page4 = venyx:addPage("Mobility", 5012544693)
+
 local section1 = page1:addSection("Main")
+local section2 = page2:addSection("Teleports")
+local section21 = page2:addSection("Safe Places")
+local section3 = page3:addSection("Automation")
+local section4 = page4:addSection("Mobility")
+
 section1:addToggle("Autovitals", default, function(bool)
     getgenv().AutoN = bool
     if bool then
@@ -82,7 +88,6 @@ section1:addButton("Instant Log", function()
      player:Kick("Instant Log")
         end)
 end)
-local section2 = page2:addSection("Teleports")
 section2:addButton("Quest Board", function()
 pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestBoard.Part.CFrame
@@ -93,7 +98,6 @@ pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").SpawnedCharacters["Evil Saiyan"].HumanoidRootPart.CFrame
         end)
 end)
-local section21 = page2:addSection("Safe Places")
 section21:addButton("Polaris", function()
 pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1950, 431, 10029)
@@ -104,7 +108,6 @@ pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
         end)
 end)
-local section3 = page3:addSection("Automation")
 section3:addToggle("Autoattack", default, function(bool)
     getgenv().Autom1 = bool
     if bool then
