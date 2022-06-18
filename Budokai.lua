@@ -41,9 +41,14 @@ getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
+        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value < 85 then
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        wait()
+        else if game:GetService("Workspace").SpawnedCharacters.NooblyNoobylgton.Core.StatValues.CharacterStatValues.isNapping.Value == true then
+            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         end
+        end
+        wait()
+    end
     end)
 end
 
@@ -51,7 +56,7 @@ getgenv().Autostop = false
 function Stop()
     spawn(function()
     while getgenv().Autostop == true do
-        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value == 10 then
+        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value < 10 then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3674, 85, 3137)
             wait(30)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
