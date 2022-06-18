@@ -47,6 +47,19 @@ function Nap()
     end)
 end
 
+getgenv().Autostop = false
+function Stop()
+    spawn(function()
+    while getgenv().Autostop == true do
+        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value <= 10 then
+            getgenv().Autoattack = false
+        else
+            getgenv().Autoattack = bool
+        end
+    end
+end)
+end
+
 -- themes
 local themes = {
 Background = Color3.fromRGB(24, 24, 24),
@@ -68,12 +81,6 @@ local section21 = page2:addSection("Safe Places")
 local section3 = page3:addSection("Automation")
 local section4 = page4:addSection("Mobility")
 
-section1:addToggle("Autovitals", default, function(bool)
-    getgenv().AutoN = bool
-    if bool then
-        Nap()
-    end
-end)
 section1:addButton("Godmode", function()
 pcall( function()
     game.Players.LocalPlayer.Character.Core.Cooldowns.InvincibilityFrames:Destroy()
@@ -114,6 +121,12 @@ pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
         end)
 end) 
+section3:addToggle("Autovitals", default, function(bool)
+    getgenv().AutoN = bool
+    if bool then
+        Nap()
+    end
+end)
 section3:addToggle("Autoattack", default, function(bool)
     getgenv().Autom1 = bool
     if bool then
@@ -124,6 +137,12 @@ section3:addToggle("Automastery", default, function(bool)
     getgenv().Auto6 = bool
     if bool then
         Mastery()
+    end
+end)
+section3:addToggle("Autoregen", default, function(bool)
+    getgenv().Autostop = bool
+    if bool then
+        Stop()
     end
 end)
 venyx:SelectPage(venyx.pages[1], true)
