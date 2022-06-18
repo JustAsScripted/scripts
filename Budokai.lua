@@ -52,10 +52,10 @@ function Stop()
     spawn(function()
     while getgenv().Autostop == true do
         if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value <= 10 then
-            getgenv().Autoattack = false
+            getgenv().Autom1 = false
             wait(60)
         else
-            getgenv().Autoattack = bool
+            getgenv().Autom1 = bool
         end
         wait()
     end
