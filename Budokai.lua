@@ -13,7 +13,7 @@ function Mastery()
             [1] = "6"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
         end
-        wait()
+        wait(3)
     end
     end)
 end
