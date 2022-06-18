@@ -51,11 +51,12 @@ getgenv().Autostop = false
 function Stop()
     spawn(function()
     while getgenv().Autostop == true do
-        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value <= 10 then
-            getgenv().Autom1 = false
-            wait(60)
+        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value == 10 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3674, 85, 3137)
+            wait(30)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
         else
-            getgenv().Autom1 = bool
+            wait()
         end
         wait()
     end
@@ -132,7 +133,7 @@ section3:addToggle("Autovitals", default, function(bool)
 end)
 section3:addToggle("Autoattack", default, function(bool)
     getgenv().Autom1 = bool
-    if bool then
+    if true then
         Autoclick()
     end
 end)
