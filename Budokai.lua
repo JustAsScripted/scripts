@@ -7,14 +7,14 @@ getgenv().Auto6 = false
 function Mastery()
     spawn(function()
     while getgenv().Auto6 == true do
-        if game:GetService("Workspace").SpawnedCharacters.NooblyNoobylgton.Core.StatValues.PlayerStatValues.WhichTransformation.Value ~= 6
+        if game:GetService("Workspace").SpawnedCharacters.NooblyNoobylgton.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value <= 1.2
     then 
         local args = {
             [1] = "6"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
         else wait()
         end
-        wait(3)
+        wait()
     end
     end)
 end
