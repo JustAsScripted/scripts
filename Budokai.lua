@@ -58,6 +58,7 @@ function Stop()
         end
         wait()
     end
+    wait()
     end)
 end
 
