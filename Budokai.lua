@@ -109,6 +109,11 @@ pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
         end)
 end)
+section21:addButton("King Kai", function()
+pcall( function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
+        end)
+end) 
 section3:addToggle("Autoattack", default, function(bool)
     getgenv().Autom1 = bool
     if bool then
