@@ -56,8 +56,9 @@ function Stop()
         else
             getgenv().Autoattack = bool
         end
+        wait()
     end
-end)
+    end)
 end
 
 -- themes
