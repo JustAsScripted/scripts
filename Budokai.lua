@@ -7,7 +7,7 @@ getgenv().Auto6 = false
 function Mastery()
     spawn(function()
     while getgenv().Auto6 == true do
-        if game:GetService("Workspace").SpawnedCharacters.NooblyNoobylgton.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value <= 1.2
+        if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value <= 1.2
     then 
         local args = {
             [1] = "6"}
@@ -41,9 +41,9 @@ getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
-        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value < 85 then
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 85 then
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        else if game:GetService("Workspace").SpawnedCharacters.NooblyNoobylgton.Core.StatValues.CharacterStatValues.isNapping.Value == true then
+        else if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         end
         end
@@ -56,12 +56,28 @@ getgenv().Autostop = false
 function Stop()
     spawn(function()
     while getgenv().Autostop == true do
-        if game:GetService("Players").NooblyNoobylgton.stats.PlayerVitals.Value < 10 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3674, 85, 3137)
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1143, 522, -1265)
             wait(30)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1056, 693, -1284)
         else
             wait()
+        end
+        wait()
+    end
+    wait()
+    end)
+end
+
+getgenv().AutoHP = false
+function Regen()
+    spawn(function()
+    while getgenv().AutoHP == true do
+        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.Health.DelayedBar.Percent.Text == "10%" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1143, 522, -1265)
+        wait(120)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1056, 693, -1284)
+        else wait()
         end
         wait()
     end
@@ -122,7 +138,7 @@ pcall( function()
 end)
 section21:addButton("Sadala", function()
 pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3114, 76, 3179)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1056, 693, -1284)
         end)
 end)
 section21:addButton("King Kai", function()
@@ -152,6 +168,12 @@ section3:addToggle("Autoregen", default, function(bool)
     getgenv().Autostop = bool
     if bool then
         Stop()
+    end
+end)
+section3:addToggle("AutoHPregen", default, function(bool)
+    getgenv().AutoHP = bool
+    if bool then
+        Regen()
     end
 end)
 venyx:SelectPage(venyx.pages[1], true)
