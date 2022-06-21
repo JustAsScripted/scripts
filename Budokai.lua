@@ -57,9 +57,9 @@ function Stop()
     spawn(function()
     while getgenv().Autostop == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1143, 522, -1265)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1067, 529, -1317)
             wait(30)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1056, 693, -1284)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         else
             wait()
         end
@@ -74,9 +74,9 @@ function Regen()
     spawn(function()
     while getgenv().AutoHP == true do
         if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.Health.DelayedBar.Percent.Text == "10%" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1143, 522, -1265)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1067, 529, -1317)
         wait(120)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1056, 693, -1284)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         else wait()
         end
         wait()
@@ -138,7 +138,7 @@ pcall( function()
 end)
 section21:addButton("Sadala", function()
 pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1056, 693, -1284)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         end)
 end)
 section21:addButton("King Kai", function()
