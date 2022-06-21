@@ -58,7 +58,7 @@ function Stop()
     while getgenv().Autostop == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1067, 529, -1317)
-            wait(30)
+            wait(35)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         else
             wait()
@@ -75,7 +75,7 @@ function Regen()
     while getgenv().AutoHP == true do
         if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.Health.DelayedBar.Percent.Text == "10%" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1067, 529, -1317)
-        wait(120)
+        wait(225)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         else wait()
         end
@@ -164,7 +164,7 @@ section3:addToggle("Automastery", default, function(bool)
         Mastery()
     end
 end)
-section3:addToggle("Autoregen", default, function(bool)
+section3:addToggle("AutoVITALSregen", default, function(bool)
     getgenv().Autostop = bool
     if bool then
         Stop()
