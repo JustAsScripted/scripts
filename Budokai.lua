@@ -149,7 +149,12 @@ section21:addButton("King Kai", function()
 pcall( function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
         end)
-end) 
+end)
+section21:addButton("Time Chamber", function()
+    pcall( function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
+            end)
+    end) 
 section3:addToggle("Autovitals", default, function(bool)
     getgenv().AutoN = bool
     if bool then
