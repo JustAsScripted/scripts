@@ -43,11 +43,15 @@ function Nap()
     while getgenv().AutoN == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 85 then
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        else if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
-            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
+        else wait()
         end
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 85 then
+            if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
+                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
+            else wait()
+            end
         end
-        wait()
+    wait()   
     end
     end)
 end
@@ -176,4 +180,18 @@ section3:addToggle("AutoHPregen", default, function(bool)
         Regen()
     end
 end)
+section4:addButton("Lower power level", function()
+pcall( function()
+    local args = {
+        [1] = "Lower"}
+    game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+    end)
+end)
+section4:addButton("Full power level", function()
+    pcall( function()
+        local args = {
+            [1] = "Full Power"}
+        game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+        end)
+    end)
 venyx:SelectPage(venyx.pages[1], true)
