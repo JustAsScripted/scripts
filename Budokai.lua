@@ -1,13 +1,13 @@
 local plr = game:GetService("Players").LocalPlayer.Character
 local player = game.Players.LocalPlayer
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
-local venyx = library.new("Budokai", 5013109572)
+local venyx = library.new("Budokai sadala ver.", 5013109572)
 
 getgenv().Auto6 = false
 function Mastery()
     spawn(function()
     while getgenv().Auto6 == true do
-        if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value <= 1.2
+        if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
     then 
         local args = {
             [1] = "6"}
@@ -133,7 +133,7 @@ pcall( function()
 end)
 section21:addButton("Polaris", function()
 pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1950, 431, 10029)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         end)
 end)
 section21:addButton("Sadala", function()
