@@ -19,33 +19,15 @@ function Mastery()
     end)
 end
 
-getgenv().Autom1 = false
-function Autoclick()
-    spawn(function()
-    while getgenv().Autom1 == true do
-        local args = {
-            [1] = "RegularAttack"}
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(1)
-        end
-    end)
-end
-
 getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 85 then
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 95 then
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         else wait()
         end
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 85 then
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 95 then
             if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
             else wait()
@@ -56,36 +38,26 @@ function Nap()
     end)
 end
 
-getgenv().Autostop = false
-function Stop()
+getgenv().Autofarm = false
+function Farm()
     spawn(function()
-    while getgenv().Autostop == true do
+    while getgenv().Autofarm == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2172, 262, 10444)
-            wait(35)
+            wait(60)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
-        else
-            wait()
+        else local args = {
+            [1] = "RegularAttack"}
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(0.3)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(0.3)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(0.3)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(1)
         end
         wait()
     end
-    wait()
-    end)
-end
-
-getgenv().AutoHP = false
-function Regen()
-    spawn(function()
-    while getgenv().AutoHP == true do
-        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.Health.DelayedBar.Percent.Text == "10%" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2172, 262, 10444)
-        wait(225)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
-        else wait()
-        end
-        wait()
-    end
-    wait()
     end)
 end
 
@@ -93,7 +65,7 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3 then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2 then
         player:Kick("You are reading this wasn't a part of my plan, sadly.")
     else wait()
     end
@@ -168,34 +140,22 @@ section21:addButton("Time Chamber", function()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
             end)
     end) 
+section3:addToggle("Autofarm", default, function(bool)
+    getgenv().Autofarm = bool
+    if bool then
+        Farm()
+    end
+end)
 section3:addToggle("Autovitals", default, function(bool)
     getgenv().AutoN = bool
     if bool then
         Nap()
     end
 end)
-section3:addToggle("Autoattack", default, function(bool)
-    getgenv().Autom1 = bool
-    if true then
-        Autoclick()
-    end
-end)
 section3:addToggle("Automastery", default, function(bool)
     getgenv().Auto6 = bool
     if bool then
         Mastery()
-    end
-end)
-section3:addToggle("AutoVITALSregen", default, function(bool)
-    getgenv().Autostop = bool
-    if bool then
-        Stop()
-    end
-end)
-section3:addToggle("AutoHPregen", default, function(bool)
-    getgenv().AutoHP = bool
-    if bool then
-        Regen()
     end
 end)
 section3:addToggle("Autostopfarm", default, function(bool)
