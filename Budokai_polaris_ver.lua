@@ -12,7 +12,6 @@ function Mastery()
         local args = {
             [1] = "6"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
-        else wait()
         end
         wait()
     end
@@ -25,12 +24,10 @@ function Nap()
     while getgenv().AutoN == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 95 then
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        else wait()
         end
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 95 then
             if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
-            else wait()
             end
         end
     wait()   
@@ -67,7 +64,6 @@ function Log()
     while getgenv().Autolives == true do
     if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2 then
         player:Kick("You are reading this wasn't a part of my plan, sadly.")
-    else wait()
     end
     wait()
     end
