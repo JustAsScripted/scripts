@@ -1,7 +1,7 @@
 local plr = game:GetService("Players").LocalPlayer.Character
 local player = game.Players.LocalPlayer
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
-local venyx = library.new("Budokai polaris ver.", 5013109572)
+local venyx = library.new("Budokai Justy polaris ver.", 5013109572)
 
 getgenv().Auto6 = false
 function Mastery()
