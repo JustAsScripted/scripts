@@ -12,18 +12,37 @@ function Mastery()
         local args = {
             [1] = "6"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
-        else wait()
         end
         wait()
     end
     end)
 end
 
-getgenv().Autom1 = false
-function Autoclick()
+getgenv().AutoN = false
+function Nap()
     spawn(function()
-    while getgenv().Autom1 == true do
-        local args = {
+    while getgenv().AutoN == true do
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 95 then
+        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
+        end
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 95 then
+            if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
+                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
+            end
+        end
+    wait()   
+    end
+    end)
+end
+
+getgenv().Autofarm = false
+function Farm()
+    spawn(function()
+    while getgenv().Autofarm == true do
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
+            wait(60)
+            --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)--
+        else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
         wait(0.3)
@@ -34,58 +53,8 @@ function Autoclick()
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
         wait(1)
         end
-    end)
-end
-
-getgenv().AutoN = false
-function Nap()
-    spawn(function()
-    while getgenv().AutoN == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 85 then
-        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        else wait()
-        end
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 85 then
-            if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
-                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
-            else wait()
-            end
-        end
-    wait()   
-    end
-    end)
-end
-
-getgenv().Autostop = false
-function Stop()
-    spawn(function()
-    while getgenv().Autostop == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1067, 529, -1317)
-            wait(35)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
-        else
-            wait()
-        end
         wait()
     end
-    wait()
-    end)
-end
-
-getgenv().AutoHP = false
-function Regen()
-    spawn(function()
-    while getgenv().AutoHP == true do
-        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.Health.DelayedBar.Percent.Text == "10%" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1067, 529, -1317)
-        wait(225)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
-        else wait()
-        end
-        wait()
-    end
-    wait()
     end)
 end
 
@@ -93,9 +62,8 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3 then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2 then
         player:Kick("You are reading this wasn't a part of my plan, sadly.")
-    else wait()
     end
     wait()
     end
@@ -168,34 +136,22 @@ section21:addButton("Time Chamber", function()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
             end)
     end) 
+section3:addToggle("Autofarm", default, function(bool)
+    getgenv().Autofarm = bool
+    if bool then
+        Farm()
+    end
+end)
 section3:addToggle("Autovitals", default, function(bool)
     getgenv().AutoN = bool
     if bool then
         Nap()
     end
 end)
-section3:addToggle("Autoattack", default, function(bool)
-    getgenv().Autom1 = bool
-    if true then
-        Autoclick()
-    end
-end)
 section3:addToggle("Automastery", default, function(bool)
     getgenv().Auto6 = bool
     if bool then
         Mastery()
-    end
-end)
-section3:addToggle("AutoVITALSregen", default, function(bool)
-    getgenv().Autostop = bool
-    if bool then
-        Stop()
-    end
-end)
-section3:addToggle("AutoHPregen", default, function(bool)
-    getgenv().AutoHP = bool
-    if bool then
-        Regen()
     end
 end)
 section3:addToggle("Autostopfarm", default, function(bool)
@@ -205,17 +161,17 @@ section3:addToggle("Autostopfarm", default, function(bool)
     end
 end)
 section4:addButton("Lower power level", function()
+pcall( function()
+    local args = {
+        [1] = "Lower"}
+    game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+    end)
+end)
+section4:addButton("Full power level", function()
     pcall( function()
         local args = {
-            [1] = "Lower"}
+            [1] = "Full Power"}
         game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
         end)
     end)
-    section4:addButton("Full power level", function()
-        pcall( function()
-            local args = {
-                [1] = "Full Power"}
-            game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
-            end)
-        end)
 venyx:SelectPage(venyx.pages[1], true)
