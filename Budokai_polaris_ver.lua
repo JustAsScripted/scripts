@@ -89,6 +89,19 @@ function Regen()
     end)
 end
 
+getgenv().Autolives = false
+function Log()
+    spawn(function()
+    while getgenv().Autolives == true do
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3 then
+        player:Kick("You are reading this wasn't a part of my plan, sadly.")
+    else wait()
+    end
+    wait()
+    end
+    end)
+end
+
 -- themes
 local themes = {
 Background = Color3.fromRGB(24, 24, 24),
@@ -183,6 +196,12 @@ section3:addToggle("AutoHPregen", default, function(bool)
     getgenv().AutoHP = bool
     if bool then
         Regen()
+    end
+end)
+section3:addToggle("Autostopfarm", default, function(bool)
+    getgenv().Autolives = bool
+    if bool then
+        Log()
     end
 end)
 section4:addButton("Lower power level", function()
