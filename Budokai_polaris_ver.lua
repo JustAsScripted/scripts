@@ -215,4 +215,15 @@ Section4:AddButton({
             game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
         end)  
     end})
-OrionLib:Init() 
+Section4:AddSlider({
+    Name = "Fly Speed",
+    Min = 0.7,
+    Max = 2,
+    Default = 0.7,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 0.1,
+    ValueName = "Speed",
+    Callback = function(FlyValue)
+        game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Movement.FlySpeed.Value = FlyValue 
+    end})
+OrionLib:Init()
