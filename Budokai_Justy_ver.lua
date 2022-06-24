@@ -1,7 +1,7 @@
-local plr = game:GetService("Players").LocalPlayer.Character
-local player = game.Players.LocalPlayer
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
-local venyx = library.new("Budokai Justy polaris ver.", 5013109572)
+local Character = game:GetService("Players").LocalPlayer.Character
+local Player = game.Players.LocalPlayer
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
+local Venyx = Library.new("Budokai Justy ver.", 5013109572)
 
 getgenv().Auto6 = false
 function Mastery()
@@ -12,9 +12,8 @@ function Mastery()
         local args = {
             [1] = "6"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
-        else wait()
         end
-        wait()
+    wait()
     end
     end)
 end
@@ -25,12 +24,10 @@ function Nap()
     while getgenv().AutoN == true do
         if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 95 then
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        else wait()
         end
         if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value >= 95 then
             if game:GetService("Workspace").SpawnedCharacters.Justy_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
-            else wait()
             end
         end
     wait()   
@@ -43,7 +40,7 @@ function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
         if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
-            wait(35)
+            wait(60)
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
@@ -64,9 +61,8 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Justy_vevo"].stats.PlayerLives.Value < 2 then
+    if game:GetService("Players")["Justy_vevo"].stats.PlayerLives.Value < 3 then
         player:Kick("You are reading this wasn't a part of my plan, sadly.")
-    else wait()
     end
     wait()
     end
@@ -83,10 +79,10 @@ DarkContrast = Color3.fromRGB(14, 14, 14),
 TextColor = Color3.fromRGB(255, 255, 255)
 }
 
-local page1 = venyx:addPage("Main", 5012544693)
-local page2 = venyx:addPage("Teleports", 5012544693)
-local page3 = venyx:addPage("Automation", 5012544693)
-local page4 = venyx:addPage("Mobility", 5012544693)
+local page1 = Venyx:addPage("Main", 5012544693)
+local page2 = Venyx:addPage("Teleports", 5012544693)
+local page3 = Venyx:addPage("Automation", 5012544693)
+local page4 = Venyx:addPage("Mobility", 5012544693)
 
 local section1 = page1:addSection("Main")
 local section2 = page2:addSection("Teleports")
@@ -99,7 +95,7 @@ pcall( function()
     game.Players.LocalPlayer.Character.Core.Cooldowns.InvincibilityFrames:Destroy()
         end)  
 end)
-section1:addButton("Reset without loosing anything", function()
+section1:addButton("Special Reset", function()
     pcall( function()
         game.Players.LocalPlayer.Character.Head:Destroy()
         end)
@@ -135,46 +131,46 @@ pcall( function()
         end)
 end)
 section21:addButton("Time Chamber", function()
-    pcall( function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
-            end)
-    end) 
-section3:addToggle("Autofarm", default, function(bool)
+pcall( function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
+        end)
+end) 
+section3:addToggle("Autofarm", false, function(bool)
     getgenv().Autofarm = bool
     if bool then
         Farm()
     end
 end)
-section3:addToggle("Autovitals", default, function(bool)
+section3:addToggle("Autovitals", false, function(bool)
     getgenv().AutoN = bool
     if bool then
         Nap()
     end
 end)
-section3:addToggle("Automastery", default, function(bool)
+section3:addToggle("Automastery", false, function(bool)
     getgenv().Auto6 = bool
     if bool then
         Mastery()
     end
 end)
-section3:addToggle("Autostopfarm", default, function(bool)
+section3:addToggle("Autostopfarm", false, function(bool)
     getgenv().Autolives = bool
     if bool then
         Log()
     end
 end)
-section4:addButton("Lower power level", function()
+section4:addButton("Lower Power Level", function()
 pcall( function()
     local args = {
         [1] = "Lower"}
     game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
     end)
 end)
-section4:addButton("Full power level", function()
-    pcall( function()
-        local args = {
-            [1] = "Full Power"}
-        game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
-        end)
+section4:addButton("Full Power Level", function()
+pcall( function()
+    local args = {
+        [1] = "Full Power"}
+    game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
     end)
+end)
 venyx:SelectPage(venyx.pages[1], true)
