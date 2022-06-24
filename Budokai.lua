@@ -1,17 +1,52 @@
-local plr = game:GetService("Players").LocalPlayer.Character
-local player = game.Players.LocalPlayer
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zxciaz/VenyxUI/main/Reuploaded"))() --someone reuploaded it so I put it in place of the original back up so guy can get free credit.
-local venyx = library.new("Budokai sadala ver.", 5013109572)
+local Character = game:GetService("Players").LocalPlayer.Character
+local Player = game.Players.LocalPlayer
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Budokai", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
-getgenv().Auto6 = false
-function Mastery()
+local Tab1 = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false})
+local Tab2 = Window:MakeTab({
+	Name = "Teleports",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false})
+local Tab3 = Window:MakeTab({
+	Name = "Automation",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false})
+local Tab4 = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false})
+
+local Section1 = Tab1:AddSection({
+	Name = "Main"})
+local Section2 = Tab2:AddSection({
+	Name = "Teleports"})
+local Section21 = Tab2:AddSection({
+	Name = "Safe Places"})
+local Section3 = Tab3:AddSection({
+	Name = "Automation"})
+local Section4 = Tab4:AddSection({
+	Name = "Misc"})
+
+getgenv().Autofarm = false
+function Farm()
     spawn(function()
-    while getgenv().Auto6 == true do
-        if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
-    then 
-        local args = {
-            [1] = "6"}
-        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
+    while getgenv().Autofarm == true do
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
+            wait(60)
+        else local args = {
+            [1] = "RegularAttack"}
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(0.3)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(0.3)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(0.3)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        wait(1)
         end
         wait()
     end
@@ -35,23 +70,15 @@ function Nap()
     end)
 end
 
-getgenv().Autofarm = false
-function Farm()
+getgenv().Auto6 = false
+function Mastery()
     spawn(function()
-    while getgenv().Autofarm == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            wait(60)
-            --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)--
-        else local args = {
-            [1] = "RegularAttack"}
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
-        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(1)
+    while getgenv().Auto6 == true do
+        if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
+    then 
+        local args = {
+            [1] = "6"}
+        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
         end
         wait()
     end
@@ -62,7 +89,7 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2 then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3 then
         player:Kick("You are reading this wasn't a part of my plan, sadly.")
     end
     wait()
@@ -70,108 +97,132 @@ function Log()
     end)
 end
 
--- themes
-local themes = {
-Background = Color3.fromRGB(24, 24, 24),
-Glow = Color3.fromRGB(0, 0, 0),
-Accent = Color3.fromRGB(10, 10, 10),
-LightContrast = Color3.fromRGB(20, 20, 20),
-DarkContrast = Color3.fromRGB(14, 14, 14),  
-TextColor = Color3.fromRGB(255, 255, 255)
-}
-
-local page1 = venyx:addPage("Main", 5012544693)
-local page2 = venyx:addPage("Teleports", 5012544693)
-local page3 = venyx:addPage("Automation", 5012544693)
-local page4 = venyx:addPage("Mobility", 5012544693)
-
-local section1 = page1:addSection("Main")
-local section2 = page2:addSection("Teleports")
-local section21 = page2:addSection("Safe Places")
-local section3 = page3:addSection("Automation")
-local section4 = page4:addSection("Mobility")
-
-section1:addButton("Godmode", function()
-pcall( function()
-    game.Players.LocalPlayer.Character.Core.Cooldowns.InvincibilityFrames:Destroy()
+Section1:AddButton({
+	Name = "Godmode",
+	Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.Core.Cooldowns.InvincibilityFrames:Destroy()
         end)  
-end)
-section1:addButton("Reset without loosing anything", function()
-    pcall( function()
-        game.Players.LocalPlayer.Character.Head:Destroy()
-        end)
-end)
-section1:addButton("Instant Log", function()
-    pcall( function()
-     player:Kick("Instant Log")
-        end)
-end)
-section2:addButton("Quest Board", function()
-pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestBoard.Part.CFrame
-        end)
-end)
-section2:addButton("Evil Saiyan", function()
-pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").SpawnedCharacters["Evil Saiyan"].HumanoidRootPart.CFrame
-        end)
-end)
-section21:addButton("Polaris", function()
-pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
-        end)
-end)
-section21:addButton("Sadala", function()
-pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
-        end)
-end)
-section21:addButton("King Kai", function()
-pcall( function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
-        end)
-end)
-section21:addButton("Time Chamber", function()
-    pcall( function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
-            end)
-    end) 
-section3:addToggle("Autofarm", default, function(bool)
-    getgenv().Autofarm = bool
-    if bool then
+  	end})
+Section1:AddButton({
+    Name = "Reset without loosing anything",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.Head:Destroy()
+        end)  
+    end})
+Section1:AddButton({
+    Name = "Instant Log",
+    Callback = function()
+        pcall( function()
+            Player:Kick("Instant Log")
+        end)  
+    end})
+Section2:AddButton({
+    Name = "Quest Board",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestBoard.Part.CFrame
+        end)  
+    end})
+Section2:AddButton({
+    Name = "Evil Saiyan",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").SpawnedCharacters["Evil Saiyan"].HumanoidRootPart.CFrame
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Polaris",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Sadala",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "King Kai",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Time Chamber",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
+        end)  
+    end})
+Section3:AddToggle({
+    Name = "Autofarm",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autofarm = bool
+        if bool then
         Farm()
-    end
-end)
-section3:addToggle("Autovitals", default, function(bool)
-    getgenv().AutoN = bool
-    if bool then
-        Nap()
-    end
-end)
-section3:addToggle("Automastery", default, function(bool)
-    getgenv().Auto6 = bool
-    if bool then
-        Mastery()
-    end
-end)
-section3:addToggle("Autostopfarm", default, function(bool)
-    getgenv().Autolives = bool
-    if bool then
-        Log()
-    end
-end)
-section4:addButton("Lower power level", function()
-pcall( function()
-    local args = {
-        [1] = "Lower"}
-    game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
-    end)
-end)
-section4:addButton("Full power level", function()
-    pcall( function()
-        local args = {
-            [1] = "Full Power"}
-        game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
-        end)
-    end)
-venyx:SelectPage(venyx.pages[1], true)
+        end
+    end})
+Section3:AddToggle({
+    Name = "Autovitals",
+    Default = false,
+    Callback = function(bool)
+        getgenv().AutoN = bool
+        if bool then
+            Nap()
+        end
+    end})
+Section3:AddToggle({
+    Name = "Automastery",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Auto6 = bool
+        if bool then
+            Mastery()
+        end
+    end})
+Section3:AddToggle({
+    Name = "Autostopfarm",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autolives = bool
+        if bool then
+            Log()
+        end
+    end})
+Section4:AddSlider({
+    Name = "Fly Speed",
+    Min = 0.7,
+    Max = 2,
+    Default = 0.7,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 0.1,
+    ValueName = "Speed",
+    Callback = function(FlyValue)
+        game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Movement.FlySpeed.Value = FlyValue 
+    end})
+Section4:AddButton({
+    Name = "Lower Power Level",
+    Callback = function()
+        pcall( function()
+            local args = {
+                [1] = "Lower"}
+            game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+        end)  
+    end})
+Section4:AddButton({
+    Name = "Full Power Level",
+    Callback = function()
+        pcall( function()
+            local args = {
+                [1] = "Full Power"}
+            game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+        end)  
+    end})
+OrionLib:Init()    
