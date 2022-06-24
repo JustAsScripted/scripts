@@ -105,7 +105,7 @@ Section1:AddButton({
         end)  
   	end})
 Section1:AddButton({
-    Name = "Reset without loosing anything",
+    Name = "Special Reset",
     Callback = function()
         pcall( function()
             game.Players.LocalPlayer.Character.Head:Destroy()
@@ -225,4 +225,4 @@ Section4:AddButton({
             game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
         end)  
     end})
-OrionLib:Init()    
+OrionLib:Init()
