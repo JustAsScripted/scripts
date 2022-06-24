@@ -36,7 +36,7 @@ function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            wait(60)
+            wait(40)
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
@@ -89,8 +89,10 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2 then
-        player:Kick("You are reading this wasn't a part of my plan, sadly.")
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
+        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
+            Player:Kick("You are reading this wasn't a part of my plan, sadly.")
+        end
     end
     wait()
     end
