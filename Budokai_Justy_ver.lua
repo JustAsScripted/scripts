@@ -39,7 +39,7 @@ getgenv().Autofarm = false
 function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
-        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 50 then
             wait(60)
         else local args = {
             [1] = "RegularAttack"}
