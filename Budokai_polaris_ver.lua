@@ -38,6 +38,7 @@ function InstantLog()
         if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
         Player:Kick("Instant Logged")
         end
+    wait()
     end
     end)
 end
