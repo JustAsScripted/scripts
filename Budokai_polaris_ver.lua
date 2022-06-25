@@ -35,7 +35,7 @@ getgenv().Autobb = false
 function InstantLog()
     spawn(function()
     while getgenv().Autobb == true do
-        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
+        if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
         Player:Kick("Instant Logged")
         end
     wait()
@@ -102,8 +102,8 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
-        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
+        if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
     end
