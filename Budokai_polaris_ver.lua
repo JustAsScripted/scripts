@@ -31,6 +31,17 @@ local Section3 = Tab3:AddSection({
 local Section4 = Tab4:AddSection({
 	Name = "Misc"})
 
+getgenv().Autobb = false
+function InstantLog()
+    spawn(function()
+    while getgenv().Autobb == true do
+        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
+        Player:Kick("Instant Logged")
+        end
+    end
+    end)
+end
+
 getgenv().Autofarm = false
 function Farm()
     spawn(function()
@@ -114,12 +125,14 @@ Section1:AddButton({
             game.Players.LocalPlayer.Character.Head:Destroy()
         end)  
     end})
-Section1:AddButton({
+Section1:AddToggle({
     Name = "Instant Log",
-    Callback = function()
-        pcall( function()
-            Player:Kick("Instant Log")
-        end)  
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autobb = bool
+        if bool then
+        InstantLog()
+        end
     end})
 Section2:AddButton({
     Name = "Quest Board",
