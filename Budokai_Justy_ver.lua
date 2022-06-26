@@ -103,7 +103,7 @@ function Log()
     spawn(function()
     while getgenv().Autolives == true do
     if game:GetService("Players")["Justy_vevo"].stats.PlayerLives.Value < 3  then
-        if game:GetService("Players")["Justy_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
+        if game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
     end
