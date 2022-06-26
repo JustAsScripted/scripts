@@ -47,7 +47,7 @@ getgenv().Autofarm = false
 function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
-        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 50 then
             wait(60)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         else local args = {
