@@ -31,6 +31,18 @@ local Section3 = Tab3:AddSection({
 local Section4 = Tab4:AddSection({
 	Name = "Misc"})
 
+getgenv().Autobb = false
+function InstantLog()
+    spawn(function()
+    while getgenv().Autobb == true do
+        if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
+        Player:Kick("Instant Logged")
+        end
+    wait()
+    end
+    end)
+end
+
 getgenv().Autofarm = false
 function Farm()
     spawn(function()
@@ -89,8 +101,8 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
-        if game:GetService("Players")["Jojo_vevo"].PlayerGui.PlayerUi.CombatTag.Text ~= "IN COMBAT" then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
+        if if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
     end
@@ -113,12 +125,14 @@ Section1:AddButton({
             game.Players.LocalPlayer.Character.Head:Destroy()
         end)  
     end})
-Section1:AddButton({
+Section1:AddToggle({
     Name = "Instant Log",
-    Callback = function()
-        pcall( function()
-            Player:Kick("Instant Log")
-        end)  
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autobb = bool
+        if bool then
+        InstantLog()
+        end
     end})
 Section2:AddButton({
     Name = "Quest Board",
