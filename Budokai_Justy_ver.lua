@@ -115,6 +115,25 @@ function Log()
     end)
 end
 
+getgenv().Autofarmrefresh = false
+function Refresh()
+    spawn(function()
+    while getgenv().Autofarmrefresh == true do
+    wait(900)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6c') 
+    virtualUser:SetKeyUp('0x6c')
+    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
+    wait(5)
+    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6c') 
+    virtualUser:SetKeyUp('0x6c')
+    wait()
+    end
+    end)
+end
+
 Section1:AddButton({
 	Name = "Godmode",
 	Callback = function()
@@ -214,6 +233,15 @@ Section3:AddToggle({
         getgenv().Autolives = bool
         if bool then
             Log()
+        end
+    end})
+Section3:AddToggle({
+    Name = "Autorefresh",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autofarmrefresh = bool
+        if bool then
+            Refresh()
         end
     end})
 Section4:AddSlider({
