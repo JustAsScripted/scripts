@@ -50,7 +50,7 @@ function Farm()
         if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
             repeat 
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-                wait(1) 
+                wait(0.3) 
             until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         else local args = {
