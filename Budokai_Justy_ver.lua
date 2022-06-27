@@ -47,8 +47,12 @@ getgenv().Autofarm = false
 function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
-        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 50 then
-            wait(60)
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
+            repeat 
+                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
+                wait(1) 
+            until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
