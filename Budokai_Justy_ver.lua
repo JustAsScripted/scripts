@@ -1,3 +1,4 @@
+local virtualUser = game:GetService('VirtualUser')
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
@@ -73,13 +74,8 @@ getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
-        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 95 then
-        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        end
-        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value >= 95 then
-            if game:GetService("Workspace").SpawnedCharacters.Justy_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
-                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
-            end
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 100 then
+            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         end
     wait()   
     end
@@ -119,13 +115,14 @@ getgenv().Autofarmrefresh = false
 function Refresh()
     spawn(function()
     while getgenv().Autofarmrefresh == true do
-    wait(900)
+    wait(750)
     virtualUser:CaptureController()
     virtualUser:SetKeyDown('0x6c') 
     virtualUser:SetKeyUp('0x6c')
     game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
-    wait(5)
+    wait(15)
     game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
+    wait(3)
     virtualUser:CaptureController()
     virtualUser:SetKeyDown('0x6c') 
     virtualUser:SetKeyUp('0x6c')
