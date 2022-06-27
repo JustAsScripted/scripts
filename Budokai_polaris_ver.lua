@@ -1,3 +1,4 @@
+local virtualUser = game:GetService('VirtualUser')
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
@@ -48,7 +49,10 @@ function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            wait(60)
+            repeat 
+                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
+                wait() 
+            until game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value == 100
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         else local args = {
             [1] = "RegularAttack"}
@@ -70,13 +74,8 @@ getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 95 then
-        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        end
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 95 then
-            if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
-                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
-            end
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 100 then
+            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         end
     wait()   
     end
@@ -102,11 +101,31 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
         if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
     end
+    wait()
+    end
+    end)
+end
+
+getgenv().Autofarmrefresh = false
+function Refresh()
+    spawn(function()
+    while getgenv().Autofarmrefresh == true do
+    wait(750)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6c') 
+    virtualUser:SetKeyUp('0x6c')
+    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
+    wait(15)
+    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
+    wait(3)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6c') 
+    virtualUser:SetKeyUp('0x6c')
     wait()
     end
     end)
@@ -211,6 +230,15 @@ Section3:AddToggle({
         getgenv().Autolives = bool
         if bool then
             Log()
+        end
+    end})
+Section3:AddToggle({
+    Name = "Autorefresh",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autofarmrefresh = bool
+        if bool then
+            Refresh()
         end
     end})
 Section4:AddSlider({
