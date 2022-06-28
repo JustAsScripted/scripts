@@ -115,7 +115,7 @@ getgenv().Autofarmrefresh = false
 function Refresh()
     spawn(function()
     while getgenv().Autofarmrefresh == true do
-    wait(750)
+    wait(60)
     virtualUser:CaptureController()
     virtualUser:SetKeyDown('0x6c') 
     virtualUser:SetKeyUp('0x6c')
@@ -124,9 +124,7 @@ function Refresh()
     virtualUser:SetKeyDown('0x6b') 
     virtualUser:SetKeyUp('0x6b')
     repeat
-    virtualUser:CaptureController()
-    virtualUser:SetKeyDown('0x6b') 
-    virtualUser:SetKeyUp('0x6b')
+    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
     wait(2)
     until game:GetService("Workspace").SpawnedCharacters["Shadow Jojo_vevo"].Humanoid.JumpPower == 50
     wait(3)
