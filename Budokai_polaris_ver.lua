@@ -101,7 +101,7 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
         if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
@@ -123,10 +123,12 @@ function Refresh()
     virtualUser:CaptureController()
     virtualUser:SetKeyDown('0x6b') 
     virtualUser:SetKeyUp('0x6b')
-    wait(60)
+    repeat
     virtualUser:CaptureController()
     virtualUser:SetKeyDown('0x6b') 
     virtualUser:SetKeyUp('0x6b')
+    wait(2)
+    until game:GetService("Workspace").SpawnedCharacters["Shadow Jojo_vevo"].Humanoid.JumpPower == 50
     wait(3)
     virtualUser:CaptureController()
     virtualUser:SetKeyDown('0x6c') 
