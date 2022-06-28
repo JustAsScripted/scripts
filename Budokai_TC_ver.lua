@@ -111,6 +111,31 @@ function Log()
     end)
 end
 
+getgenv().Autofarmrefresh = false
+function Refresh()
+    spawn(function()
+    while getgenv().Autofarmrefresh == true do
+    wait(750)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6c') 
+    virtualUser:SetKeyUp('0x6c')
+    wait(1)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6b') 
+    virtualUser:SetKeyUp('0x6b')
+    wait(60)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6b') 
+    virtualUser:SetKeyUp('0x6b')
+    wait(3)
+    virtualUser:CaptureController()
+    virtualUser:SetKeyDown('0x6c') 
+    virtualUser:SetKeyUp('0x6c')
+    wait()
+    end
+    end)
+end
+
 Section1:AddButton({
 	Name = "Godmode",
 	Callback = function()
