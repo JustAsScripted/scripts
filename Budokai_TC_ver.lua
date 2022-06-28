@@ -70,13 +70,8 @@ getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 95 then
-        game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        end
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value >= 95 then
-            if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.CharacterStatValues.isNapping.Value == true then
-                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer() 
-            end
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 100 then
+            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         end
     wait()   
     end
