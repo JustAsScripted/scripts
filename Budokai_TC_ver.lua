@@ -48,8 +48,11 @@ getgenv().Autofarm = false
 function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 50 then
-            wait(60)
+        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
+            repeat 
+                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
+                wait() 
+            until game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value == 100
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
