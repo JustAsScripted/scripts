@@ -102,7 +102,7 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
         if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
