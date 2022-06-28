@@ -238,6 +238,15 @@ Section3:AddToggle({
             Log()
         end
     end})
+Section3:AddToggle({
+    Name = "Autorefresh",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autofarmrefresh = bool
+        if bool then
+            Refresh()
+        end
+    end})
 Section4:AddSlider({
     Name = "Fly Speed",
     Min = 0.7,
