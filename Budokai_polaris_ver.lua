@@ -111,38 +111,27 @@ function Log()
     end)
 end
 
-getgenv().Autofarmrefresh = false
-function Refresh()
-    spawn(function()
-    while getgenv().Autofarmrefresh == true do
-    wait(60)
-    virtualUser:CaptureController()
-    virtualUser:SetKeyDown('0x6c') 
-    virtualUser:SetKeyUp('0x6c')
-    wait(1)
-    virtualUser:CaptureController()
-    virtualUser:SetKeyDown('0x6b') 
-    virtualUser:SetKeyUp('0x6b')
-    repeat
-    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
-    wait(2)
-    until game:GetService("Workspace").SpawnedCharacters["Shadow Jojo_vevo"].Humanoid.JumpPower == 50
-    wait(3)
-    virtualUser:CaptureController()
-    virtualUser:SetKeyDown('0x6c') 
-    virtualUser:SetKeyUp('0x6c')
-    wait()
-    end
-    end)
-end
-
 Section1:AddButton({
-	Name = "Godmode",
+	Name = "Godmode v 1.0",
 	Callback = function()
         pcall( function()
             game.Players.LocalPlayer.Character.Core.Cooldowns.InvincibilityFrames:Destroy()
         end)  
   	end})
+Section1:AddButton({
+    Name = "Godmode v 2.0",
+    Callback = function()
+        pcall( function()
+            game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.CombatValues.Attacker:Destroy()
+        end)  
+    end})
+Section1:AddButton({
+    Name = "Invisibility",
+    Callback = function()
+        pcall( function()
+            game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].HumanoidRootPart.RootJoint:Destroy()
+        end)  
+    end})
 Section1:AddButton({
     Name = "Special Reset",
     Callback = function()
@@ -186,6 +175,13 @@ Section21:AddButton({
         pcall( function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         end)  
+    end})
+Section21:AddButton({
+    Name = "Namek",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1666, 40750, -1281)
+        end)
     end})
 Section21:AddButton({
     Name = "King Kai",
@@ -237,15 +233,6 @@ Section3:AddToggle({
             Log()
         end
     end})
-Section3:AddToggle({
-    Name = "Autorefresh",
-    Default = false,
-    Callback = function(bool)
-        getgenv().Autofarmrefresh = bool
-        if bool then
-            Refresh()
-        end
-    end})
 Section4:AddSlider({
     Name = "Fly Speed",
     Min = 0.7,
@@ -273,6 +260,13 @@ Section4:AddButton({
             local args = {
                 [1] = "Full Power"}
             game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+        end)  
+    end})
+Section1:AddButton({
+    Name = "No Ki Mode",
+    Callback = function()
+        pcall( function()
+            game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].HumanoidRootPart.KiSenseIcon:Destroy()
         end)  
     end})
 OrionLib:Init()
