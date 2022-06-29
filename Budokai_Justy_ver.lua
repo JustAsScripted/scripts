@@ -1,4 +1,3 @@
-local virtualUser = game:GetService('VirtualUser')
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
@@ -51,9 +50,8 @@ function Farm()
         if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
             repeat 
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-                wait(0.3) 
+                wait() 
             until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
@@ -101,7 +99,7 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Justy_vevo"].stats.PlayerLives.Value < 3  then
+    if game:GetService("Players")["Justy_vevo"].stats.PlayerLives.Value < 2  then
         if game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
@@ -111,33 +109,27 @@ function Log()
     end)
 end
 
-getgenv().Autofarmrefresh = false
-function Refresh()
-    spawn(function()
-    while getgenv().Autofarmrefresh == true do
-    wait(750)
-    virtualUser:CaptureController()
-    virtualUser:SetKeyDown('0x6c') 
-    virtualUser:SetKeyUp('0x6c')
-    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
-    wait(60)
-    game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Other.SpawnShadow:FireServer()
-    wait(3)
-    virtualUser:CaptureController()
-    virtualUser:SetKeyDown('0x6c') 
-    virtualUser:SetKeyUp('0x6c')
-    wait()
-    end
-    end)
-end
-
 Section1:AddButton({
-	Name = "Godmode",
+	Name = "Godmode v 1.0",
 	Callback = function()
         pcall( function()
             game.Players.LocalPlayer.Character.Core.Cooldowns.InvincibilityFrames:Destroy()
         end)  
   	end})
+Section1:AddButton({
+    Name = "Godmode v 2.0",
+    Callback = function()
+        pcall( function()
+            game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.CombatValues.Attacker:Destroy()
+        end)  
+    end})
+Section1:AddButton({
+    Name = "Invisibility",
+    Callback = function()
+        pcall( function()
+            game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].HumanoidRootPart.RootJoint:Destroy()
+        end)  
+    end})
 Section1:AddButton({
     Name = "Special Reset",
     Callback = function()
@@ -181,6 +173,13 @@ Section21:AddButton({
         pcall( function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
         end)  
+    end})
+Section21:AddButton({
+    Name = "Namek",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1666, 40750, -1281)
+        end)
     end})
 Section21:AddButton({
     Name = "King Kai",
@@ -232,15 +231,6 @@ Section3:AddToggle({
             Log()
         end
     end})
-Section3:AddToggle({
-    Name = "Autorefresh",
-    Default = false,
-    Callback = function(bool)
-        getgenv().Autofarmrefresh = bool
-        if bool then
-            Refresh()
-        end
-    end})
 Section4:AddSlider({
     Name = "Fly Speed",
     Min = 0.7,
@@ -252,7 +242,7 @@ Section4:AddSlider({
     Callback = function(FlyValue)
         game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Movement.FlySpeed.Value = FlyValue 
     end})
-Section4:AddButton({
+    Section4:AddButton({
     Name = "Lower Power Level",
     Callback = function()
         pcall( function()
@@ -268,6 +258,13 @@ Section4:AddButton({
             local args = {
                 [1] = "Full Power"}
             game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+        end)  
+    end})
+Section1:AddButton({
+    Name = "No Ki Mode",
+    Callback = function()
+        pcall( function()
+            game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].HumanoidRootPart.KiSenseIcon:Destroy()
         end)  
     end})
 OrionLib:Init()
