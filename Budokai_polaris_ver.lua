@@ -1,4 +1,3 @@
-local virtualUser = game:GetService('VirtualUser')
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
@@ -49,12 +48,10 @@ function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2088, 438, 10172)
             repeat 
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
                 wait() 
             until game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value == 100
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
