@@ -68,6 +68,20 @@ function Farm()
     end)
 end
 
+getgenv().Autosave = true
+function Save()
+    spawn(function()
+        while getgenv().Autosave == true do
+            if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2045, 431, 10046)
+                repeat wait() until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 431, 10070)
+            end
+            wait()
+        end
+    end)
+end
+
 getgenv().AutoN = false
 function Nap()
     spawn(function()
@@ -99,7 +113,7 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 2  then
+    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
         if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
@@ -202,6 +216,15 @@ Section3:AddToggle({
         getgenv().Autofarm = bool
         if bool then
         Farm()
+        end
+    end})
+Section3:AddToggle({
+    Name = "AutosaveJusty",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autosave = bool
+        if bool then
+        Save()
         end
     end})
 Section3:AddToggle({
