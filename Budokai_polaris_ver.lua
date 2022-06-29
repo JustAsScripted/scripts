@@ -49,6 +49,7 @@ function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
         if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2088, 438, 10172)
             repeat 
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
                 wait() 
