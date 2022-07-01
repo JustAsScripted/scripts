@@ -259,7 +259,7 @@ Section4:AddButton({
             game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
         end)  
     end})
-Section1:AddButton({
+Section4:AddButton({
     Name = "No Ki Mode",
     Callback = function()
         pcall( function()
