@@ -87,7 +87,7 @@ function Mastery()
         if game:GetService("Workspace").SpawnedCharacters.Justy_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
     then 
         local args = {
-            [1] = "6"}
+            [1] = "7"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
         end
         wait()
