@@ -1,7 +1,7 @@
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai polaris ver.1.01", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai Justy ver.1.01", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -35,7 +35,7 @@ getgenv().Autobb = false
 function InstantLog()
     spawn(function()
     while getgenv().Autobb == true do
-        if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
+        if game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
         Player:Kick("Instant Logged")
         end
     wait()
@@ -47,10 +47,10 @@ getgenv().Autofarm = false
 function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 or game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 or game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
             repeat 
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-                wait() until game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value == 100 and game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100
+                wait() until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100 and game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value == 100
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
@@ -73,7 +73,7 @@ getgenv().AutoN = false
 function Nap()
     spawn(function()
     while getgenv().AutoN == true do
-        if game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 100 then
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 100 then
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
         end
     wait()   
@@ -85,10 +85,10 @@ getgenv().Autotransform = false
 function Mastery()
     spawn(function()
     while getgenv().Auto6 == true do
-        if game:GetService("Workspace").SpawnedCharacters.Jojo_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
+        if game:GetService("Workspace").SpawnedCharacters.Justy_vevo.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
     then 
         local args = {
-            [1] = "6"}
+            [1] = "7"}
         game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
         end
         wait()
@@ -100,8 +100,8 @@ getgenv().Autolives = false
 function Log()
     spawn(function()
     while getgenv().Autolives == true do
-    if game:GetService("Players")["Jojo_vevo"].stats.PlayerLives.Value < 3  then
-        if game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
+    if game:GetService("Players")["Justy_vevo"].stats.PlayerLives.Value < 3  then
+        if game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Cooldowns.CombatTag.Value == 0 then
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
     end
@@ -109,7 +109,6 @@ function Log()
     end
     end)
 end
-
 Section1:AddButton({
 	Name = "Godmode v 1.0",
 	Callback = function()
@@ -121,14 +120,14 @@ Section1:AddButton({
     Name = "Godmode v 2.0",
     Callback = function()
         pcall( function()
-            game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.CombatValues.Attacker:Destroy()
+            game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.CombatValues.Attacker:Destroy()
         end)  
     end})
 Section1:AddButton({
     Name = "Invisibility",
     Callback = function()
         pcall( function()
-            game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].HumanoidRootPart.RootJoint:Destroy()
+            game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].HumanoidRootPart.RootJoint:Destroy()
         end)  
     end})
 Section1:AddButton({
@@ -241,7 +240,7 @@ Section4:AddSlider({
     Increment = 0.1,
     ValueName = "Speed",
     Callback = function(FlyValue)
-        game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].Core.Movement.FlySpeed.Value = FlyValue 
+        game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Movement.FlySpeed.Value = FlyValue  
     end})
     Section4:AddButton({
     Name = "Lower Power Level",
@@ -265,7 +264,7 @@ Section4:AddButton({
     Name = "No Ki Mode",
     Callback = function()
         pcall( function()
-            game:GetService("Workspace").SpawnedCharacters["Jojo_vevo"].HumanoidRootPart.KiSenseIcon:Destroy()
+            game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].HumanoidRootPart.KiSenseIcon:Destroy()
         end)  
     end})
 OrionLib:Init()
