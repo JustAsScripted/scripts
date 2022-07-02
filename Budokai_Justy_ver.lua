@@ -109,6 +109,7 @@ function Log()
     end
     end)
 end
+
 Section1:AddButton({
 	Name = "Godmode v 1.0",
 	Callback = function()
