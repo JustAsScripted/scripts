@@ -1,7 +1,7 @@
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai Justy TC ver.1.01", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai Justy ver.1.01", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -47,7 +47,7 @@ getgenv().Autofarm = false
 function Farm()
     spawn(function()
     while getgenv().Autofarm == true do
-        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 50 or game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 50 then
+        if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 or game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value < 10 then
             repeat 
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
                 wait() until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100 and game:GetService("Players").Jojo_vevo.stats.PlayerVitals.Value == 100
