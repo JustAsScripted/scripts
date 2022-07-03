@@ -175,7 +175,7 @@ Section21:AddButton({
     Name = "Polaris",
     Callback = function()
         pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 441, 10073)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1156, 53399, 8379)
         end)  
     end})
 Section21:AddButton({
