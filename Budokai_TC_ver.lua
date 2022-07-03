@@ -1,7 +1,7 @@
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai polaris ver.", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai TC ver.1.01", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -54,30 +54,18 @@ function Farm()
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(1)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
         end
         wait()
     end
-    end)
-end
-
-getgenv().Autosave = true
-function Save()
-    spawn(function()
-        while getgenv().Autosave == true do
-            if game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value < 10 then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2045, 431, 10046)
-                repeat wait() until game:GetService("Players").Justy_vevo.stats.PlayerVitals.Value == 100
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2046, 431, 10070)
-            end
-            wait()
-        end
     end)
 end
 
@@ -93,7 +81,7 @@ function Nap()
     end)
 end
 
-getgenv().Auto6 = false
+getgenv().Autotransform = false
 function Mastery()
     spawn(function()
     while getgenv().Auto6 == true do
@@ -218,15 +206,6 @@ Section3:AddToggle({
         end
     end})
 Section3:AddToggle({
-    Name = "AutosaveJusty",
-    Default = false,
-    Callback = function(bool)
-        getgenv().Autosave = bool
-        if bool then
-        Save()
-        end
-    end})
-Section3:AddToggle({
     Name = "Autovitals",
     Default = false,
     Callback = function(bool)
@@ -239,7 +218,7 @@ Section3:AddToggle({
     Name = "Automastery",
     Default = false,
     Callback = function(bool)
-        getgenv().Auto6 = bool
+        getgenv().Autotransform = bool
         if bool then
             Mastery()
         end
