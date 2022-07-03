@@ -1,7 +1,7 @@
 local Character = game:GetService("Players").LocalPlayer.Character
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai Justy TC ver.", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai Justy TC ver.1.01", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -54,13 +54,15 @@ function Farm()
         else local args = {
             [1] = "RegularAttack"}
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(0.3)
         game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
-        wait(1)
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").Core.Events.CombatEvents.Attack.BasicAttack:FireServer(unpack(args))
         end
         wait()
     end
@@ -239,7 +241,7 @@ Section4:AddSlider({
     Increment = 0.1,
     ValueName = "Speed",
     Callback = function(FlyValue)
-        game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Movement.FlySpeed.Value = FlyValue 
+        game:GetService("Workspace").SpawnedCharacters["Justy_vevo"].Core.Movement.FlySpeed.Value = FlyValue  
     end})
     Section4:AddButton({
     Name = "Lower Power Level",
