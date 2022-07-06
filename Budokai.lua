@@ -1,6 +1,6 @@
 local Player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver.1.5", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 1.7", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -652,25 +652,60 @@ Section2:AddButton({
         end)  
     end})
 Section21:AddButton({
-    Name = "Polaris",
+    Name = "Earth",
     Callback = function()
         pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1156, 53399, 8379)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Sadala",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1045, 729, -1242)
-        end)  
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2013, 83803, 4370)
+        end)
     end})
 Section21:AddButton({
     Name = "Namek",
     Callback = function()
         pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1666, 40750, -1281)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1211, 107877, -1354)
         end)
+    end})
+Section21:AddButton({
+    Name = "Sadala",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2211, 89179, 112)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Majin",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(746, 68440, 6)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Polaris",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-740, 89881, 9054)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Olbus",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77, 148435, 1212)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Mythria",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4622, 130617, 2425)
+        end)  
+    end})
+Section21:AddButton({
+    Name = "Netfiss",
+    Callback = function()
+        pcall( function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2268, 107426, -982)
+        end)  
     end})
 Section21:AddButton({
     Name = "King Kai",
