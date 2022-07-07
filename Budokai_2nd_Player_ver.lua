@@ -1063,14 +1063,12 @@ end
 getgenv().LeechAutofarm = false
 function Leech()
     spawn(function()
-    while getgenv().Autofarm == true do
-        if game.Players.LocalPlayer.stats.PlayerVitals.Value < 50 or game:GetService("Players").SecondPlayersName.stats.PlayerVitals.Value < 50 then
-            repeat 
-                game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-                wait() until game.Players.LocalPlayer.stats.PlayerVitals.Value == 100 and game:GetService("Players").SecondPlayersName.stats.PlayerVitals.Value == 100
-        end
-        wait()
-    end
+        OrionLib:MakeNotification({
+            Name = "Message",
+            Content = "LeechAutoFarm is not working, because it takes too much space in the script with ShadowAutoFarm. If you want LeechAutoFarm back - DM hecker!",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+        })
     end)
 end
 
@@ -1089,14 +1087,19 @@ end
 getgenv().Autotransform = false
 function Mastery()
     spawn(function()
-        OrionLib:MakeNotification({
-            Name = "Message",
-            Content = "LeechAutoFarm is not working, because it takes too much space in the script with ShadowAutoFarm. If you want LeechAutoFarm back - DM hecker!",
-            Image = "rbxassetid://4483345998",
-            Time = 5
-        })
-    end)
-end
+        while getgenv().Auto6 == true do
+            if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
+        then 
+            local args = {
+                [1] = "6"
+                [2] = "7"
+                [3] = "8"}
+            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
+            end
+            wait()
+        end
+        end)
+    end 
 
 getgenv().Autolives = false
 function Log()
