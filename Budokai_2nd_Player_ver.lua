@@ -1067,7 +1067,7 @@ function Leech()
             Name = "Message",
             Content = "LeechAutoFarm is not working, because it takes too much space in the script with ShadowAutoFarm. If you want LeechAutoFarm back - DM hecker!",
             Image = "rbxassetid://4483345998",
-            Time = 5
+            Time = 10
         })
     end)
 end
