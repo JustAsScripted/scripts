@@ -1091,8 +1091,8 @@ function Mastery()
             if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
         then 
             local args = {
-                [1] = "6"
-                [2] = "7"
+                [1] = "6",
+                [2] = "7",
                 [3] = "8"}
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
             end
