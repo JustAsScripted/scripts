@@ -337,7 +337,7 @@ end
 getgenv().Autotransform = false
 function Mastery()
     spawn(function()
-        while getgenv().Auto6 == true do
+        while getgenv().Autotransform == true do
             if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
         then 
             local args = {
