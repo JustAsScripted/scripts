@@ -1,6 +1,8 @@
 local Player = game.Players.LocalPlayer
+local plrname = game.Players.LocalPlayer.Name
+local bp = game.Players.LocalPlayer.stats.BattlePower.Value
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 1.85", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.0", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -341,7 +343,7 @@ function Mastery()
             if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
         then 
             local args = {
-                [1] = "8"}
+                [1] = "7"}
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
             end
             wait()
@@ -359,6 +361,56 @@ function Log()
         end
     end
     wait()
+    end
+    end)
+end
+
+getgenv().Automod = false
+function ModKick()
+    spawn(function()
+        while getgenv().Automod == true do
+            for i,v in pairs(game.Players:GetChildren()) do
+                if v.Name == "Reesemunna300" -- Elder Kai
+                or v.Name == "Die6494" -- Roku 
+                or v.Name == "AdoptedHippopotamus" -- Perc
+                or v.Name == "axelseeker" -- Jermaine 
+                or v.Name == "BeltorTux" -- BeltorTux
+                or v.Name == "chanceslater" -- Buzz
+                or v.Name == "ihatepoo22" -- Tony
+                or v.Name == "Playwinz" -- Snake Oil
+                or v.Name == "Xeau" -- Dick sucker
+                or v.Name == "Ticksterkiddo6" -- Nigger
+                or v.Name == "playr66666" -- Qblox
+                or v.Name == "IconicOne" -- IconicOne
+                or v.Name == "ZombieBra1n" -- Zom
+                then 
+                    local pidor = v.Name
+                    local response = syn.request(
+                    {
+                            Url = 'https://discord.com/api/webhooks/994643354455380111/AgwxlMJP-6wjpXYvV3Lwm1wBAGA2w1sm319YqIU-g0JYELkIEDqdU-MOYPS6_1UyAe55',
+                            Method = 'POST',
+                            Headers = {
+                                    ['Content-Type'] = 'application/json'},
+                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
+                    Player:Kick("Looks like the GAY ASS NIGGA has joined the server!")
+                end
+            end
+            wait()
+        end
+    end)
+end
+
+getgenv().AutoBpLogs = false
+function BpLog()
+    spawn(function()
+    while getgenv().AutoBpLogs == true do
+        local response = syn.request(
+            {
+                Url = 'https://discord.com/api/webhooks/994643354455380111/AgwxlMJP-6wjpXYvV3Lwm1wBAGA2w1sm319YqIU-g0JYELkIEDqdU-MOYPS6_1UyAe55',
+                Method = 'POST',
+                Headers = {['Content-Type'] = 'application/json'},
+                Body = game:GetService('HttpService'):JSONEncode({content = plrname.. "'s current BattlePower is "..bp})})
+                wait(3600)
     end
     end)
 end
@@ -534,6 +586,24 @@ Section3:AddToggle({
         getgenv().Autolives = bool
         if bool then
             Log()
+        end
+    end})
+Section3:AddToggle({
+    Name = "AutoModDetector",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Automod = bool
+        if bool then
+            ModKick()
+        end
+    end})
+Section3:AddToggle({
+    Name = "AutoBpLogs",
+    Default = false,
+    Callback = function(bool)
+        getgenv().AutoBpLogs = bool
+        if bool then
+            BpLog()
         end
     end})
 Section4:AddSlider({
