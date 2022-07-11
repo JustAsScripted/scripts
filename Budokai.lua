@@ -1,8 +1,7 @@
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
-local bp = game.Players.LocalPlayer.stats.BattlePower.Value
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.0", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.05", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -409,7 +408,7 @@ function BpLog()
                 Url = 'https://discord.com/api/webhooks/994643354455380111/AgwxlMJP-6wjpXYvV3Lwm1wBAGA2w1sm319YqIU-g0JYELkIEDqdU-MOYPS6_1UyAe55',
                 Method = 'POST',
                 Headers = {['Content-Type'] = 'application/json'},
-                Body = game:GetService('HttpService'):JSONEncode({content = plrname.. "'s current BattlePower is "..bp})})
+                Body = game:GetService('HttpService'):JSONEncode({content = plrname.. "'s current BattlePower is "..game.Players.LocalPlayer.stats.BattlePower.Value})})
                 wait(3600)
     end
     end)
