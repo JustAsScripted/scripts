@@ -1,7 +1,14 @@
+repeat wait() until game:IsLoaded()
+repeat
+    local args = {
+        [1] = "Lower"}
+    game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+    wait()
+    until game.Players.LocalPlayer.PlayerGui.PlayerUi.Output.Text == "Power Output: 10%"
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.1", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.2", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -382,6 +389,7 @@ function ModKick()
                 or v.Name == "playr66666" -- Qblox
                 or v.Name == "IconicOne" -- IconicOne
                 or v.Name == "ZombieBra1n" -- Zom
+                or v.Name == "Pjmayo0" --Pjmayo0(huy znaet kto)
                 then 
                     local pidor = v.Name
                     local response = syn.request(
@@ -610,7 +618,7 @@ Section4:AddSlider({
     Name = "Fly Speed",
     Min = 0.7,
     Max = 2,
-    Default = 0.7,
+    Default = game.Players.LocalPlayer.Character.Core.Movement.FlySpeed.Value,
     Color = Color3.fromRGB(255,255,255),
     Increment = 0.1,
     ValueName = "Speed",
@@ -621,9 +629,12 @@ Section4:AddSlider({
     Name = "Lower Power Level",
     Callback = function()
         pcall( function()
-            local args = {
-                [1] = "Lower"}
-            game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+            repeat
+                local args = {
+                    [1] = "Lower"}
+                game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
+                wait()
+                until game.Players.LocalPlayer.PlayerGui.PlayerUi.Output.Text == "Power Output: 10%"
         end)  
     end})
 Section4:AddButton({
@@ -640,6 +651,61 @@ Section4:AddButton({
     Callback = function()
         pcall( function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.KiSenseIcon:Destroy()
+        end)  
+    end})
+Section4:AddButton({
+    Name = "It has to be this way",
+    Callback = function()
+        pcall( function()
+            local args = {
+                [1] = "Standing here",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "I realize",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "You are just like me",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "Trying to make history",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "But who's to judge",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "The right from wrong?",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "When our guard is down",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "I think we'll both agree",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "That violence breeds violence",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            wait(3)
+            local args = {
+                [1] = "But in the end it has to be this way",
+                [2] = "All"}
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
         end)  
     end})
 OrionLib:Init()
