@@ -401,6 +401,8 @@ function ModKick()
                             Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
                     Player:Kick("Looks like the GAY ASS NIGGA has joined the server!")
                     getgenv().Automod = false
+                    getgenv().Autokai = false
+                    getgenv().AutoBpLogs = false
                 end
             end
             wait()
@@ -424,7 +426,9 @@ function KaiKick()
                                     ['Content-Type'] = 'application/json'},
                             Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
                     Player:Kick("Kai tried to ban you, but slightly fucked up")
+                    getgenv().Automod = false
                     getgenv().Autokai = false
+                    getgenv().AutoBpLogs = false
                 end
             end
             wait()
