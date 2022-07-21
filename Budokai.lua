@@ -8,7 +8,7 @@ repeat
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.2", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.3", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -349,7 +349,7 @@ function Mastery()
             if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.FormMultipliers.BattlePower.Value < 1.1
         then 
             local args = {
-                [1] = "7"}
+                [1] = "6"}
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.TransformEvent:FireServer(unpack(args))
             end
             wait()
@@ -394,13 +394,37 @@ function ModKick()
                     local pidor = v.Name
                     local response = syn.request(
                     {
-                            Url = 'https://discord.com/api/webhooks/994643354455380111/AgwxlMJP-6wjpXYvV3Lwm1wBAGA2w1sm319YqIU-g0JYELkIEDqdU-MOYPS6_1UyAe55',
+                            Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
                             Method = 'POST',
                             Headers = {
                                     ['Content-Type'] = 'application/json'},
                             Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
                     Player:Kick("Looks like the GAY ASS NIGGA has joined the server!")
-                    break
+                    getgenv().Automod = false
+                end
+            end
+            wait()
+        end
+    end)
+end
+
+getgenv().Autokai = false
+function KaiKick()
+    spawn(function()
+        while getgenv().Autokai == true do
+            for i,v in pairs(game.Players:GetChildren()) do
+                if v.stats.PlayerRace.Value == "Kai"
+                then 
+                    local pidor = v.Name
+                    local response = syn.request(
+                    {
+                            Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                            Method = 'POST',
+                            Headers = {
+                                    ['Content-Type'] = 'application/json'},
+                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
+                    Player:Kick("Kai tried to ban you, but slightly fucked up")
+                    getgenv().Autokai = false
                 end
             end
             wait()
@@ -414,7 +438,7 @@ function BpLog()
     while getgenv().AutoBpLogs == true do
         local response = syn.request(
             {
-                Url = 'https://discord.com/api/webhooks/994643354455380111/AgwxlMJP-6wjpXYvV3Lwm1wBAGA2w1sm319YqIU-g0JYELkIEDqdU-MOYPS6_1UyAe55',
+                Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
                 Method = 'POST',
                 Headers = {['Content-Type'] = 'application/json'},
                 Body = game:GetService('HttpService'):JSONEncode({content = plrname.. "'s current BattlePower is "..game.Players.LocalPlayer.stats.BattlePower.Value})})
@@ -603,6 +627,15 @@ Section3:AddToggle({
         getgenv().Automod = bool
         if bool then
             ModKick()
+        end
+    end})
+Section3:AddToggle({
+    Name = "AutoKaiDetector",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Autokai = bool
+        if bool then
+            KaiKick()
         end
     end})
 Section3:AddToggle({
