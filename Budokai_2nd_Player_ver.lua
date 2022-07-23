@@ -8,7 +8,7 @@ repeat
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.45", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.47", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -362,7 +362,14 @@ function Log()
     spawn(function()
     while getgenv().Autolives == true do
     if game.Players.LocalPlayer.stats.PlayerLives.Value < 3  then
-        if game.Players.LocalPlayer.Character.Core.Cooldowns.CombatTag.Value == 0 then
+        if game.Players.LocalPlayer.Character.Core.Cooldowns.CombatTag.Value <= 0 then
+            local response = syn.request(
+                            {
+                                Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                                Method = 'POST',
+                                Headers = {
+                                    ['Content-Type'] = 'application/json'},
+                                    Body = game:GetService('HttpService'):JSONEncode({content = "@everyone DUDE THERE IS LIT NO WAY I COULD LOSE A LIFE!"})})
             Player:Kick("You are reading this wasn't a part of my plan, sadly.")
         end
     end
@@ -376,22 +383,35 @@ function SafeWhipe()
     spawn(function()
         while getgenv().SafeMode == true do
             for i,v in pairs(game.Players:GetChildren()) do
-                if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y - v.Character.HumanoidRootPart.Position.Y <= 10000 then
-                local response = syn.request(
-                    {
-                            Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
-                            Method = 'POST',
-                            Headers = {
+                if v.Character.HumanoidRootPart.Position.Y ~= game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y then
+                    if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y - v.Character.HumanoidRootPart.Position.Y <= 10000 then
+                        local response = syn.request(
+                            {
+                                Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                                Method = 'POST',
+                                Headers = {
                                     ['Content-Type'] = 'application/json'},
-                            Body = game:GetService('HttpService'):JSONEncode({content = "@everyone Exploiter tried to exploit you but failed miserably!!!"})})
-                Player:Kick("I GOT BITCHES ALL ON MY DICK EVERYDAY! SUCKING ON MY BALLS! LICKING EVERYDAY!")
-                getgenv().SafeMode = false
+                                    Body = game:GetService('HttpService'):JSONEncode({content = "@everyone Exploiter tried to exploit you but failed miserably!!!"})})
+                                    Player:Kick("I GOT BITCHES ALL ON MY DICK EVERYDAY! SUCKING ON MY BALLS! LICKING EVERYDAY!")
+                                    getgenv().SafeMode = false
+                                end
+                            end
+                        end
+                        if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y < 300000 then
+                            local response = syn.request(
+                            {
+                                Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                                Method = 'POST',
+                                Headers = {
+                                    ['Content-Type'] = 'application/json'},
+                                    Body = game:GetService('HttpService'):JSONEncode({content = "@everyone WTF HOW DID I EVEN FALL????"})})
+                            Player:Kick("Bro fell off, shit")
+                            getgenv().SafeMode = false
+                                end
+                        wait()
+                    end
+                end)
             end
-        end
-            wait()
-        end
-    end)
-end
 
 getgenv().Automod = false
 function ModKick()
@@ -420,7 +440,7 @@ function ModKick()
                             Method = 'POST',
                             Headers = {
                                     ['Content-Type'] = 'application/json'},
-                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
+                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit! @everyone"})})
                     Player:Kick("Looks like the GAY ASS NIGGA has joined the server!")
                     getgenv().Automod = false
                     getgenv().Autokai = false
@@ -446,7 +466,7 @@ function KaiKick()
                             Method = 'POST',
                             Headers = {
                                     ['Content-Type'] = 'application/json'},
-                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit!"})})
+                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit! @everyone"})})
                     Player:Kick("Kai tried to ban you, but slightly fucked up")
                     getgenv().Automod = false
                     getgenv().Autokai = false
