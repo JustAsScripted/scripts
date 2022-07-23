@@ -8,7 +8,7 @@ repeat
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.4", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.45", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -375,17 +375,19 @@ getgenv().SafeMode = false
 function SafeWhipe()
     spawn(function()
         while getgenv().SafeMode == true do
-            if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.DamageTakenIncrement.Value > 0 then
+            for i,v in pairs(game.Players:GetChildren()) do
+                if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y - v.Character.HumanoidRootPart.Position.Y <= 10000 then
                 local response = syn.request(
                     {
                             Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
                             Method = 'POST',
                             Headers = {
                                     ['Content-Type'] = 'application/json'},
-                            Body = game:GetService('HttpService'):JSONEncode({content = "Exploiter tried to exploit you but failed miserably!!!"})})
-                Player:Kick("Exploiter tried to exploit you but failed miserably!!!")
+                            Body = game:GetService('HttpService'):JSONEncode({content = "@everyone Exploiter tried to exploit you but failed miserably!!!"})})
+                Player:Kick("I GOT BITCHES ALL ON MY DICK EVERYDAY! SUCKING ON MY BALLS! LICKING EVERYDAY!")
                 getgenv().SafeMode = false
             end
+        end
             wait()
         end
     end)
