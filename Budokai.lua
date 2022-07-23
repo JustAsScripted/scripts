@@ -8,7 +8,7 @@ repeat
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.3", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.4", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -371,6 +371,26 @@ function Log()
     end)
 end
 
+getgenv().SafeMode = false
+function SafeWhipe()
+    spawn(function()
+        while getgenv().SafeMode == true do
+            if game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.DamageTakenIncrement.Value > 0 then
+                local response = syn.request(
+                    {
+                            Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                            Method = 'POST',
+                            Headers = {
+                                    ['Content-Type'] = 'application/json'},
+                            Body = game:GetService('HttpService'):JSONEncode({content = "Exploiter tried to exploit you but failed miserably!!!"})})
+                Player:Kick("Exploiter tried to exploit you but failed miserably!!!")
+                getgenv().SafeMode = false
+            end
+            wait()
+        end
+    end)
+end
+
 getgenv().Automod = false
 function ModKick()
     spawn(function()
@@ -548,7 +568,7 @@ Section21:AddButton({
     Name = "Olbus",
     Callback = function()
         pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77, 148435, 1212)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77.0257645, 307777.156, 1190.901, -0.999805927, -4.13872492e-08, 0.0197017416, -4.18762518e-08, 1, -2.44077096e-08, -0.0197017416, -2.52280064e-08, -0.999805927)
         end)  
     end})
 Section21:AddButton({
@@ -622,6 +642,15 @@ Section3:AddToggle({
         getgenv().Autolives = bool
         if bool then
             Log()
+        end
+    end})
+Section3:AddToggle({
+    Name = "Safe Mode",
+    Default = false,
+    Callback = function(bool)
+        getgenv().SafeMode = bool
+        if bool then
+            SafeWhipe()
         end
     end})
 Section3:AddToggle({
@@ -746,3 +775,6 @@ Section4:AddButton({
         end)  
     end})
 OrionLib:Init()
+
+--game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.DamageTakenIncrement.Value
+--game.Players.LocalPlayer.Character.Core.CombatValues.BeingGrippedBy.Value
