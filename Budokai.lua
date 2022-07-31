@@ -1,14 +1,10 @@
 repeat wait() until game:IsLoaded()
-repeat
-    local args = {
-        [1] = "Lower"}
-    game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
-    wait()
-    until game.Players.LocalPlayer.PlayerGui.PlayerUi.Output.Text == "Power Output: 10%"
+game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+game.Players.LocalPlayer.Backpack:WaitForChild("Power Control")
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.47", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.55", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -57,7 +53,7 @@ function Farm()
     if game.Players.LocalPlayer.stats.PlayerVitals.Value < 50 then
         repeat
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-                wait()
+                wait(0.000001)
         until game.Players.LocalPlayer.stats.PlayerVitals.Value == 100
     else local args = {
         [1] = "RegularAttack"}
@@ -383,8 +379,8 @@ function SafeWhipe()
     spawn(function()
         while getgenv().SafeMode == true do
             for i,v in pairs(game.Players:GetChildren()) do
-                if v.Character.HumanoidRootPart.Position.Y ~= game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y then
-                    if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y - v.Character.HumanoidRootPart.Position.Y <= 10000 then
+                if v ~= game.Players.LocalPlayer then
+                    if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y - v.Character.HumanoidRootPart.Position.Y <= 95000 then
                         local response = syn.request(
                             {
                                 Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
@@ -397,7 +393,8 @@ function SafeWhipe()
                                 end
                             end
                         end
-                        if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y < 300000 then
+                        if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y < 300000
+                        or game:GetService("Workspace").SpawnedCharacters["Shadow SavingForFun"].HumanoidRootPart.Position.Y < 300000 then
                             local response = syn.request(
                             {
                                 Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
@@ -426,12 +423,13 @@ function ModKick()
                 or v.Name == "chanceslater" -- Buzz
                 or v.Name == "ihatepoo22" -- Tony
                 or v.Name == "Playwinz" -- Snake Oil
-                or v.Name == "Xeau" -- Dick sucker
+                or v.Name == "Xeau" -- Ultimate cock sucker
                 or v.Name == "Ticksterkiddo6" -- Nigger
                 or v.Name == "playr66666" -- Qblox
                 or v.Name == "IconicOne" -- IconicOne
                 or v.Name == "ZombieBra1n" -- Zom
-                or v.Name == "Pjmayo0" --Pjmayo0(huy znaet kto)
+                or v.Name == "Pjmayo0" --Pjmayo0 (huy znaet kto)
+                or v.Name == "PerceptionalReality" --Beni
                 then 
                     local pidor = v.Name
                     local response = syn.request(
@@ -551,74 +549,30 @@ Section2:AddButton({
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").SpawnedCharacters["Evil Saiyan"].HumanoidRootPart.CFrame
         end)  
     end})
-Section21:AddButton({
-    Name = "Earth",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2013, 83803, 4370)
-        end)
+Section21:AddDropdown({
+    Name = "Planets",
+    Default = "Select the planet",
+    Options = {"Earth", "Namek", "Sadala", "Majin", "Polaris", "Olbus", "Mythria", "Netfiss", "King Kai", "Time Chamber"},
+    Callback = function(PlanetValue)
+        SelectedPlanet = PlanetValue
     end})
 Section21:AddButton({
-    Name = "Namek",
+    Name = "Teleport",
     Callback = function()
         pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1211, 107877, -1354)
-        end)
-    end})
-Section21:AddButton({
-    Name = "Sadala",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2211, 89179, 112)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Majin",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(746, 68440, 6)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Polaris",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-740, 89881, 9054)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Olbus",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77.0257645, 307777.156, 1190.901, -0.999805927, -4.13872492e-08, 0.0197017416, -4.18762518e-08, 1, -2.44077096e-08, -0.0197017416, -2.52280064e-08, -0.999805927)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Mythria",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4622, 130617, 2425)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Netfiss",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2268, 107426, -982)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "King Kai",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
-        end)  
-    end})
-Section21:AddButton({
-    Name = "Time Chamber",
-    Callback = function()
-        pcall( function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
+            if SelectedPlanet then
+                if SelectedPlanet == "Earth" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2013, 83803, 4370)
+                elseif SelectedPlanet == "Namek" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1211, 107877, -1354)
+                elseif SelectedPlanet == "Sadala" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2211, 89179, 112)
+                elseif SelectedPlanet == "Majin" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(746, 68440, 6)
+                elseif SelectedPlanet == "Polaris" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-740, 89881, 9054)
+                elseif SelectedPlanet == "Olbus" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77.0257645, 307777.156, 1190.901, -0.999805927, -4.13872492e-08, 0.0197017416, -4.18762518e-08, 1, -2.44077096e-08, -0.0197017416, -2.52280064e-08, -0.999805927)
+                elseif SelectedPlanet == "Mythria" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4622, 130617, 2425)
+                elseif SelectedPlanet == "Netfiss" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2268, 107426, -982)
+                elseif SelectedPlanet == "King Kai" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(137, 8610, -281)
+                elseif SelectedPlanet == "Time Chamber" then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-734, 9094, 220)
+                end
+            end
         end)  
     end})
 Section3:AddToggle({
@@ -713,7 +667,7 @@ Section4:AddSlider({
     Callback = function(FlyValue)
         game.Players.LocalPlayer.Character.Core.Movement.FlySpeed.Value = FlyValue  
     end})
-    Section4:AddButton({
+Section4:AddButton({
     Name = "Lower Power Level",
     Callback = function()
         pcall( function()
@@ -722,7 +676,7 @@ Section4:AddSlider({
                     [1] = "Lower"}
                 game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
                 wait()
-                until game.Players.LocalPlayer.PlayerGui.PlayerUi.Output.Text == "Power Output: 10%"
+                until game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.BattlePower.Value <= 600000
         end)  
     end})
 Section4:AddButton({
@@ -741,62 +695,8 @@ Section4:AddButton({
             game.Players.LocalPlayer.Character.HumanoidRootPart.KiSenseIcon:Destroy()
         end)  
     end})
-Section4:AddButton({
-    Name = "It has to be this way",
-    Callback = function()
-        pcall( function()
-            local args = {
-                [1] = "Standing here",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "I realize",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "You are just like me",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "Trying to make history",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "But who's to judge",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "The right from wrong?",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "When our guard is down",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "I think we'll both agree",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "That violence breeds violence",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            wait(3)
-            local args = {
-                [1] = "But in the end it has to be this way",
-                [2] = "All"}
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-        end)  
-    end})
 OrionLib:Init()
 
---game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.DamageTakenIncrement.Value
---game.Players.LocalPlayer.Character.Core.CombatValues.BeingGrippedBy.Value
+--[[game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.DamageTakenIncrement.Value
+game.Players.LocalPlayer.Character.Core.CombatValues.BeingGrippedBy.Value
+game:GetService("Workspace").SpawnedCharacters["Shadow SavingForFun"].HumanoidRootPart]]--
