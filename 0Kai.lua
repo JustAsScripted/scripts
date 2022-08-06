@@ -57,7 +57,7 @@ function Farm()
                 repeat wait() until game.Players.LocalPlayer.stats.PlayerVitals.Value == 100
                 game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
             end
-        else loadstring(game:HttpGet(('https://raw.githubusercontent.com/JustAsScripted/scripts/main/Budokai_attack.lua')))()
+        else loadstring(game:HttpGet(('https://raw.githubusercontent.com/JustAsScripted/scripts/main/BIGBANGATTACK.lua')))()
             wait(3)
         end
         wait()
