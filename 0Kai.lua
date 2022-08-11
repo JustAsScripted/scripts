@@ -375,7 +375,7 @@ Section21:AddButton({
             end
         end)  
     end})
-Section3:AddToggle({
+local FarmToggle = Section3:AddToggle({
     Name = "ShadowAutofarm",
     Default = false,
     Callback = function(bool)
@@ -420,7 +420,7 @@ Section3:AddToggle({
             Log()
         end
     end})
-local Safetoggle = Section3:AddToggle({
+local SafeToggle = Section3:AddToggle({
     Name = "Safe Mode",
     Default = false,
     Callback = function(bool)
@@ -432,9 +432,9 @@ local Safetoggle = Section3:AddToggle({
 function Refresh()
     spawn(function()
         while getgenv().Autorefresh == true do
-            Safetoggle:Set(true)
+            SafeToggle:Set(true)
             wait(1)
-            Safetoggle:Set(false)
+            SafeToggle:Set(false)
             wait()
         end
     end)
