@@ -23,10 +23,14 @@ local Tab2 = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false})
 local Tab3 = Window:MakeTab({
-	Name = "Automation",
+	Name = "Autofarm",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false})
 local Tab4 = Window:MakeTab({
+    Name = "Security",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false})
+local Tab5 = Window:MakeTab({
 	Name = "Misc",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false})
@@ -38,8 +42,10 @@ local Section2 = Tab2:AddSection({
 local Section21 = Tab2:AddSection({
 	Name = "Safe Places"})
 local Section3 = Tab3:AddSection({
-	Name = "Automation"})
+	Name = "Autofarm"})
 local Section4 = Tab4:AddSection({
+    Name = "Security"})
+local Section5 = Tab5:AddSection({
 	Name = "Misc"})
 
 getgenv().Autobb = false
@@ -85,18 +91,6 @@ function Leech()
     end)
 end
 
-getgenv().AutoN = false
-function Nap()
-    spawn(function()
-    while getgenv().AutoN == true do
-        if game.Players.LocalPlayer.stats.PlayerVitals.Value < 100 then
-            game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
-        end
-    wait()   
-    end
-    end)
-end
-
 getgenv().Autotransform = false
 function Mastery()
     spawn(function()
@@ -130,6 +124,30 @@ function Log()
     end
     wait()
     end
+    end)
+end
+
+local invader
+getgenv().Antipeople = false
+function NoPeople()
+    spawn(function()
+        while getgenv().Antipeople == true do
+            for i,v in pairs(game.Players:GetChildren()) do
+                if v ~= game.Players.LocalPlayer then
+                    invader = v.Name
+                    Player:Kick("NOOOOOOOOOOOOOOOOOOO!")
+                    local response = syn.request(
+                        {
+                            Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                            Method = 'POST',
+                            Headers = {
+                                ['Content-Type'] = 'application/json'},
+                            Body = game:GetService('HttpService'):JSONEncode({content = "@everyone Rejoin kid, his name is "..invader})})
+                        getgenv().Antipeople = false
+                end
+            end
+            wait()
+        end
     end)
 end
 
@@ -394,15 +412,6 @@ Section3:AddToggle({
         end
     end})
 Section3:AddToggle({
-    Name = "Autovitals",
-    Default = false,
-    Callback = function(bool)
-        getgenv().AutoN = bool
-        if bool then
-            Nap()
-        end
-    end})
-Section3:AddToggle({
     Name = "Automastery",
     Default = false,
     Callback = function(bool)
@@ -411,7 +420,7 @@ Section3:AddToggle({
             Mastery()
         end
     end})
-Section3:AddToggle({
+Section4:AddToggle({
     Name = "Autostopfarm",
     Default = false,
     Callback = function(bool)
@@ -420,7 +429,16 @@ Section3:AddToggle({
             Log()
         end
     end})
-local SafeToggle = Section3:AddToggle({
+local AntiPeopleToggle = Section4:AddToggle({
+    Name = "Antipeople",
+    Default = false,
+    Callback = function(bool)
+        getgenv().Antipeople = bool
+        if bool then
+            NoPeople()
+        end
+    end})
+local SafeToggle = Section4:AddToggle({
     Name = "Safe Mode",
     Default = false,
     Callback = function(bool)
@@ -439,7 +457,7 @@ function Refresh()
         end
     end)
 end
-Section3:AddToggle({
+Section4:AddToggle({
     Name = "Autorefresh",
     Default = false,
     Callback = function(bool)
@@ -448,7 +466,7 @@ Section3:AddToggle({
             Refresh()
         end
     end})
-Section3:AddToggle({
+Section4:AddToggle({
     Name = "AutoModDetector",
     Default = false,
     Callback = function(bool)
@@ -457,7 +475,7 @@ Section3:AddToggle({
             ModKick()
         end
     end})
-Section3:AddToggle({
+Section4:AddToggle({
     Name = "AutoKaiDetector",
     Default = false,
     Callback = function(bool)
@@ -466,7 +484,7 @@ Section3:AddToggle({
             KaiKick()
         end
     end})
-Section3:AddToggle({
+Section4:AddToggle({
     Name = "AutoBpLogs",
     Default = false,
     Callback = function(bool)
@@ -475,7 +493,7 @@ Section3:AddToggle({
             BpLog()
         end
     end})
-Section4:AddSlider({
+Section5:AddSlider({
     Name = "Fly Speed",
     Min = 0.7,
     Max = 2,
@@ -486,7 +504,7 @@ Section4:AddSlider({
     Callback = function(FlyValue)
         game.Players.LocalPlayer.Character.Core.Movement.FlySpeed.Value = FlyValue  
     end})
-Section4:AddButton({
+Section5:AddButton({
     Name = "Lower Power Level",
     Callback = function()
         pcall( function()
@@ -498,7 +516,7 @@ Section4:AddButton({
                 until game.Players.LocalPlayer.Character.Core.StatValues.PlayerStatValues.BattlePower.Value < (game.Players.LocalPlayer.stats.BattlePower.Value / 10) + 1
         end)  
     end})
-Section4:AddButton({
+Section5:AddButton({
     Name = "Full Power Level",
     Callback = function()
         pcall( function()
@@ -507,14 +525,14 @@ Section4:AddButton({
             game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Power Control").Trigger:FireServer(unpack(args))
         end)  
     end})
-Section4:AddButton({
+Section5:AddButton({
     Name = "No Ki Mode",
     Callback = function()
         pcall( function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.KiSenseIcon:Destroy()
         end)  
     end})
-Section4:AddButton({
+Section5:AddButton({
     Name = "Autofarm finish",
     Callback = function()
         pcall( function()
@@ -535,7 +553,7 @@ Section4:AddButton({
             Player:Kick("Autofarm session has successfully finished!")
         end)  
     end})
-Section4:AddToggle({
+Section5:AddToggle({
     Name = "Dragon Ball Radar",
     Default = false,
     Callback = function(bool)
@@ -544,7 +562,7 @@ Section4:AddToggle({
             Radar()
         end
     end})
-Section4:AddButton({
+Section5:AddButton({
     Name = "Highest Bounty",
     Callback = function()
         pcall( function()
@@ -570,7 +588,7 @@ Section4:AddButton({
             })
         end)  
     end})
-Section4:AddButton({
+Section5:AddButton({
     Name = "Highest Zeni",
     Callback = function()
         pcall( function()
