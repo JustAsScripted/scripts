@@ -12,7 +12,7 @@ game.Players.LocalPlayer.Backpack:WaitForChild("Power Control")
 local Player = game.Players.LocalPlayer
 local plrname = game.Players.LocalPlayer.Name
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Budokai ver. 2.8", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
+local Window = OrionLib:MakeWindow({Name = "Budokai ver. 3.0", HidePremium = true, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = false})
 
 local Tab1 = Window:MakeTab({
 	Name = "Main",
@@ -45,12 +45,12 @@ local Section4 = Tab4:AddSection({
 getgenv().Autobb = false
 function InstantLog()
     spawn(function()
-    while getgenv().Autobb == true do
-        if game.Players.LocalPlayer.Character.Core.Cooldowns.CombatTag.Value == 0 then
-        Player:Kick("Instant Logged")
+        while getgenv().Autobb == true do
+            if game.Players.LocalPlayer.Character.Core.Cooldowns.CombatTag.Value == 0 then
+                Player:Kick("Instant Logged")
+            end
+            wait()
         end
-    wait()
-    end
     end)
 end
 
@@ -58,7 +58,7 @@ getgenv().ShadowAutoFarm = false
 function Farm()
     spawn(function()
     while getgenv().ShadowAutoFarm == true do
-    if game.Players.LocalPlayer.stats.PlayerVitals.Value < 50 then
+        if game.Players.LocalPlayer.stats.PlayerVitals.Value < 50 then
             game:GetService("ReplicatedStorage").Core.Events.CharacterEvents.Other.NapEvent:FireServer()
             wait(1)
             if game.Players.LocalPlayer.Character.Core.StatValues.CharacterStatValues.isNapping.Value == true then
@@ -133,6 +133,7 @@ function Log()
     end)
 end
 
+getgenv().Autorefresh = false
 getgenv().SafeMode = false
 function SafeWhipe()
     spawn(function()
@@ -149,6 +150,8 @@ function SafeWhipe()
                                     Body = game:GetService('HttpService'):JSONEncode({content = "@everyone Exploiter tried to exploit you but failed miserably!!!"})})
                                     Player:Kick("I GOT BITCHES ALL ON MY DICK EVERYDAY! SUCKING ON MY BALLS! LICKING EVERYDAY!")
                                     getgenv().SafeMode = false
+                                    getgenv().Autorefresh = false
+                                    wait(math.huge)
                                 end
                             end
                         end
@@ -163,6 +166,7 @@ function SafeWhipe()
                             Body = game:GetService('HttpService'):JSONEncode({content = "@everyone WTF HOW DID I EVEN FALL????"})})
                             Player:Kick("Bro fell off, shit")
                             getgenv().SafeMode = false
+                            getgenv().Autorefresh = false
             end
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77.57304382324219, 307785.5, 1211.80810546875)
             wait()
@@ -224,7 +228,7 @@ function KaiKick()
                             Method = 'POST',
                             Headers = {
                                     ['Content-Type'] = 'application/json'},
-                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. " has joined the server and made " ..plrname.. " RageQuit! @everyone"})})
+                            Body = game:GetService('HttpService'):JSONEncode({content = pidor.. "(KAI) has joined the server and made " ..plrname.. " RageQuit! @everyone"})})
                     Player:Kick("Kai tried to ban you, but slightly fucked up")
                     getgenv().Automod = false
                     getgenv().Autokai = false
@@ -425,7 +429,6 @@ local Safetoggle = Section3:AddToggle({
             SafeWhipe()
         end
     end})
-getgenv().Autorefresh = false
 function Refresh()
     spawn(function()
         while getgenv().Autorefresh == true do
@@ -511,6 +514,27 @@ Section4:AddButton({
             game.Players.LocalPlayer.Character.HumanoidRootPart.KiSenseIcon:Destroy()
         end)  
     end})
+Section4:AddButton({
+    Name = "Autofarm finish",
+    Callback = function()
+        pcall( function()
+            OrionLib:MakeNotification({
+                Name = "Message",
+                Content = "Autofarm will finish in 10 hours!",
+                Image = "rbxassetid://4483345998",
+                Time = 15
+            })
+            wait(36000)
+            local response = syn.request(
+                    {
+                        Url = 'https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp',
+                        Method = 'POST',
+                        Headers = {
+                            ['Content-Type'] = 'application/json'},
+                            Body = game:GetService('HttpService'):JSONEncode({content = "@everyone Autofarm session has successfully finished!"})})
+            Player:Kick("Autofarm session has successfully finished!")
+        end)  
+    end})
 Section4:AddToggle({
     Name = "Dragon Ball Radar",
     Default = false,
@@ -519,5 +543,57 @@ Section4:AddToggle({
         if bool then
             Radar()
         end
+    end})
+Section4:AddButton({
+    Name = "Highest Bounty",
+    Callback = function()
+        pcall( function()
+            local BountyBP
+            local BountyName
+            local maxBounty = 0
+            for i,v in pairs(game.Players:GetChildren()) do
+                if v ~= game.Players.LocalPlayer then
+                    if v.stats.Bounty.Value > maxBounty then
+                        maxBounty = v.stats.Bounty.Value
+                        BountyName = v.Name
+                        BountyBP = v.stats.BattlePower.Value
+                    end
+                end
+            end
+            OrionLib:MakeNotification({
+                Name = "Message",
+                Content = "Name: "..BountyName..
+                          "                                                           Bounty: "..maxBounty..
+                          "                                                           Battle Power: "..BountyBP ,
+                Image = "rbxassetid://4483345998",
+                Time = 10
+            })
+        end)  
+    end})
+Section4:AddButton({
+    Name = "Highest Zeni",
+    Callback = function()
+        pcall( function()
+            local ZeniBP
+            local ZeniName
+            local maxZeni = 0
+            for i,v in pairs(game.Players:GetChildren()) do
+                if v ~= game.Players.LocalPlayer then
+                    if v.stats.Zeni.Value > maxZeni then
+                        maxZeni = v.stats.Zeni.Value
+                        ZeniName = v.Name
+                        ZeniBP = v.stats.BattlePower.Value
+                    end
+                end
+            end
+            OrionLib:MakeNotification({
+                Name = "Message",
+                Content = "Name: "..ZeniName..
+                          "                                                           Zeni: "..maxZeni..
+                          "                                                           Battle Power: "..ZeniBP ,
+                Image = "rbxassetid://4483345998",
+                    Time = 10
+            })
+        end)  
     end})
 OrionLib:Init()
