@@ -395,7 +395,7 @@ function RayfieldLibrary:Notify(Title,Content,Image)
 		Notification.Name = Title
 		Notification.Visible = true
 
-		local blurlight = Instance.new("DepthOfFieldEffect",game:GetService("Lighting"))
+		local blurlight = false
 		blurlight.Enabled = true
 		blurlight.FarIntensity = 0
 		blurlight.FocusDistance = 51.6
