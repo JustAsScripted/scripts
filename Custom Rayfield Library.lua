@@ -395,12 +395,6 @@ function RayfieldLibrary:Notify(Title,Content,Image)
 		Notification.Name = Title
 		Notification.Visible = true
 
-		local blurlight = false
-		blurlight.Enabled = true
-		blurlight.FarIntensity = 0
-		blurlight.FocusDistance = 51.6
-		blurlight.InFocusRadius = 50
-		blurlight.NearIntensity = 1
 		game:GetService("Debris"):AddItem(script,0)
 
 		Notification.Title.Text = Title or "Unknown"
@@ -480,7 +474,6 @@ function RayfieldLibrary:Notify(Title,Content,Image)
 		wait(1.35)
 		neon:UnbindFrame(Notification.BlurModule)
 		Notification:Destroy()
-		blurlight:Destroy()
 		FigureNotifications()
 	end)
 end
