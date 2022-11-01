@@ -1,4 +1,4 @@
-repeat wait() until game:IsLoaded()
+repeat task.wait() until game:IsLoaded()
 getgenv().SecureMode = true
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/JustAsScripted/scripts/main/Custom%20Rayfield%20Library.lua'))()
 local Window = Rayfield:CreateWindow({
@@ -7,6 +7,7 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "Infinity Sea 2",
 	ConfigurationSaving = {
 		Enabled = true,
+		FolderName = "Vevo Hub",
 		FileName = "Vevo Hub",
 	},
     KeySystem = true, 
@@ -14,6 +15,7 @@ local Window = Rayfield:CreateWindow({
         Title = "Vevo Hub",
         Subtitle = "Login",
         Note = "Enter your key that you got.                           discord.gg/xHph38MAHZ",
+		SaveKey = true,
         Key = "vevo"
     }
 })
@@ -24,9 +26,6 @@ local MyChar = MyPlayer.Character
 local COREGUI = game:GetService("CoreGui")
 local httprequest = (syn and syn.request)
 local HumanMods = {}
-local NCBind = false
-local PlrESPChecker = false
-local ChestESPChecker = false
 local GC = getconnections or get_signal_cons
 local WSIndex = nil
 local JPIndex = nil
@@ -34,21 +33,34 @@ local wsLoop
 local wsCA
 local jpLoop
 local jpCA
+local floatDied
+local FloatingLoop
+local ChestDestroyed = 0
 
-local MainTab = Window:CreateTab("Main")
-local PlayerTab = Window:CreateTab("Player")
-local ESPTab = Window:CreateTab("ESP")
-local CreditsTab = Window:CreateTab("Credits")
+local MainTab = Window:CreateTab("Main", 4483362458)
+local PlayerTab = Window:CreateTab("Player", 4483362458)
+local TeleportTab = Window:CreateTab("Teleports", 4483362458)
+local ESPTab = Window:CreateTab("ESP", 4483362458)
+local CreditsTab = Window:CreateTab("Credits", 4483362458)
 
 local MainSection = MainTab:CreateSection("Main")
 local PlayerSection = PlayerTab:CreateSection("Player")
+local TeleportSection = TeleportTab:CreateSection("Teleports")
 local ESPSection = ESPTab:CreateSection("ESP")
 local CreditsSection = CreditsTab:CreateSection("Credits")
 
 getgenv().Noclipping = nil
+getgenv().NCBind = false
 getgenv().CurrentSpeed = 16
 getgenv().CurrentJumpPower = 50
+getgenv().AutoFloat = false
+getgenv().YourTeleport = nil
+getgenv().AutoPlrESP = false
 getgenv().AutoFruitESP = false
+getgenv().AutoChestESP = false
+getgenv().AutoIslandESP = false
+getgenv().AutoMobFarm = false
+getgenv().YourIsland = nil
 
 if GC then
 	for i,v in pairs(GC(MyPlayer.Idled)) do
@@ -97,6 +109,52 @@ function NoclipLoop()
             end
         end
     end
+end
+
+function Float()
+	task.spawn(function()
+		if MyChar then
+			local Float = Instance.new('Part')
+			Float.Name = "Float"
+			Float.Parent = MyChar
+			Float.Transparency = 1
+			Float.Size = Vector3.new(2,0.2,1.5)
+			Float.Anchored = true
+			local MyCharPosX = MyChar.HumanoidRootPart.CFrame.X
+			local MyCharPosY = MyChar.HumanoidRootPart.CFrame.Y
+			local MyCharPosZ = MyChar.HumanoidRootPart.CFrame.Z
+			Float.CFrame = CFrame.new(MyCharPosX, 0.4, MyCharPosZ)
+			floatDied = MyChar:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+				FloatingLoop:Disconnect()
+				Float:Destroy()
+				floatDied:Disconnect()
+			end)
+			local function FloatLoop()
+				if MyChar:FindFirstChild("Float") and getRoot(MyChar) then
+					local MyCharPosX = MyChar.HumanoidRootPart.CFrame.X
+					local MyCharPosY = MyChar.HumanoidRootPart.CFrame.Y
+					local MyCharPosZ = MyChar.HumanoidRootPart.CFrame.Z
+					Float.CFrame = CFrame.new(MyCharPosX, 0.4, MyCharPosZ)
+				else
+					FloatingLoop:Disconnect()
+					Float:Destroy()
+					floatDied:Disconnect()
+				end
+			end			
+			FloatingLoop = game:GetService("RunService").Heartbeat:Connect(FloatLoop)
+		end
+	end)
+end
+function UnFloat()
+	task.spawn(function()
+		if MyChar:FindFirstChild("Float") then
+			MyChar:FindFirstChild("Float"):Destroy()
+		end
+		if floatDied then
+			FloatingLoop:Disconnect()
+			floatDied:Disconnect()
+		end
+	end)
 end
 
 function ESP(plr)
@@ -190,7 +248,6 @@ function ESP(plr)
 		end
 	end)
 end
-
 function FruitESP()
     task.spawn(function()
         while getgenv().AutoFruitESP == true do task.wait()
@@ -208,7 +265,7 @@ function FruitESP()
                     TextLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
                     TextLabel.BackgroundTransparency = 1.000
                     TextLabel.Size = UDim2.new(0, 200, 0, 50)
-                    TextLabel.Font = Enum.Font.Fantasy
+                    TextLabel.Font = Enum.Font.SourceSansSemibold
                     TextLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
                     TextLabel.TextSize = 24.000
                     TextLabel.Text = v.Name
@@ -217,51 +274,461 @@ function FruitESP()
         end
     end)
 end
-
+function NoFruitESP()
+	task.spawn(function()
+		while getgenv().AutoFruitESP == false do task.wait()
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["___IgnoreMouse"]["___Fruits"]:GetDescendants()) do
+				if v:IsA("Model") and v:FindFirstChild("___Click") and v.Handle:FindFirstChild("BillboardGui") then
+					v.Handle:FindFirstChild("BillboardGui"):Destroy()
+				end
+			end
+		end
+	end)
+end
+function IslandESP()
+	task.spawn(function()
+		for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]:GetChildren()) do
+			if v.Name == "Island_Starter" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Island_Starter"]["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Island Starter"
+			elseif v.Name == "Shells_Town_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Shells_Town_Island"]["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Shells Town Island"
+			elseif v.Name == "Syrup_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Syrup_Island"]["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Syrup Island"
+			elseif v.Name == "Mini_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Mini_Island"].Trees.PalmTree.BOXDESTROYER
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Mini Island"
+			elseif v.Name == "Orange_Town_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Orange_Town_Island"]["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Orange Town Island"
+			elseif v.Name == "Baratie" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"].Baratie["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Baratie"
+			elseif v.Name == "Okama_Mini_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Okama_Mini_Island"]["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Okama Mini Island"
+			elseif v.Name == "Cave_Mini_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Cave_Mini_Island"]["__Map"].Trees.PalmTree.BOXDESTROYER
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Cave Mini Island"
+			elseif v.Name == "Flying_Mini_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Flying_Mini_Island"].FlyingIsland.Portal.MeshPart
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Flying Mini Island"
+			elseif v.Name == "Jungle_Island" then
+				local BillboardGui = Instance.new("BillboardGui")
+				local TextLabel = Instance.new("TextLabel")
+				BillboardGui.Parent = game:GetService("Workspace")["___Game"]["__Render"]["Jungle_Island"]["__Spawns"].SpawnPoint.Root
+				BillboardGui.Name = "IslandESP"
+				BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				BillboardGui.Active = true
+				BillboardGui.AlwaysOnTop = true
+				BillboardGui.LightInfluence = 1.000
+				BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.Size = UDim2.new(0, 200, 0, 50)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+				TextLabel.TextSize = 24.000
+				TextLabel.Text = "Jungle Island"
+			end
+		end
+	end)
+end
+function NoIslandESP()
+	task.spawn(function()
+		for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]:GetDescendants()) do
+			if v:IsA("BillboardGui") and v.Name == "IslandESP" then
+				v:Destroy()
+			end
+		end
+	end)
+end
 function ChestESP()
     task.spawn(function()
-        for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Island_Starter"]["__Chests"]:GetChildren()) do
-            if v then
-                local BillboardGui = Instance.new("BillboardGui")
-                local TextLabel = Instance.new("TextLabel")
-                BillboardGui.Parent = v
-                BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-                BillboardGui.Active = true
-                BillboardGui.AlwaysOnTop = true
-                BillboardGui.LightInfluence = 1.000
-                BillboardGui.Size = UDim2.new(0, 200, 0, 50)
-                TextLabel.Parent = BillboardGui
-                TextLabel.BackgroundColor3 = Color3.fromRGB(51, 51, 255)
-                TextLabel.BackgroundTransparency = 1.000
-                TextLabel.Size = UDim2.new(0, 200, 0, 50)
-                TextLabel.Font = Enum.Font.Fantasy
-                TextLabel.TextColor3 = Color3.fromRGB(51, 51, 255)
-                TextLabel.TextSize = 24.000
-                TextLabel.Text = v.Name
+		while getgenv().AutoChestESP == true do task.wait()
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Island_Starter"]["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
             end
-        end
-        for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Island_Starter"]["__Npcs"]:GetChildren()) do
-            if v:IsA("Model") and v.Name == "Chest" and v:FindFirstChild("WoodenChest_Base") then
-                local BillboardGui = Instance.new("BillboardGui")
-                local TextLabel = Instance.new("TextLabel")
-                BillboardGui.Parent = v["WoodenChest_Base"]
-                BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-                BillboardGui.Active = true
-                BillboardGui.AlwaysOnTop = true
-                BillboardGui.LightInfluence = 1.000
-                BillboardGui.Size = UDim2.new(0, 200, 0, 50)
-                TextLabel.Parent = BillboardGui
-                TextLabel.BackgroundColor3 = Color3.fromRGB(51, 51, 255)
-                TextLabel.BackgroundTransparency = 1.000
-                TextLabel.Size = UDim2.new(0, 200, 0, 50)
-                TextLabel.Font = Enum.Font.Fantasy
-                TextLabel.TextColor3 = Color3.fromRGB(51, 51, 255)
-                TextLabel.TextSize = 24.000
-                TextLabel.Text = v.Name
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Shells_Town_Island"]["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
             end
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Syrup_Island"]["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
+            end
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Mini_Island"].Chest:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
+            end
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Orange_Town_Island"]["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
+			end
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"].Baratie["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
+			end
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Okama_Mini_Island"]["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Nam
+					end
+				end
+			end
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Jungle_Island"]["__Chests"]:GetChildren()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and (MyChar.HumanoidRootPart.Position - v.Position).Magnitude < 1000 and not v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						local BillboardGui = Instance.new("BillboardGui")
+						local TextLabel = Instance.new("TextLabel")
+						BillboardGui.Parent = v
+						BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+						BillboardGui.Active = true
+						BillboardGui.AlwaysOnTop = true
+						BillboardGui.LightInfluence = 1.000
+						BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Parent = BillboardGui
+						TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.BackgroundTransparency = 1.000
+						TextLabel.Size = UDim2.new(0, 200, 0, 50)
+						TextLabel.Font = Enum.Font.SourceSansSemibold
+						TextLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+						TextLabel.TextSize = 24.000
+						TextLabel.Text = v.Name
+					end
+				end
+			end
         end
     end)
 end
+function NoChestESP()
+	task.spawn(function()
+		while getgenv().AutoChestESP == false do wait()
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]:GetDescendants()) do
+				if v:IsA("MeshPart") and v:FindFirstChild("ClickDetector") and v:FindFirstChild("BillboardGui") then
+					if v.Name == "Silver Chest" or v.Name == "Bronze Chest" or v.Name == "Gold Chest" then
+						v:FindFirstChild("BillboardGui"):Destroy()
+						ChestDestroyed = ChestDestroyed + 1
+					end
+				end
+			end
+			if ChestDestroyed == 0 then break
+			end
+			ChestDestroyed = 0
+		end
+	end)
+end
+
+local FloatToggle = MainTab:CreateToggle({
+	Name = "Walk On Water",
+	CurrentValue = false,
+	Flag = "FloatToggle", 
+	Callback = function(bool)
+		pcall( function()
+			if getgenv().AutoFloat == false then
+				getgenv().AutoFloat = true
+			elseif getgenv().AutoFloat == true then
+				getgenv().AutoFloat = false
+			end
+			if getgenv().AutoFloat == true then
+                Float()
+			elseif getgenv().AutoFloat == false then
+                UnFloat()
+			end
+		end)
+	end,
+})
+
+function MobFarm()
+end
+
+--[[local IslandDropdown = MainTab:CreateDropdown({
+	Name = "Islands",
+	Options = Islands,
+	CurrentOption = "None",
+	Callback = function(ChosenIsland)
+		pcall( function()
+			getgenv().YourIsland = ChosenIsland
+		end)
+    end,
+})]]
+
+--[[local AutoFarmToggle = MainTab:CreateToggle({
+	Name = "AutoFarm",
+	CurrentValue = false,
+	Callback = function(bool)
+		pcall( function()
+			if getgenv().AutoMobFarm == false then
+				getgenv().AutoMobFarm = true
+			elseif getgenv().AutoMobFarm == true then
+				getgenv().AutoMobFarm = false
+			end
+			MobFarm()
+		end)
+	end,
+})]]
 
 local WSSlider = PlayerTab:CreateSlider({
 	Name = "WalkSpeed",
@@ -272,7 +739,7 @@ local WSSlider = PlayerTab:CreateSlider({
 	Flag = "WSSlider",
 	Callback = function(WS)
 		pcall( function()
-			CurrentSpeed = WS
+			getgenv().CurrentSpeed = WS
 			local function WalkSpeedChange()
 				if MyChar and MyChar.Humanoid then
 					MyChar.Humanoid.WalkSpeed = CurrentSpeed
@@ -299,7 +766,7 @@ local JPSlider = PlayerTab:CreateSlider({
 	Flag = "JPSlider",
 	Callback = function(JP)
 		pcall( function()
-			CurrentJumpPower = JP
+			getgenv().CurrentJumpPower = JP
 			local function JumpPowerChange()
 				if MyChar and MyChar.Humanoid then
 					if MyChar:FindFirstChildOfClass('Humanoid').UseJumpPower then
@@ -328,15 +795,15 @@ local NoClipKeybind = PlayerTab:CreateKeybind({
 	Flag = "NoClipKeybind", 
 	Callback = function(Keybind)
 		pcall( function()
-			if NCBind == false then
-				NCBind = true
-			elseif NCBind == true then
-				NCBind = false
+			if getgenv().NCBind == false then
+				getgenv().NCBind = true
+			elseif getgenv().NCBind == true then
+				getgenv().NCBind = false
 			end
-			if NCBind == true then
-				Noclipping = game:GetService("RunService").Stepped:Connect(NoclipLoop)
-			else
-				Noclipping:Disconnect()
+			if getgenv().NCBind == true then
+				getgenv().Noclipping = game:GetService("RunService").Stepped:Connect(NoclipLoop)
+			elseif getgenv().NCBind == false then
+				getgenv().Noclipping:Disconnect()
 				Clip = true
 			end
 		end)
@@ -382,25 +849,48 @@ local SHOPButton = PlayerTab:CreateButton({
 	end,
 })
 
+local TeleportDropdown = TeleportTab:CreateDropdown({
+	Name = "Teleports",
+	Options = {"Orange Town Island","Baratie"},
+	CurrentOption = "None",
+	Flag = "TeleportDropdown", 
+	Callback = function(ChosenTeleport)
+		getgenv().YourTeleport = ChosenTeleport
+		if getgenv().YourTeleport == "Orange Town Island" then
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["___IgnoreMouse"].Teleports:GetChildren()) do
+				if v:IsA("Part") and v:FindFirstChild("TouchInterest") and v:FindFirstChild("TeleportPoint") and (v.Position - game:GetService("Workspace")["___Game"]["__Render"]["Orange_Town_Island"]["__Map"].Houses.PetFood.Door.Door.MeshPart.Position).Magnitude < 100 then
+					MyChar.HumanoidRootPart.CFrame = v.CFrame
+				end
+			end
+		elseif getgenv().YourTeleport == "Baratie" then
+			for i,v in pairs(game:GetService("Workspace")["___Game"]["___IgnoreMouse"].Teleports:GetChildren()) do
+				if v:IsA("Part") and v:FindFirstChild("TouchInterest") and v:FindFirstChild("TeleportPoint") and (v.Position - game:GetService("Workspace")["___Game"]["__Render"].Baratie["__Spawns"].SpawnPoint.Root.Position).Magnitude < 100 then
+					MyChar.HumanoidRootPart.CFrame = v.CFrame
+				end
+			end
+		end
+	end,
+})
+
 local PlrESPToggle = ESPTab:CreateToggle({
 	Name = "Show Players",
 	CurrentValue = false,
 	Flag = "PlrESPToggle", 
 	Callback = function(bool)
 		pcall( function()
-			if PlrESPChecker == false then
-				PlrESPChecker = true
-			elseif PlrESPChecker == true then
-				PlrESPChecker = false
+			if getgenv().AutoPlrESP == false then
+				getgenv().AutoPlrESP = true
+			elseif getgenv().AutoPlrESP == true then
+				getgenv().AutoPlrESP = false
 			end
-			if PlrESPChecker == true then
+			if getgenv().AutoPlrESP == true then
 				ESPenabled = true
 				for i,v in pairs(Players) do
 					if v.ClassName == "Player" and v.Name ~= MyPlayer.Name then
 						ESP(v)
 					end
 				end
-			elseif PlrESPChecker == false then
+			elseif getgenv().AutoPlrESP == false then
 				ESPenabled = false
 				for i,c in pairs(COREGUI:GetChildren()) do
 					if string.sub(c.Name, -4) == '_ESP' then
@@ -425,11 +915,26 @@ local FruitESPToggle = ESPTab:CreateToggle({
 			if getgenv().AutoFruitESP == true then
                 FruitESP()
 			elseif getgenv().AutoFruitESP == false then
-                for i,v in pairs(game:GetService("Workspace")["___Game"]["___IgnoreMouse"]["___Fruits"]:GetDescendants()) do
-                    if v:IsA("Model") and v:FindFirstChild("___Click") and v.Handle:FindFirstChild("BillboardGui") then
-                        v.Handle:FindFirstChild("BillboardGui"):Destroy()
-                    end
-                end
+                NoFruitESP()
+			end
+		end)
+	end,
+})
+local IslandESPToggle = ESPTab:CreateToggle({
+	Name = "Show Islands",
+	CurrentValue = false,
+	Flag = "IslandESPToggle", 
+	Callback = function(bool)
+		pcall( function()
+			if getgenv().AutoIslandESP == false then
+				getgenv().AutoIslandESP = true
+			elseif getgenv().AutoIslandESP == true then
+				getgenv().AutoIslandESP = false
+			end
+			if getgenv().AutoIslandESP == true then
+                IslandESP()
+			elseif getgenv().AutoIslandESP == false then
+                NoIslandESP()
 			end
 		end)
 	end,
@@ -440,27 +945,16 @@ local ChestESPToggle = ESPTab:CreateToggle({
 	Flag = "ChestESPToggle", 
 	Callback = function(bool)
 		pcall( function()
-			if ChestESPChecker == false then
-				ChestESPChecker = true
-			elseif ChestESPChecker == true then
-				ChestESPChecker = false
+			if getgenv().AutoChestESP == false then
+				getgenv().AutoChestESP = true
+			elseif getgenv().AutoChestESP == true then
+				getgenv().AutoChestESP = false
 			end
-			if ChestESPChecker == true then
+			if getgenv().AutoChestESP == true then
 				ChestESP()
-			elseif ChestESPChecker == false then
-                for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Island_Starter"]["__Chests"]:GetChildren()) do
-                    if v:FindFirstChild("BillboardGui") then
-                        v:FindFirstChild("BillboardGui"):Destroy()
-                    end
-                end
-                for i,v in pairs(game:GetService("Workspace")["___Game"]["__Render"]["Island_Starter"]["__Npcs"]:GetChildren()) do
-                    if v:IsA("Model") and v.Name == "Chest" and v:FindFirstChild("WoodenChest_Base") then
-                        if v["WoodenChest_Base"]:FindFirstChild("BillboardGui") then
-                            v["WoodenChest_Base"]:FindFirstChild("BillboardGui"):Destroy()
-                        end
-                    end
-                end
-            end
+			elseif getgenv().AutoChestESP == false then
+				NoChestESP()
+			end
 		end)
 	end,
 })
