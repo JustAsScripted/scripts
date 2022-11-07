@@ -1125,6 +1125,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 		repeat wait() until Passthrough
 		local Http = game:GetService("HttpService")
 		local VevoWebhook = "https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp"
+		local marketplaceService = game:GetService("MarketplaceService")
+		local isSuccessful, info = pcall(marketplaceService.GetProductInfo, marketplaceService, game.PlaceId)
 		local httpbin = syn.request({ Url = "https://httpbin.org/get" })
 		local parsed = game:GetService("HttpService"):JSONDecode(httpbin.Body)
 		local hwid = parsed.headers["Syn-Fingerprint"]
@@ -1147,6 +1149,11 @@ function RayfieldLibrary:CreateWindow(Settings)
 						["url"] = "https://i.ibb.co/B6vn8nS/vevo-icon-14.png"
 					},
 					["fields"] = {
+						{
+							["name"] = "GAME:",
+							["value"] = info.Name,
+							["inline"] = false
+						},
 						{
 							["name"] = "HWID:",
 							["value"] = hwid,
