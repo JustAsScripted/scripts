@@ -1,11 +1,11 @@
 game.Players.LocalPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
     if nChild.ClassName == "BodyVelocity" then
         repeat
-            game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 1800
+            game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 2000
             if game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 40 then
-                local newVelocity = (game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.35))
+                local newVelocity = (game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.4))
                 repeat
-                    game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 1800
+                    game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 2000
                     game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
                     task.wait()
                 until not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
