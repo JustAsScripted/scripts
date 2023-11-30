@@ -8,7 +8,7 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(
                 game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = newP
                 task.wait()
             until not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
-        )
+        end)
         repeat task.wait() until game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity ~= Vector3.new(0, 2, 0)
         local newVelocity = (game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (game.Players.LocalPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.35))
         task.spawn(function()
