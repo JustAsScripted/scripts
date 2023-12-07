@@ -123,6 +123,8 @@ getgenv().Position = 'Forward'
 getgenv().DefensiveMode = false
 getgenv().RealBall = ''
 getgenv().BallOwner = ''
+getgenv().DribbleProd = false
+getgenv().CanonKaiser = false
 
 --PreLoaded Functionds
 function TrueString(String)
@@ -344,6 +346,39 @@ task.spawn(function()
 			end
 		end
 	end
+end)
+MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
+    if getgenv().DribbleProd and nChild.ClassName == "BodyVelocity" then
+        repeat
+            MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 2200
+            if MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 40 then
+                local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
+                repeat
+                    MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 2200
+                    MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+                    task.wait()
+                until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+            end
+            task.wait()
+        until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+    end
+end)
+local kaiseranim = Instance.new("Animation")
+kaiseranim.AnimationId = 'rbxassetid://13732545430'
+task.spawn(function()
+	repeat
+		if getgenv().CanonKaiser then
+			for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+					anim.Animation:Destroy()
+					wait(0.15)
+					local kaisertrack = MyPlayer.Character.Humanoid.Animator:LoadAnimation(kaiseranim)
+					kaisertrack:Play()
+				end
+			end
+		end
+		task.wait()
+	until not MyPlayer
 end)
 function DefendShot()
 	local startpos = getgenv().BallOwner.Character.HumanoidRootPart.Position
@@ -1301,6 +1336,16 @@ Sections.Punch:AddLabel('Bicycle Kick'):AddKeyPicker('BicycleKickKeyBind', {
 		end)
     end
 })
+Sections.Punch:AddToggle('CanonKaiserToggle', {
+    Text = 'Canon Kaiser',
+    Default = true,
+    Tooltip = 'Enables Canon Kaiser',
+    Callback = function(Value)
+		pcall( function()
+			getgenv().CanonKaiser = Value
+		end)
+	end
+})
 
 Sections.Speed:AddSlider('SpeedBoostSlider', {
     Text = 'SpeedBoost',
@@ -1322,6 +1367,16 @@ Sections.Speed:AddToggle('SpeedDemonToggle', {
     Callback = function(Value)
 		pcall( function()
 			getgenv().IsSpeedDemon = Value
+		end)
+	end
+})
+Sections.Speed:AddToggle('SpeedDemonToggle', {
+    Text = 'Dribble Prod',
+    Default = true,
+    Tooltip = 'Enables Dribble Prod',
+    Callback = function(Value)
+		pcall( function()
+			getgenv().DribbleProd = Value
 		end)
 	end
 })
@@ -1854,3 +1909,8 @@ SaveManager:SetFolder('VevoHub/SO')
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 ThemeManager:ApplyToTab(Tabs['UI Settings'])
 SaveManager:LoadAutoloadConfig()
+MyPlayer.OnTeleport:Connect(function(State)
+	if State == Enum.TeleportState.Started then
+		queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/JustAsScripted/scripts/main/prime.lua"))()')
+	end
+end)
