@@ -7,7 +7,7 @@ local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))
 local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
-    Title = 'Vevo Hub (prime)',
+    Title = 'Vevo Hub (RONALDO)',
     Center = true,
     AutoShow = true,
     TabPadding = 8,
@@ -117,17 +117,17 @@ getgenv().IsAutoSpin = false
 getgenv().IsFixCamera = false
 getgenv().IsAutoDefense = false
 getgenv().IsAutoTrapping = false
-getgenv().SpeedBoost = 0.2
+getgenv().SpeedBoost = 4.2
 getgenv().Team = 1
 getgenv().Position = 'Forward'
 getgenv().DefensiveMode = false
 getgenv().RealBall = ''
 getgenv().BallOwner = ''
-getgenv().DribbleProd = false
-getgenv().CanonKaiser = false
+getgenv().Ronaldo = true
+getgenv().CanonKaiser = true
 
 --PreLoaded Functionds
-function TrueString(String)
+--[[function TrueString(String)
     if type(String) ~= 'string' then
         return false
     end
@@ -141,7 +141,7 @@ function hookGetSerivce(...)
         local self, Index = ...
         local Response = OldGetService(...)   
         if type(Index) == 'string' and TrueString(Index) == 'VirtualInputManager' then
-            error((''%s' is not a valid Service name'):format(TrueString(Index)))
+            error(("'%s' is not a valid Service name"):format(TrueString(Index)))
             return;
         end
     
@@ -210,16 +210,16 @@ for i, v in next, getconnections(UserInputService.WindowFocused) do
 end
 if not getgenv().WindowFocused then
     getgenv().WindowFocused = true
-end
-task.spawn(function()
-    while Library do
+end]]
+--[[task.spawn(function()
+    while true do
 		if getgenv().IsAntiAFK and not MyPlayer.Character:FindFirstChild('Ball') then
 			VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, nil, 1)
 			VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, nil, 1)
 		end
 		task.wait()
     end
-end)
+end)]]
 --[[local oldNameCall = nil
 oldNameCall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
 	local args = {...}
@@ -312,7 +312,7 @@ if game:GetService('Workspace'):FindFirstChild('MiniField') then
 	end
 end
 task.spawn(function()
-	while Library do
+	while true do
 		if getgenv().IsAutoDefense and not MyPlayer.Character:FindFirstChild('Ball') then
 			for i,v in pairs(game:GetService('Players'):GetChildren()) do
 				if v.Character and v.Character:FindFirstChild('HumanoidRootPart') then
@@ -348,16 +348,22 @@ task.spawn(function()
 	end
 end)
 MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
-    if getgenv().DribbleProd and nChild.ClassName == "BodyVelocity" then
+    if getgenv().Ronaldo and nChild.ClassName == "BodyVelocity" then
         repeat
-            MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 2200
-            if MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 40 then
-                local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
-                repeat
-                    MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 2200
-                    MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
-                    task.wait()
-                until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+			if (not (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 44 and MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude < 46)) then
+				if (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 37) then
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.35))
+					repeat
+						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+						task.wait()
+					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
+					repeat
+						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+						task.wait()
+					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+				end
             end
             task.wait()
         until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
@@ -370,10 +376,23 @@ task.spawn(function()
 		if getgenv().CanonKaiser then
 			for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
-					anim.Animation:Destroy()
+					anim:Destroy()
+					local destroying = true
+					task.spawn(function()
+						repeat
+							for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+								if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+									anim:Stop(0)
+								end
+							end
+							task.wait()
+						until not destroying
+					end)
 					wait(0.15)
+					destroying = false
 					local kaisertrack = MyPlayer.Character.Humanoid.Animator:LoadAnimation(kaiseranim)
 					kaisertrack:Play()
+					wait(1.5)
 				end
 			end
 		end
@@ -560,9 +579,6 @@ game:GetService('Workspace').Camera:GetPropertyChangedSignal('FieldOfView'):Conn
 		game:GetService('Workspace').Camera.FieldOfView = 100
 	end
 end)
-if MyPlayer.Character:FindFirstChild('Bald') then
-	MyPlayer.Character:FindFirstChild('Bald'):Destroy()
-end
 game:GetService('RunService').Stepped:Connect(function()
 	if getgenv().WalkSpeedToggle then
 		pcall( function()
@@ -1006,20 +1022,8 @@ function Delete()
 end
 function PowerfulShot()
 	if PlaceId ~= 12467817668 then
-		if MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text ~= '' then
-			if (not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible) then
-				local args = {
-					[1] = 'Hold',
-					[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
-				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-				local args = {
-					[1] = 'UseSkill',
-					[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
-				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-			end
-		end
 		if MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text ~= '' then
-			if (MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible) and (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
+			if (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
 				local args = {
 					[1] = 'Hold',
 					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
@@ -1033,20 +1037,20 @@ function PowerfulShot()
 	end
 end
 function BicycleKick()
-	if PlaceId ~= 12467817668 and MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text ~= '' and (not MyPlayer.PlayerGui.SkilsGui.SlotSix.CDFrame.Visible) and MyPlayer.Character:FindFirstChild('Ball') then
+	if PlaceId ~= 12467817668 and MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text ~= '' and (not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible) and MyPlayer.Character:FindFirstChild('Ball') then
 		local args = {
 			[1] = 'LobPass',
 			[2] = MyPlayer.Character:WaitForChild('Ball'),
 			[3] = MyPlayer.Character.HumanoidRootPart.Position}		
 		game:GetService('ReplicatedStorage'):WaitForChild('Remotes'):WaitForChild('PunchRemote'):FireServer(unpack(args))
-		wait(0.1)
+		wait(0.05)
 		local args = {
 			[1] = 'Hold',
-			[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 		game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 		local args = {
 			[1] = 'UseSkill',
-			[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 		game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 	end		
 end
@@ -1307,7 +1311,7 @@ Sections.Punch:AddLabel('Enable PunchPower'):AddKeyPicker('PunchPowerKeyBind', {
     end
 })
 task.spawn(function()
-    while Library do task.wait()
+    while true do task.wait()
         if Options.PunchPowerKeyBind:GetState() then
             getgenv().IsShootingPower = true
 		else
@@ -1349,7 +1353,7 @@ Sections.Punch:AddToggle('CanonKaiserToggle', {
 
 Sections.Speed:AddSlider('SpeedBoostSlider', {
     Text = 'SpeedBoost',
-    Default = 0.2,
+    Default = 4.2,
     Min = 0,
     Max = 5,
     Rounding = 1,
@@ -1371,12 +1375,12 @@ Sections.Speed:AddToggle('SpeedDemonToggle', {
 	end
 })
 Sections.Speed:AddToggle('SpeedDemonToggle', {
-    Text = 'Dribble Prod',
+    Text = 'Ronaldo',
     Default = true,
-    Tooltip = 'Enables Dribble Prod',
+    Tooltip = 'Enables Ronaldo',
     Callback = function(Value)
 		pcall( function()
-			getgenv().DribbleProd = Value
+			getgenv().Ronaldo = Value
 		end)
 	end
 })
@@ -1389,7 +1393,7 @@ Sections.Defense:AddLabel('Enable AutoDefense'):AddKeyPicker('AutoDefenseKeyBind
     end
 })
 task.spawn(function()
-    while Library do task.wait()
+    while true do task.wait()
         if Options.AutoDefenseKeyBind:GetState() then
             getgenv().IsAutoDefense = true
 		else
@@ -1879,7 +1883,7 @@ Sections.ESP:AddDropdown('TeamsDropdown', {
     end
 })
 
-Sections.Credits:AddLabel('Made by g0atku')
+--[[Sections.Credits:AddLabel('Made by g0atku')
 Sections.Credits:AddLabel('UI: Linoria')
 local DiscordButton = Sections.Credits:AddButton({
 	Text = 'Copy Discord Server Link',
@@ -1890,7 +1894,7 @@ local DiscordButton = Sections.Credits:AddButton({
 	end,
 	DoubleClick = false,
     Tooltip = 'Copies discord server link'
-})
+})]]
 
 -- UI Settings
 Library.KeybindFrame.Visible = true;
@@ -1900,17 +1904,3 @@ end)
 Sections.Menu:AddButton('Unload', function() Library:Unload() end)
 Sections.Menu:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' })
 Library.ToggleKeybind = Options.MenuKeybind
-ThemeManager:SetLibrary(Library)
-SaveManager:SetLibrary(Library)
-SaveManager:IgnoreThemeSettings()
-SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
-ThemeManager:SetFolder('VevoHub')
-SaveManager:SetFolder('VevoHub/SO')
-SaveManager:BuildConfigSection(Tabs['UI Settings'])
-ThemeManager:ApplyToTab(Tabs['UI Settings'])
-SaveManager:LoadAutoloadConfig()
-MyPlayer.OnTeleport:Connect(function(State)
-	if State == Enum.TeleportState.Started then
-		queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/JustAsScripted/scripts/main/prime.lua"))()')
-	end
-end)
