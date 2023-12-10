@@ -402,6 +402,7 @@ task.spawn(function()
 	until not MyPlayer
 end)
 function Finish(passtype)
+	print("Trying to finish")
 	if passtype == "gs" then
 		if getgenv().ShootingMode == "Ground" then
 			local args = {
@@ -1459,14 +1460,29 @@ Sections.Speed:AddDropdown('PassersDropdown', {
     Callback = function(Value)
     end
 })
+local CanRecievePass = false
 task.spawn(function()
 	while Library do
-		if table.find(Options.PassersDropdown.Value, getgenv().BallOwner.Name) and getgenv().IsAutoFinishing then
+		local CanRecievePass = false
+		for Passer,_ in pairs(Options.PassersDropdown.Value) do
+			if Passer == getgenv().BallOwner.Name then
+				CanRecievePass = true
+				break
+			else
+				CanRecievePass = false
+			end
+		end
+		if CanRecievePass and getgenv().IsAutoFinishing then
+			print("Passed Check 1")
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
 				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
-					Finish("gs")
+					print("Passed gs check")
+					local shott = "gs"
+					Finish(shott)
 				elseif anim.Animation.AnimationId == 'rbxassetid://13022877902' then
-					Finish("pka")
+					print("Passed pka check")
+					local shott = "pka"
+					Finish(shott)
 				end
 			end
 		end
