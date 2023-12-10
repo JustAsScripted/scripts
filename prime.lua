@@ -117,9 +117,11 @@ getgenv().IsAutoSpin = false
 getgenv().IsFixCamera = false
 getgenv().IsAutoDefense = false
 getgenv().IsAutoTrapping = false
+getgenv().IsAutoFinishing = false
 getgenv().SpeedBoost = 4.2
 getgenv().Team = 1
 getgenv().Position = 'Forward'
+getgenv().ShootingMode = "Middle"
 getgenv().DefensiveMode = false
 getgenv().RealBall = ''
 getgenv().BallOwner = ''
@@ -399,6 +401,70 @@ task.spawn(function()
 		task.wait()
 	until not MyPlayer
 end)
+function Finish(passtype)
+	if passtype == "gs" then
+		if getgenv().ShootingMode == "Ground" then
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+		elseif getgenv().ShootingMode == "Sky" then
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+		elseif getgenv().ShootingMode == "Middle" then
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+		end
+	elseif passtype == "pka" then
+		if getgenv().ShootingMode == "Ground" then
+			wait(0.5)
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+		elseif getgenv().ShootingMode == "Sky" then
+			wait(0.75)
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+		elseif getgenv().ShootingMode == "Middle" then
+			wait(0.5)
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+		end
+	end
+end
 function DefendShot()
 	local startpos = getgenv().BallOwner.Character.HumanoidRootPart.Position
 	local range = (MyPlayer.Character.HumanoidRootPart.Position - startpos).Magnitude
@@ -488,7 +554,7 @@ function DefendShot()
 		end
 	end
 end
-task.spawn(function()
+--[[task.spawn(function()
 	while Library do
 		if getgenv().IsAutoTrapping and getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
@@ -511,6 +577,26 @@ task.spawn(function()
 						[1] = 'UseSkill',
 						[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
 					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+				end
+			end
+		end
+		task.wait()
+	end
+end)]]
+local CanRecievePass = false
+task.spawn(function()
+	while Library do
+		for Passer,_ in pairs(Options.PassersDropdown.Value) do
+			if Passer == getgenv().BallOwner then
+				CanRecievePass = true
+			end
+		end
+		if getgenv().IsAutoFinishing and CanRecievePass then
+			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
+				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
+					Finish("gs")
+				elseif anim.Animation.AnimationId == 'rbxassetid://13022877902' then
+					Finish("pka")
 				end
 			end
 		end
@@ -1384,6 +1470,51 @@ Sections.Speed:AddToggle('SpeedDemonToggle', {
 		end)
 	end
 })
+Sections.Speed:AddDropdown('PassersDropdown', {
+    SpecialType = 'Player',
+	Default = 1,
+	Multi = true,
+    Text = 'Passers',
+    Tooltip = 'Choose Passers',
+    Callback = function(Value)
+    end
+})
+Sections.Speed:AddLabel('Enable AutoFinishing'):AddKeyPicker('AutoFinishingKeyBind', {
+    Default = 'F',
+    Mode = 'Toggle',
+	Text = 'Auto Finishing',
+    NoUI = false,
+    Callback = function(Value)
+		pcall(function()
+			getgenv().IsAutoFinishing = Value
+		end)
+    end
+})
+Sections.Speed:AddDropdown('ShootingModeDropdown', {
+    Values = {'Middle','Sky','Ground'},
+    Default = 1,
+    Multi = false,
+    Text = 'Shooting Mode',
+    Tooltip = 'Choose Shooting Mode',
+    Callback = function(Value)
+        pcall( function()
+			getgenv().ShootingMode = Value
+		end)
+    end
+})
+Sections.Speed:AddLabel('Enable SUI'):AddKeyPicker('SUIKeyBind', {
+    Default = 'Y',
+    Mode = 'Toggle',
+	Text = 'SUI',
+    NoUI = true,
+    Callback = function(Value)
+		pcall(function()
+			local args = {
+				[1] = "SUI"}
+			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UseEmote"):FireServer(unpack(args))							
+		end)
+    end
+})
 
 Sections.Defense:AddLabel('Enable AutoDefense'):AddKeyPicker('AutoDefenseKeyBind', {
     Default = 'MB2',
@@ -1402,7 +1533,7 @@ task.spawn(function()
         if Library.Unloaded then break end
     end
 end)
-Sections.Defense:AddLabel('Enable AutoTrapping'):AddKeyPicker('AutoTrappingKeyBind', {
+--[[Sections.Defense:AddLabel('Enable AutoTrapping'):AddKeyPicker('AutoTrappingKeyBind', {
     Default = 'F',
     Mode = 'Toggle',
 	Text = 'Auto Trapping',
@@ -1412,8 +1543,8 @@ Sections.Defense:AddLabel('Enable AutoTrapping'):AddKeyPicker('AutoTrappingKeyBi
 			getgenv().IsAutoTrapping = Value
 		end)
     end
-})
-Sections.Defense:AddLabel('Enable DefensiveMode'):AddKeyPicker('DefensiveModeKeyBind', {
+})]]
+--[[Sections.Defense:AddLabel('Enable DefensiveMode'):AddKeyPicker('DefensiveModeKeyBind', {
     Default = 'Y',
     Mode = 'Toggle',
 	Text = 'Defensive Mode',
@@ -1440,7 +1571,8 @@ Sections.Defense:AddLabel('Enable DefensiveMode'):AddKeyPicker('DefensiveModeKey
 			end								
 		end)
     end
-})
+})]]
+
 Sections.Positioning:AddDropdown('TeamDropdown', {
     Values = {'1','2'},
     Default = 1,
