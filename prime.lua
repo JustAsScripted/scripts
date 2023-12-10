@@ -1461,7 +1461,7 @@ Sections.Speed:AddDropdown('PassersDropdown', {
 })
 task.spawn(function()
 	while Library do
-		if table.find(Options.PassersDropdown.Value, getgenv().BallOwner) and getgenv().IsAutoFinishing then
+		if table.find(Options.PassersDropdown.Value, getgenv().BallOwner.Name) and getgenv().IsAutoFinishing then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
 				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
 					Finish("gs")
