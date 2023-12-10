@@ -583,26 +583,6 @@ end
 		task.wait()
 	end
 end)]]
-local CanRecievePass = false
-task.spawn(function()
-	while Library do
-		for Passer,_ in pairs(Options.PassersDropdown.Value) do
-			if Passer == getgenv().BallOwner then
-				CanRecievePass = true
-			end
-		end
-		if getgenv().IsAutoFinishing and CanRecievePass then
-			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
-				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
-					Finish("gs")
-				elseif anim.Animation.AnimationId == 'rbxassetid://13022877902' then
-					Finish("pka")
-				end
-			end
-		end
-		task.wait()
-	end
-end)
 task.spawn(function()
 	while Library do
 		task.spawn(function()
@@ -1479,6 +1459,26 @@ Sections.Speed:AddDropdown('PassersDropdown', {
     Callback = function(Value)
     end
 })
+local CanRecievePass = false
+task.spawn(function()
+	while Library do
+		for Passer,_ in pairs(Options.PassersDropdown.Value) do
+			if Passer == getgenv().BallOwner then
+				CanRecievePass = true
+			end
+		end
+		if getgenv().IsAutoFinishing and CanRecievePass then
+			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
+				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
+					Finish("gs")
+				elseif anim.Animation.AnimationId == 'rbxassetid://13022877902' then
+					Finish("pka")
+				end
+			end
+		end
+		task.wait()
+	end
+end)
 Sections.Speed:AddLabel('Enable AutoFinishing'):AddKeyPicker('AutoFinishingKeyBind', {
     Default = 'F',
     Mode = 'Toggle',
