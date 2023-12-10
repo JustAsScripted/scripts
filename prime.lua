@@ -1459,15 +1459,9 @@ Sections.Speed:AddDropdown('PassersDropdown', {
     Callback = function(Value)
     end
 })
-local CanRecievePass = false
 task.spawn(function()
 	while Library do
-		for Passer,_ in pairs(Options.PassersDropdown.Value) do
-			if Passer == getgenv().BallOwner then
-				CanRecievePass = true
-			end
-		end
-		if getgenv().IsAutoFinishing and CanRecievePass then
+		if table.find(Options.PassersDropdown.Value, getgenv().BallOwner) getgenv().IsAutoFinishing then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
 				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
 					Finish("gs")
