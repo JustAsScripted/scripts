@@ -402,7 +402,6 @@ task.spawn(function()
 	until not MyPlayer
 end)
 function Finish(passtype)
-	print("Trying to finish")
 	if passtype == "gs" then
 		if getgenv().ShootingMode == "Ground" then
 			local args = {
@@ -413,6 +412,7 @@ function Finish(passtype)
 				[1] = 'UseSkill',
 				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
 		elseif getgenv().ShootingMode == "Sky" then
 			local args = {
 				[1] = 'Hold',
@@ -422,15 +422,17 @@ function Finish(passtype)
 				[1] = 'UseSkill',
 				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
 		elseif getgenv().ShootingMode == "Middle" then
 			local args = {
 				[1] = 'Hold',
-				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 			local args = {
 				[1] = 'UseSkill',
-				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
 		end
 	elseif passtype == "pka" then
 		if getgenv().ShootingMode == "Ground" then
@@ -443,6 +445,7 @@ function Finish(passtype)
 				[1] = 'UseSkill',
 				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
 		elseif getgenv().ShootingMode == "Sky" then
 			wait(0.75)
 			local args = {
@@ -453,16 +456,18 @@ function Finish(passtype)
 				[1] = 'UseSkill',
 				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
 		elseif getgenv().ShootingMode == "Middle" then
 			wait(0.5)
 			local args = {
 				[1] = 'Hold',
-				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 			local args = {
 				[1] = 'UseSkill',
-				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
 		end
 	end
 end
@@ -1473,14 +1478,11 @@ task.spawn(function()
 			end
 		end
 		if CanRecievePass and getgenv().IsAutoFinishing then
-			print("Passed Check 1")
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
 				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
-					print("Passed gs check")
 					local shott = "gs"
 					Finish(shott)
 				elseif anim.Animation.AnimationId == 'rbxassetid://13022877902' then
-					print("Passed pka check")
 					local shott = "pka"
 					Finish(shott)
 				end
@@ -2046,3 +2048,4 @@ end)
 Sections.Menu:AddButton('Unload', function() Library:Unload() end)
 Sections.Menu:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' })
 Library.ToggleKeybind = Options.MenuKeybind
+
