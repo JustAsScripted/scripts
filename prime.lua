@@ -358,17 +358,17 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 					repeat
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
 						task.wait()
-					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+					until not nChild
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
 					repeat
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
 						task.wait()
-					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+					until not nChild
 				end
             end
             task.wait()
-        until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+        until not nChild
     end
 end)
 local kaiseranim = Instance.new("Animation")
@@ -390,7 +390,7 @@ task.spawn(function()
 							task.wait()
 						until not destroying
 					end)
-					wait(0.15)
+					wait(0.2)
 					destroying = false
 					local kaisertrack = MyPlayer.Character.Humanoid.Animator:LoadAnimation(kaiseranim)
 					kaisertrack:Play()
@@ -401,8 +401,41 @@ task.spawn(function()
 		task.wait()
 	until not MyPlayer
 end)
+getgenv().ShootingMode = "Sky"
 function Finish(passtype)
-	if passtype == "gs" then
+	if passtype == "ki" then
+		if getgenv().ShootingMode == "Ground" then
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
+		elseif getgenv().ShootingMode == "Sky" then
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
+		elseif getgenv().ShootingMode == "Middle" then
+			local args = {
+				[1] = 'Hold',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			local args = {
+				[1] = 'UseSkill',
+				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
+			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			wait(0.25)
+		end
+	elseif passtype == "gs" then
 		if getgenv().ShootingMode == "Ground" then
 			local args = {
 				[1] = 'Hold',
@@ -436,7 +469,7 @@ function Finish(passtype)
 		end
 	elseif passtype == "pka" then
 		if getgenv().ShootingMode == "Ground" then
-			wait(0.5)
+			wait(0.75)
 			local args = {
 				[1] = 'Hold',
 				[2] = MyPlayer.PlayerGui.SkilsGui.SlotFive.SkillName.Text}
@@ -458,7 +491,7 @@ function Finish(passtype)
 			game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 			wait(0.25)
 		elseif getgenv().ShootingMode == "Middle" then
-			wait(0.5)
+			wait(0.75)
 			local args = {
 				[1] = 'Hold',
 				[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
@@ -1465,21 +1498,14 @@ Sections.Speed:AddDropdown('PassersDropdown', {
     Callback = function(Value)
     end
 })
-local CanRecievePass = false
 task.spawn(function()
 	while Library do
-		local CanRecievePass = false
-		for Passer,_ in pairs(Options.PassersDropdown.Value) do
-			if Passer == getgenv().BallOwner.Name then
-				CanRecievePass = true
-				break
-			else
-				CanRecievePass = false
-			end
-		end
-		if CanRecievePass and getgenv().IsAutoFinishing then
-			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do					
-				if anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
+		if getgenv().IsAutoFinishing then
+			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
+				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+					local shott = "ki"
+					Finish(shott)					
+				elseif anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
 					local shott = "gs"
 					Finish(shott)
 				elseif anim.Animation.AnimationId == 'rbxassetid://13022877902' then
@@ -1499,18 +1525,6 @@ Sections.Speed:AddLabel('Enable AutoFinishing'):AddKeyPicker('AutoFinishingKeyBi
     Callback = function(Value)
 		pcall(function()
 			getgenv().IsAutoFinishing = Value
-		end)
-    end
-})
-Sections.Speed:AddDropdown('ShootingModeDropdown', {
-    Values = {'Middle','Sky','Ground'},
-    Default = 1,
-    Multi = false,
-    Text = 'Shooting Mode',
-    Tooltip = 'Choose Shooting Mode',
-    Callback = function(Value)
-        pcall( function()
-			getgenv().ShootingMode = Value
 		end)
     end
 })
@@ -2048,4 +2062,3 @@ end)
 Sections.Menu:AddButton('Unload', function() Library:Unload() end)
 Sections.Menu:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' })
 Library.ToggleKeybind = Options.MenuKeybind
-
