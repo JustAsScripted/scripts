@@ -230,6 +230,14 @@ oldNameCall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
   	end
 	return oldNameCall(self, unpack(args))
 end))]]
+function randomString()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
 if not game:GetService('Workspace'):FindFirstChild('ligma') then
 	local SPart = Instance.new('Part')
 	SPart.Name = 'ligma'
@@ -351,6 +359,8 @@ task.spawn(function()
 end)
 MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
     if getgenv().Ronaldo and nChild.ClassName == "BodyVelocity" then
+		local vName = randomString()
+		nChild.Name = vName
         repeat
 			if (not (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 44 and MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude < 46)) then
 				if (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 37) then
@@ -358,17 +368,17 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 					repeat
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
 						task.wait()
-					until not nChild
+					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
 					repeat
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
 						task.wait()
-					until not nChild
+					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				end
             end
             task.wait()
-        until not nChild
+        until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
     end
 end)
 local kaiseranim = Instance.new("Animation")
