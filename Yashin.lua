@@ -1227,19 +1227,6 @@ Sections.Punch:AddDropdown('FieldTypeDropdown', {
 		end)
     end
 })
-Sections.Punch:AddSlider('PunchPowerSlider', {
-    Text = 'PunchPower',
-    Default = 1,
-    Min = 1,
-    Max = 5,
-    Rounding = 1,
-    Compact = false,
-    Callback = function(PunchPower)
-        pcall( function()
-			getgenv().ShootingPower = PunchPower
-		end)
-    end
-})
 Sections.Punch:AddLabel('Enable PunchPower'):AddKeyPicker('PunchPowerKeyBind', {
     Default = 'Space',
     Mode = 'Hold',
@@ -1291,16 +1278,7 @@ Sections.Speed:AddToggle('SpeedDemonToggle', {
 		end)
 	end
 })
-Sections.Speed:AddDropdown('PassersDropdown', {
-    SpecialType = 'Player',
-	Default = 1,
-	Multi = true,
-    Text = 'Passers',
-    Tooltip = 'Choose Passers',
-    Callback = function(Value)
-    end
-})
-Sections.Speed:AddLabel('Enable AutoFinishing'):AddKeyPicker('AutoFinishingKeyBind', {
+Sections.Speed:AddLabel('Enable AutoSaving'):AddKeyPicker('AutoSavingKeyBind', {
     Default = 'F',
     Mode = 'Toggle',
 	Text = 'Auto Saving',
