@@ -114,11 +114,9 @@ getgenv().IsAutoBuy = false
 getgenv().FieldType = 'BigField'
 getgenv().IsAutoDelete = false
 getgenv().IsAutoSpin = false
-getgenv().BoostFPS = false
 getgenv().IsFixCamera = false
 getgenv().IsAutoDefense = false
-getgenv().IsAutoTrapping = false
-getgenv().IsAutoFinishing = false
+getgenv().IsAutoSaving = false
 getgenv().SpeedBoost = 4.2
 getgenv().Team = 1
 getgenv().Position = 'Forward'
@@ -126,8 +124,6 @@ getgenv().ShootingMode = "Middle"
 getgenv().DefensiveMode = false
 getgenv().RealBall = ''
 getgenv().BallOwner = ''
-getgenv().Ronaldo = true
-getgenv().CanonKaiser = true
 
 --PreLoaded Functionds
 --[[function TrueString(String)
