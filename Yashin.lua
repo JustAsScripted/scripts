@@ -125,108 +125,6 @@ getgenv().DefensiveMode = false
 getgenv().RealBall = ''
 getgenv().BallOwner = ''
 
---PreLoaded Functionds
---[[function TrueString(String)
-    if type(String) ~= 'string' then
-        return false
-    end
-    return (string.split(String, '\0'))[1]
-end
-function SortArguments(self, ...)
-    return self, {...}
-end
-function hookGetSerivce(...)
-    local OldGetService; OldGetService = function(...)
-        local self, Index = ...
-        local Response = OldGetService(...)   
-        if type(Index) == 'string' and TrueString(Index) == 'VirtualInputManager' then
-            error(("'%s' is not a valid Service name"):format(TrueString(Index)))
-            return;
-        end
-    
-        return Response
-    end
-end
-local OldFindService = hookfunction(game.FindService, function(...)
-    local self, Index = ...
-    local Response = OldFindService(...)
-    if type(Index) == 'string' and TrueString(Index) == 'VirtualInputManager' then
-        return;
-    end
-    return Response
-end)
-hookGetSerivce(game.GetService)
-hookGetSerivce(game.getService)
-hookGetSerivce(game.service)
-local OldNamecall; OldNamecall = hookmetamethod(game, '__namecall', function(...)
-    local self, Arguments = SortArguments(...)
-    local Method = getnamecallmethod()
-    if typeof(self) == 'Instance' and self == game and Method:lower():match('service') and TrueString(Arguments[1]) == 'VirtualInputManager' then
-        if Method == 'FindService' then
-            return;
-        end
-        local Success, Error = pcall(function()
-            setnamecallmethod(Method)
-            game[Method](game, 'VirtualFuckOff')
-        end)
-        if not Error:match('is not a valid member') then
-            error(Error:replace('VirtualFuckOff', 'VirtualInputManager'))
-            return;
-        end
-    end
-    return OldNamecall(...)
-end)
-local OldWindow; OldWindow = hookmetamethod(UserInputService.WindowFocused, '__index', function(...)
-    local self, Index = ...
-    local Response = OldWindow(...)
-    if type(Response) ~= 'function' and (tostring(self):find('WindowFocused') or tostring(self):find('WindowFocusReleased')) and not table.find(Hooks, Response) then
-        table.insert(Hooks, Response)
-        if Index:lower() == 'wait' then
-            local Old2; Old2 = hookfunction(Response, function(...)
-                local self1 = ...
-                if self1 == self then
-                    self1 = Instance.new('BindableEvent').Event
-                end
-                return Old2(self1)
-            end)
-        elseif Index:lower() == 'connect' then
-            local Old2; Old2 = hookfunction(Response, function(...)
-                local self1, Function = ...
-                if self1 == self then
-                    Function = function() return; end
-                end
-                return Old2(self1, Function)
-            end)
-        end
-    end
-    return Response
-end)
-for i, v in next, getconnections(UserInputService.WindowFocusReleased) do
-    v:Disable()
-end
-for i, v in next, getconnections(UserInputService.WindowFocused) do
-    v:Disable()
-end
-if not getgenv().WindowFocused then
-    getgenv().WindowFocused = true
-end]]
---[[task.spawn(function()
-    while true do
-		if getgenv().IsAntiAFK and not MyPlayer.Character:FindFirstChild('Ball') then
-			VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, nil, 1)
-			VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, nil, 1)
-		end
-		task.wait()
-    end
-end)]]
---[[local oldNameCall = nil
-oldNameCall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
-	local args = {...}
-	if not checkcaller() and getnamecallmethod() == 'FireServer' and args[1] == 'PunchBall' and getgenv().IsShootingPower then
-    	args[3] = getgenv().ShootingPower
-  	end
-	return oldNameCall(self, unpack(args))
-end))]]
 function randomString()
 	local length = math.random(10,20)
 	local array = {}
@@ -446,7 +344,7 @@ task.spawn(function()
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
                     wait(3)
-				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' and  then
+				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
                     local typashot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
                     DefendShot(typashoot, distance)
@@ -1307,45 +1205,6 @@ task.spawn(function()
         if Library.Unloaded then break end
     end
 end)
---[[Sections.Defense:AddLabel('Enable AutoTrapping'):AddKeyPicker('AutoTrappingKeyBind', {
-    Default = 'F',
-    Mode = 'Toggle',
-	Text = 'Auto Trapping',
-    NoUI = false,
-    Callback = function(Value)
-		pcall(function()
-			getgenv().IsAutoTrapping = Value
-		end)
-    end
-})]]
---[[Sections.Defense:AddLabel('Enable DefensiveMode'):AddKeyPicker('DefensiveModeKeyBind', {
-    Default = 'Y',
-    Mode = 'Toggle',
-	Text = 'Defensive Mode',
-    NoUI = false,
-    Callback = function(Value)
-		pcall(function()
-			getgenv().DefensiveMode = Value
-			if getgenv().DefensiveMode then
-				local args = {
-					[1] = 'Equip',
-					[2] = 'SlotSix',
-					[3] = 'WeaponTree3',
-					[4] = 1
-				}
-				game:GetService('ReplicatedStorage'):WaitForChild('Remotes'):WaitForChild('SkillTreeRemote'):FireServer(unpack(args))
-			else
-				local args = {
-					[1] = 'Equip',
-					[2] = 'SlotSix',
-					[3] = 'WeaponTree2',
-					[4] = 2
-				}				
-				game:GetService('ReplicatedStorage'):WaitForChild('Remotes'):WaitForChild('SkillTreeRemote'):FireServer(unpack(args))
-			end								
-		end)
-    end
-})]]
 
 Sections.Positioning:AddDropdown('TeamDropdown', {
     Values = {'1','2'},
@@ -1788,19 +1647,6 @@ Sections.ESP:AddDropdown('TeamsDropdown', {
 		end)
     end
 })
-
---[[Sections.Credits:AddLabel('Made by g0atku')
-Sections.Credits:AddLabel('UI: Linoria')
-local DiscordButton = Sections.Credits:AddButton({
-	Text = 'Copy Discord Server Link',
-	Func = function()
-		pcall( function()
-			setclipboard('discord.gg/xHph38MAHZ')
-		end)
-	end,
-	DoubleClick = false,
-    Tooltip = 'Copies discord server link'
-})]]
 
 -- UI Settings
 Library.KeybindFrame.Visible = true;
