@@ -304,32 +304,34 @@ function DefendShot(typashoot, distance)
             end
         end
     elseif typashoot == "lob" then
-        if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 3 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 3 then
-            if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
-                task.spawn(function()
-                    repeat
-                        MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, Vector3.new(GetRealBall().Ball.Position.X, MyPlayer.Character.HumanoidRootPart.Position.Y, GetRealBall().Ball.Position.Z))
-                        task.wait()
-                    until MyPlayer:GetAttribute('UsingSkill')
-                end)
-                local args = {
-                    [1] = 'Hold',
-                    [2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
-                game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-                local args = {
-                    [1] = 'UseSkill',
-                    [2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
-                game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-            elseif GetHoldingSkill() then
-                local args = {
-                    [1] = 'Hold',
-                    [2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
-                game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-                local args = {
-                    [1] = 'UseSkill',
-                    [2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
-                game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-            end
+		if distance < 10 then
+			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 3 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 3 then
+				if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
+					task.spawn(function()
+						repeat
+							MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, Vector3.new(GetRealBall().Ball.Position.X, MyPlayer.Character.HumanoidRootPart.Position.Y, GetRealBall().Ball.Position.Z))
+							task.wait()
+						until MyPlayer:GetAttribute('UsingSkill')
+					end)
+					local args = {
+						[1] = 'Hold',
+						[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+					local args = {
+						[1] = 'UseSkill',
+						[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+				elseif GetHoldingSkill() then
+					local args = {
+						[1] = 'Hold',
+						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+					local args = {
+						[1] = 'UseSkill',
+						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+				end
+			end
         end
 	end
 end
@@ -819,8 +821,8 @@ function Delete()
 end
 function SnakeDash()
 	if PlaceId ~= 12467817668 then
-		if MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text ~= '' then
-			if (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
+		if MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text ~= '' then
+			if (not MyPlayer.PlayerGui.SkilsGui.SlotSix.CDFrame.Visible) then
                 if GetRealBall() then
                     task.spawn(function()
                         repeat
@@ -838,11 +840,11 @@ function SnakeDash()
                 end 
 				local args = {
 					[1] = 'Hold',
-					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+					[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
 				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 				local args = {
 					[1] = 'UseSkill',
-					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+					[2] = MyPlayer.PlayerGui.SkilsGui.SlotSix.SkillName.Text}
 				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
 			end
 		end
