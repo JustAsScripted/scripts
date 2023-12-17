@@ -255,9 +255,11 @@ end
 function GetHoldingSkill()
     local holdingSkill = nil
     for i,v in pairs(MyPlayer.PlayerGui.SkilsGui:GetChildren()) do
-        if v.CDFrame.AbsoluteSize.Magnitude > 140 then
-            holdingSkill = v.Name
-        end
+		if v.Name ~= "StatsAndSkillsLocal" and v.Name ~= "SelectionImage" and v.Name ~= "Dribbles" then
+			if v.CDFrame.AbsoluteSize.Magnitude > 140 then
+				holdingSkill = v.Name
+			end
+		end
     end
     return holdingSkill
 end
