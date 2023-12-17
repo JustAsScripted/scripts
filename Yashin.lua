@@ -345,7 +345,7 @@ task.spawn(function()
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
                     wait(3)
-				elseif anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
+				elseif anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.15 then
                     local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
