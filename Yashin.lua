@@ -262,6 +262,7 @@ function GetHoldingSkill()
     return holdingSkill
 end
 function DefendShot(typashoot, distance)
+    print(typashoot, distance)
 	if typashoot == "shoot" then
         if distance < 25 then
             if MyPlayer.PlayerGui.SkilsGui.SlotThree.CDFrame.Visible then
@@ -335,6 +336,7 @@ task.spawn(function()
 		if getgenv().IsAutoSaving and getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+                    print("Animation detected")
                     local typashot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
