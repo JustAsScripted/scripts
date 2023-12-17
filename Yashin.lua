@@ -373,7 +373,7 @@ task.spawn(function()
 		task.spawn(function()
 			if getgenv().IsShootingPower then
 				if getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
-					MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, Vector3.new(GetRealBall().Ball.Position.X, MyPlayer.Character.HumanoidRootPart.Position.Y, GetRealBall().Ball.Position.Z))
+					MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, Vector3.new(getgenv().BallOwner.Character.HumanoidRootPart.Position.X, MyPlayer.Character.HumanoidRootPart.Position.Y, getgenv().BallOwner.Character.HumanoidRootPart.Position.Z))
 				end
 			end
 		end)
