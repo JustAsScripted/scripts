@@ -304,8 +304,8 @@ function DefendShot(typashoot, distance)
             end
         end
     elseif typashoot == "lob" then
-		if distance < 25 then
-			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 3 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 3 then
+		if distance < 20 then
+			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 5 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 5 then
 				if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
 					task.spawn(function()
 						repeat
@@ -361,12 +361,19 @@ task.spawn(function()
 		task.wait()
 	end
 end)
+--[[function GetGate()
+
+task.spawn(function()
+	while Library do
+		if getgenv().IsChatGPT and GetRealBall() then
+			local direction = GetRealBall().Ball.AssemblyLinearVelocity
+end)]]
 task.spawn(function()
 	while Library do
 		task.spawn(function()
 			if getgenv().IsShootingPower then
 				if getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
-					MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, getgenv().BallOwner.Character.HumanoidRootPart.Position)
+					MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, Vector3.new(GetRealBall().Ball.Position.X, MyPlayer.Character.HumanoidRootPart.Position.Y, GetRealBall().Ball.Position.Z))
 				end
 			end
 		end)
@@ -375,7 +382,7 @@ task.spawn(function()
 end)
 game:GetService('Workspace').Camera:GetPropertyChangedSignal('FieldOfView'):Connect(function()
 	if getgenv().IsFixCamera then
-		game:GetService('Workspace').Camera.FieldOfView = 100
+		game:GetService('Workspace').Camera.FieldOfView = 150
 	end
 end)
 game:GetService('RunService').Stepped:Connect(function()
@@ -1145,6 +1152,17 @@ Sections.Speed:AddLabel('Enable AutoSaving'):AddKeyPicker('AutoSavingKeyBind', {
     Callback = function(Value)
 		pcall(function()
 			getgenv().IsAutoSaving = Value
+		end)
+    end
+})
+Sections.Speed:AddLabel('Enable AiGK'):AddKeyPicker('AiGKKeyBind', {
+    Default = 'Y',
+    Mode = 'Toggle',
+	Text = 'ChatGPT',
+    NoUI = false,
+    Callback = function(Value)
+		pcall(function()
+			getgenv().IsChatGPT = Value
 		end)
     end
 })
