@@ -304,7 +304,7 @@ function DefendShot(typashoot, distance)
             end
         end
     elseif typashoot == "lob" then
-		if distance < 10 then
+		if distance < 25 then
 			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 3 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 3 then
 				if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
 					task.spawn(function()
