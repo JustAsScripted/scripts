@@ -267,7 +267,7 @@ function DefendShot(typashoot, distance)
     print(typashoot, distance)
 	if typashoot == "shoot" then
         if distance < 25 then
-            if MyPlayer.PlayerGui.SkilsGui.SlotThree.CDFrame.Visible then
+            if not MyPlayer.PlayerGui.SkilsGui.SlotThree.CDFrame.Visible then
                 local args = {
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui.SlotThree.SkillName.Text}
@@ -283,7 +283,7 @@ function DefendShot(typashoot, distance)
                 game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
             end
         else
-            if MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible then
+            if not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible then
                 local args = {
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
@@ -305,7 +305,7 @@ function DefendShot(typashoot, distance)
         end
     elseif typashoot == "lob" then
         if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 3 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 3 then
-            if MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
+            if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
                 task.spawn(function()
                     repeat
                         MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, Vector3.new(GetRealBall().Ball.Position.X, MyPlayer.Character.HumanoidRootPart.Position.Y, GetRealBall().Ball.Position.Z))
