@@ -363,54 +363,8 @@ task.spawn(function()
 	while Library do
 		task.spawn(function()
 			if getgenv().IsShootingPower then
-				if getgenv().FieldType == 'BigField' then
-					game:GetService('Workspace'):WaitForChild('ligma').Position = Vector3.new(-464.5, MyPlayer.Character.HumanoidRootPart.Position.Y, -369)
-					game:GetService('Workspace'):WaitForChild('ligma2').Position = Vector3.new(-464.5, MyPlayer.Character.HumanoidRootPart.Position.Y, -341)
-					game:GetService('Workspace'):WaitForChild('ligma3').Position = Vector3.new(-1107.5, MyPlayer.Character.HumanoidRootPart.Position.Y, -369)
-					game:GetService('Workspace'):WaitForChild('ligma4').Position = Vector3.new(-1107.5, MyPlayer.Character.HumanoidRootPart.Position.Y, -341)
-					game:GetService('Workspace'):WaitForChild('FinalWalls').FinalWall1.Position = Vector3.new(-464.5, MyPlayer.Character.HumanoidRootPart.Position.Y - 657, -369)
-					game:GetService('Workspace'):WaitForChild('FinalWalls').FinalWall2.Position = Vector3.new(-1107.5, MyPlayer.Character.HumanoidRootPart.Position.Y - 657, -369)
-				elseif getgenv().FieldType == 'MiniField' then
-					game:GetService('Workspace'):WaitForChild('ligma').Position = Vector3.new(-669, MyPlayer.Character.HumanoidRootPart.Position.Y, 372.5)
-					game:GetService('Workspace'):WaitForChild('ligma2').Position = Vector3.new(-669, MyPlayer.Character.HumanoidRootPart.Position.Y, 401)
-					game:GetService('Workspace'):WaitForChild('ligma3').Position = Vector3.new(-1113, MyPlayer.Character.HumanoidRootPart.Position.Y, 372.5)
-					game:GetService('Workspace'):WaitForChild('ligma4').Position = Vector3.new(-1113, MyPlayer.Character.HumanoidRootPart.Position.Y, 401)
-					game:GetService('Workspace'):WaitForChild('FinalWalls').FinalWall1.Position = Vector3.new(-669, MyPlayer.Character.HumanoidRootPart.Position.Y - 657, 372.5)
-					game:GetService('Workspace'):WaitForChild('FinalWalls').FinalWall2.Position = Vector3.new(-1113, MyPlayer.Character.HumanoidRootPart.Position.Y - 657, 372.5)
-				end
-				local rayOrigin = game:GetService('Workspace').CurrentCamera.CFrame.p
-				local rayDirection = (game:GetService('Workspace').CurrentCamera.CFrame.LookVector) * 1000
-				local rayParams = RaycastParams.new()
-				rayParams.FilterDescendantsInstances = game:GetService('Workspace'):WaitForChild('FinalWalls'):GetChildren()
-				rayParams.FilterType = Enum.RaycastFilterType.Include
-				local rayResult = game:GetService('Workspace'):Raycast(rayOrigin, rayDirection, rayParams)
-				if rayResult then
-					local hitpos = rayResult.Position
-					local ClosestDistancePart = {}
-					local distance = (hitpos - game:GetService('Workspace').ligma.Position).Magnitude
-					local distance2 = (hitpos - game:GetService('Workspace').ligma2.Position).Magnitude
-					local distance3 = (hitpos - game:GetService('Workspace').ligma3.Position).Magnitude
-					local distance4 = (hitpos - game:GetService('Workspace').ligma4.Position).Magnitude
-					table.insert(ClosestDistancePart, distance)
-					table.insert(ClosestDistancePart, distance2)
-					table.insert(ClosestDistancePart, distance3)
-					table.insert(ClosestDistancePart, distance4)
-					local mindistance = math.huge
-					for _,dist in pairs(ClosestDistancePart) do
-						if dist < mindistance then
-							mindistance = dist
-						end
-					end
-					if mindistance == distance then
-						MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, game:GetService('Workspace').ligma.Position)
-					elseif mindistance == distance2 then
-						MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, game:GetService('Workspace').ligma2.Position)
-					elseif mindistance == distance3 then
-						MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, game:GetService('Workspace').ligma3.Position)
-					elseif mindistance == distance4 then
-						MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, game:GetService('Workspace').ligma4.Position)
-					end
-				end
+				if getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
+				MyPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(MyPlayer.Character.HumanoidRootPart.Position, getgenv().BallOwner.Character.HumanoidRootPart.Position)
 			end
 		end)
 		task.wait()
