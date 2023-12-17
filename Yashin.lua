@@ -337,17 +337,17 @@ task.spawn(function()
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
                     print("Animation detected")
-                    local typashot = "shoot"
+                    local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
                     wait(3)
 				elseif anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.1 then
-                    local typashot = "shoot"
+                    local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
                     wait(3)
 				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
-                    local typashot = "lob"
+                    local typashoot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
                     DefendShot(typashoot, distance)
                     wait(3)
