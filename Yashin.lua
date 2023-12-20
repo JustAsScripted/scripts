@@ -303,8 +303,33 @@ function DefendShot(typashoot, distance)
                 game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
             end
         end
+	elseif typashoot == "bicycle" then
+		repeat
+			if (GetRealBall().Ball.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude < 5 then
+				if not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible then
+					local args = {
+						[1] = 'Hold',
+						[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+					local args = {
+						[1] = 'UseSkill',
+						[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+				elseif GetHoldingSkill() then
+					local args = {
+						[1] = 'Hold',
+						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+					local args = {
+						[1] = 'UseSkill',
+						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
+					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+				end
+			end
+			task.wait()
+		until not GetRealBall()
     elseif typashoot == "lob" then
-		if distance < 20 then
+		if distance < 35 then
 			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 5 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 5 then
 				if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
 					task.spawn(function()
@@ -340,21 +365,25 @@ task.spawn(function()
 		if getgenv().IsAutoSaving and getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
-                    print("Animation detected")
                     local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
-                    wait(3)
+                    repeat task.wait() until MyPlayer:GetAttribute('UsingSkill')
+				elseif anim.Animation.AnimationId == 'rbxassetid://14085400141' then
+                    local typashoot = "bicycle"
+                    local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
+					DefendShot(typashoot, distance)
+                    repeat task.wait() until not GetRealBall()
 				elseif anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.15 then
                     local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
-                    wait(3)
+                    repeat task.wait() until MyPlayer:GetAttribute('UsingSkill')
 				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
                     local typashoot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
                     DefendShot(typashoot, distance)
-                    wait(3)
+                    repeat task.wait() until not GetRealBall()
 				end
 			end
 		end
