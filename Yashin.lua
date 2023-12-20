@@ -370,20 +370,24 @@ task.spawn(function()
 					DefendShot(typashoot, distance)
                     repeat task.wait() until MyPlayer:GetAttribute('UsingSkill')
 				elseif anim.Animation.AnimationId == 'rbxassetid://14085400141' then
-                    local typashoot = "bicycle"
+					local typashoot = "bicycle"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
-					DefendShot(typashoot, distance)
-                    repeat task.wait() until not GetRealBall()
+					if (GetRealBall().Ball.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude < 5 then
+						DefendShot(typashoot, distance)
+                    	repeat task.wait() until MyPlayer:GetAttribute('UsingSkill')
+					end
 				elseif anim.Animation.AnimationId == 'rbxassetid://12699056251' and anim.TimePosition > 0.15 then
                     local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
                     repeat task.wait() until MyPlayer:GetAttribute('UsingSkill')
 				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
-                    local typashoot = "lob"
+					local typashoot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
-                    DefendShot(typashoot, distance)
-                    repeat task.wait() until not GetRealBall()
+					if distance < 35 and GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 5 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 5 then
+                    	DefendShot(typashoot, distance)
+                    	repeat task.wait() until not GetRealBall()
+					end
 				end
 			end
 		end
