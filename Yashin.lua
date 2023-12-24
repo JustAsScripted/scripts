@@ -31,7 +31,7 @@ local Sections = {
 	Misc = Tabs.Misc:AddLeftGroupbox('Misc'),
 	Player = Tabs.Player:AddLeftGroupbox('Player'),
 	ESP = Tabs.ESP:AddLeftGroupbox('ESP'),
-    Menu = Tabs['UI Settings']:AddLeftGаroupbox('Menu'),
+    Menu = Tabs['UI Settings']:AddLeftGroupbox('Menu'),
 	Credits = Tabs.Credits:AddLeftGroupbox('Credits')
 }
 
@@ -378,7 +378,6 @@ task.spawn(function()
                     local typashoot = "shoot"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
 					DefendShot(typashoot, distance)
-                    repeat task.wait() until MyPlayer:GetAttribute('UsingSkill')
 				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
 					local typashoot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
