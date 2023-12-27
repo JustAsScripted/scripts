@@ -114,6 +114,7 @@ getgenv().IsAutoBuy = false
 getgenv().FieldType = 'BigField'
 getgenv().IsAutoDelete = false
 getgenv().IsAutoSpin = false
+getgenv().BoostFPS = false
 getgenv().IsFixCamera = false
 getgenv().IsAutoDefense = false
 getgenv().IsAutoTrapping = false
@@ -370,9 +371,10 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
-					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.75))
 					repeat
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 17500
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				end
