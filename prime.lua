@@ -365,9 +365,10 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
         repeat
 			if (not (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 44 and MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude < 46)) then
 				if (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 37) then
-					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.35))
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
 					repeat
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 17500
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
