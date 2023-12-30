@@ -1513,7 +1513,7 @@ Sections.Speed:AddDropdown('PassersDropdown', {
 })
 task.spawn(function()
 	while Library do
-		if getgenv().IsAutoFinishing then
+		if getgenv().IsAutoFinishing and getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
 					local shott = "ki"
