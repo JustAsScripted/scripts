@@ -244,13 +244,12 @@ task.spawn(function()
 	end
 end)
 function GetRealBall()
-    local isBall = nil
     for i,v in pairs(workspace:GetChildren()) do
         if v.Name == 'Ball' and v:GetAttribute('GameBall') then
-            isBall = v
+            return v
         end
     end
-    return isBall
+    return nil
 end
 function GetHoldingSkill()
     for i,v in pairs(MyPlayer.PlayerGui.SkilsGui:GetChildren()) do
@@ -271,7 +270,7 @@ function DefendShot(typashoot, distance)
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui.SlotThree.SkillName.Text}
                 game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-            elseif GetHoldingSkill() != nil then
+            elseif GetHoldingSkill() ~= nil then
                 local args = {
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -291,7 +290,7 @@ function DefendShot(typashoot, distance)
                     [1] = 'UseSkill',
                     [2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
                 game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-            elseif GetHoldingSkill() != nil then
+            elseif GetHoldingSkill() ~= nil then
                 local args = {
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -314,7 +313,7 @@ function DefendShot(typashoot, distance)
 						[1] = 'UseSkill',
 						[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
 					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-				elseif GetHoldingSkill() != nil then
+				elseif GetHoldingSkill() ~= nil then
 					local args = {
 						[1] = 'Hold',
 						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -345,7 +344,7 @@ function DefendShot(typashoot, distance)
 						[1] = 'UseSkill',
 						[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-				elseif GetHoldingSkill() != nil then
+				elseif GetHoldingSkill() ~= nil then
 					local args = {
 						[1] = 'Hold',
 						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -361,7 +360,7 @@ function DefendShot(typashoot, distance)
 end
 task.spawn(function()
 	while Library do
-		if getgenv().IsAutoSaving and getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character then
+		if getgenv().IsAutoSaving and getgenv().BallOwner ~= MyPlayer and not MyPlayer.Character:FindFirstChild('Ball') and getgenv().BallOwner ~= '' and game:GetService('Players'):FindFirstChild(getgenv().BallOwner.Name) and game:GetService('Players')[getgenv().BallOwner.Name].Character and GetRealBall() ~= nil then
 			for _, anim in pairs(getgenv().BallOwner.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
                     local typashoot = "shoot"
@@ -381,7 +380,7 @@ task.spawn(function()
 				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
 					local typashoot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
-					if distance < 35 and GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 10 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 1- then
+					if distance < 35 and GetRealBall() ~= nil and GetRealBall().Ball.AssemblyLinearVelocity.X < 10 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 10 then
                     	DefendShot(typashoot, distance)
 					end
 				end
