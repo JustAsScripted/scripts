@@ -253,15 +253,14 @@ function GetRealBall()
     return isBall
 end
 function GetHoldingSkill()
-    local holdingSkill = nil
     for i,v in pairs(MyPlayer.PlayerGui.SkilsGui:GetChildren()) do
 		if v.Name ~= "StatsAndSkillsLocal" and v.Name ~= "SelectionImage" and v.Name ~= "Dribbles" then
 			if v.CDFrame.AbsoluteSize.Magnitude > 140 then
-				holdingSkill = v.Name
+				return v.Name
 			end
 		end
     end
-    return holdingSkill
+	return nil
 end
 function DefendShot(typashoot, distance)
     print(typashoot, distance)
@@ -272,7 +271,7 @@ function DefendShot(typashoot, distance)
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui.SlotThree.SkillName.Text}
                 game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-            elseif GetHoldingSkill() then
+            elseif GetHoldingSkill() != nil then
                 local args = {
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -292,7 +291,7 @@ function DefendShot(typashoot, distance)
                     [1] = 'UseSkill',
                     [2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
                 game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-            elseif GetHoldingSkill() then
+            elseif GetHoldingSkill() != nil then
                 local args = {
                     [1] = 'Hold',
                     [2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -315,7 +314,7 @@ function DefendShot(typashoot, distance)
 						[1] = 'UseSkill',
 						[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
 					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-				elseif GetHoldingSkill() then
+				elseif GetHoldingSkill() != nil then
 					local args = {
 						[1] = 'Hold',
 						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -330,7 +329,7 @@ function DefendShot(typashoot, distance)
 		until not GetRealBall()
     elseif typashoot == "lob" then
 		if distance < 35 then
-			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 5 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 5 then
+			if GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 10 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 10 then
 				if not MyPlayer.PlayerGui.SkilsGui.SlotSeven.CDFrame.Visible then
 					task.spawn(function()
 						repeat
@@ -346,7 +345,7 @@ function DefendShot(typashoot, distance)
 						[1] = 'UseSkill',
 						[2] = MyPlayer.PlayerGui.SkilsGui.SlotSeven.SkillName.Text}
 					game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-				elseif GetHoldingSkill() then
+				elseif GetHoldingSkill() != nil then
 					local args = {
 						[1] = 'Hold',
 						[2] = MyPlayer.PlayerGui.SkilsGui[GetHoldingSkill()].SkillName.Text}
@@ -382,7 +381,7 @@ task.spawn(function()
 				elseif anim.Animation.AnimationId == 'rbxassetid://12698894288' then
 					local typashoot = "lob"
                     local distance = (MyPlayer.Character.HumanoidRootPart.Position - getgenv().BallOwner.Character.HumanoidRootPart.Position).Magnitude
-					if distance < 35 and GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 5 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 5 then
+					if distance < 35 and GetRealBall() and GetRealBall().Ball.AssemblyLinearVelocity.X < 10 and GetRealBall().Ball.AssemblyLinearVelocity.Z < 1- then
                     	DefendShot(typashoot, distance)
 					end
 				end
