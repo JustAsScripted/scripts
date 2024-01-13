@@ -378,7 +378,7 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 					local newVelocity1 = Vector3.new(0, newVelocity.Y, 0)
 					repeat
 						task.spawn(function()
-							MyPlayer.Character.HumanoidRootPart.CFrame = MyPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(15),0,0)
+							MyPlayer.Character.HumanoidRootPart.CFrame = MyPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(45),0,0)
 							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity1
 							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 17500
 						end)
