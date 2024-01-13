@@ -1141,24 +1141,18 @@ function Delete()
 end
 function PowerfulShot()
 	if PlaceId ~= 12467817668 then
-		local MyPlayer = game:GetService("Players").LocalPlayer
-		wait(5)
-		repeat task.wait()
-			task.spawn(function()
-				if MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text ~= '' then
-					if (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
-						local args = {
-							[1] = 'Hold',
-							[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
-						game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-						local args = {
-							[1] = 'UseSkill',
-							[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
-						game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-					end
-				end
-			end)
-		until not MyPlayer
+		if MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text ~= '' then
+			if (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
+				local args = {
+					[1] = 'Hold',
+					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+				local args = {
+					[1] = 'UseSkill',
+					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+			end
+		end
 	end
 end
 function BicycleKick()
