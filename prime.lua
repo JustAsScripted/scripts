@@ -372,9 +372,10 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
-					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.85))
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
+					local newVelocity1 = Vector3.new(0, newVelocity.Y, 0)
 					repeat
-						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity1
 						MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 17500
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
@@ -1140,18 +1141,24 @@ function Delete()
 end
 function PowerfulShot()
 	if PlaceId ~= 12467817668 then
-		if MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text ~= '' then
-			if (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
-				local args = {
-					[1] = 'Hold',
-					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
-				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-				local args = {
-					[1] = 'UseSkill',
-					[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
-				game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
-			end
-		end
+		local MyPlayer = game:GetService("Players").LocalPlayer
+		wait(5)
+		repeat task.wait()
+			task.spawn(function()
+				if MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text ~= '' then
+					if (not MyPlayer.PlayerGui.SkilsGui.SlotEight.CDFrame.Visible) then
+						local args = {
+							[1] = 'Hold',
+							[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+						game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+						local args = {
+							[1] = 'UseSkill',
+							[2] = MyPlayer.PlayerGui.SkilsGui.SlotEight.SkillName.Text}
+						game:GetService('ReplicatedStorage').Remotes.TranciverRemote:FireServer(unpack(args))
+					end
+				end
+			end)
+		until not MyPlayer
 	end
 end
 function BicycleKick()
