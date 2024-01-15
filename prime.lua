@@ -411,7 +411,35 @@ task.spawn(function()
 							task.spawn(function()
 								for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
 									if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
-										anim:Stop(0)
+										anim:Stop()
+									end
+								end
+							end)
+							task.wait()
+						until not destroying
+					end)
+					wait(0.25)
+					destroying = false
+					kaisertrack:Play()
+					wait(1.5)
+				end
+			end
+		end
+		task.wait()
+	until not MyPlayer
+end)
+task.spawn(function()
+	repeat
+		if getgenv().CanonKaiser then
+			for _, anim in pairs(MyPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+					local destroying = true
+					task.spawn(function()
+						repeat
+							task.spawn(function()
+								for _, anim in pairs(MyPlayer.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+									if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+										anim:Stop()
 									end
 								end
 							end)
