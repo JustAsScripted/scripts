@@ -130,7 +130,7 @@ getgenv().Ronaldo = true
 getgenv().CanonKaiser = true
 
 --PreLoaded Functionds
---[[function TrueString(String)
+function TrueString(String)
     if type(String) ~= 'string' then
         return false
     end
@@ -213,16 +213,16 @@ for i, v in next, getconnections(UserInputService.WindowFocused) do
 end
 if not getgenv().WindowFocused then
     getgenv().WindowFocused = true
-end]]
---[[task.spawn(function()
+end
+task.spawn(function()
     while true do
-		if getgenv().IsAntiAFK and not MyPlayer.Character:FindFirstChild('Ball') then
+		if getgenv().IsAntiAFK then
 			VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, nil, 1)
 			VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, nil, 1)
 		end
 		task.wait()
     end
-end)]]
+end)
 --[[local oldNameCall = nil
 oldNameCall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
 	local args = {...}
@@ -399,26 +399,27 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 end)
 local kaiseranim = Instance.new("Animation")
 kaiseranim.AnimationId = 'rbxassetid://13732545430'
+local kaisertrack = MyPlayer.Character.Humanoid.Animator:LoadAnimation(kaiseranim)
 task.spawn(function()
 	repeat
 		if getgenv().CanonKaiser then
 			for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
 				if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
-					anim:Destroy()
 					local destroying = true
 					task.spawn(function()
 						repeat
-							for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
-								if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
-									anim:Stop(0)
+							task.spawn(function()
+								for _, anim in pairs(MyPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+									if anim.Animation.AnimationId == 'rbxassetid://13732545430' then
+										anim:Stop(0)
+									end
 								end
-							end
+							end)
 							task.wait()
 						until not destroying
 					end)
-					wait(0.2)
+					wait(0.25)
 					destroying = false
-					local kaisertrack = MyPlayer.Character.Humanoid.Animator:LoadAnimation(kaiseranim)
 					kaisertrack:Play()
 					wait(1.5)
 				end
