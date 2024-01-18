@@ -374,7 +374,7 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
-					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity))
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
 					local newVelocity1 = Vector3.new(0, newVelocity.Y, 0)
 					--[[local charY = MyPlayer.Character.HumanoidRootPart.CFrame.Y
 					task.spawn(function()
