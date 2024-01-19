@@ -360,40 +360,43 @@ task.spawn(function()
 end)
 MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
     if getgenv().Ronaldo and nChild.ClassName == "BodyVelocity" then
-		local vName = randomString()
-		nChild.Name = vName
-        repeat
-			if (not (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 44 and MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude < 46)) then
-				if (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 37) then
+		if (not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46)) then
+			repeat
+				if nChild.Velocity.Magnitude > 37 then
+					local vName = randomString()
+					nChild.Name = vName
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
 					repeat
 						task.spawn(function()
 							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
-							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 17500
 						end)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
-				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
+				elseif nChild.Velocity.Magnitude > 35 then
+					local vName = randomString()
+					nChild.Name = vName
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
-					local newVelocity1 = Vector3.new(0,newVelocity.Y,0)
-					local charY = MyPlayer.Character.HumanoidRootPart.CFrame.Y					
+					local newVelocity1 = Vector3.new(0,newVelocity.Y,0)				
 					repeat
 						task.spawn(function()
 							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity1
-							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).P = 17500
 						end)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
-					task.spawn(function()
-						while MyPlayer.Character.HumanoidRootPart.CFrame.Y > charY do
-							MyPlayer.Character.HumanoidRootPart.CFrame *= MyPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(-15),0,0)
-							task.wait()
-						end
-					end)
+				elseif nChild.Velocity.Magnitude > 2 and nChild.Velocity.Magnitude < 5 then
+					local vName = randomString()
+					nChild.Name = vName
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
+					repeat
+						task.spawn(function()
+							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
+						end)
+						task.wait()
+					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				end
-            end
-            task.wait()
-        until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+				task.wait()
+			until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+		end
     end
 end)
 local kaiseranim = Instance.new("Animation")
