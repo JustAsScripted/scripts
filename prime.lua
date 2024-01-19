@@ -375,15 +375,8 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
 				elseif (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity.Magnitude > 35) then
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
-					local newVelocity1 = Vector3.new(0, newVelocity.Y, 0)
-					--[[local charY = MyPlayer.Character.HumanoidRootPart.CFrame.Y
-					task.spawn(function()
-						repeat task.wait() until MyPlayer.Character.HumanoidRootPart.CFrame.Y > charY
-						while MyPlayer.Character.HumanoidRootPart.CFrame.Y > charY do
-							MyPlayer.Character.HumanoidRootPart.CFrame = MyPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(-45),0,0)
-							task.wait()
-						end
-					end)]]
+					local newVelocity1 = Vector3.new(MyPlayer.Character.HumanoidRootPart.Position + Vector3.new(0,30,0)
+					local charY = MyPlayer.Character.HumanoidRootPart.CFrame.Y					
 					repeat
 						task.spawn(function()
 							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity1
@@ -391,6 +384,12 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						end)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
+					task.spawn(function()
+						while MyPlayer.Character.HumanoidRootPart.CFrame.Y > charY do
+							MyPlayer.Character.HumanoidRootPart.CFrame *= MyPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(-15),0,0)
+							task.wait()
+						end
+					end)
 				end
             end
             task.wait()
