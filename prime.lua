@@ -360,9 +360,9 @@ task.spawn(function()
 end)
 MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
     if getgenv().Ronaldo and nChild.ClassName == "BodyVelocity" then
-		if (not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46)) then
+		if not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
 			repeat
-				if nChild.Velocity.Magnitude > 37 then
+				if nChild.Velocity.Magnitude > 37 and not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
 					local vName = randomString()
 					nChild.Name = vName
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
@@ -372,7 +372,7 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						end)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
-				elseif nChild.Velocity.Magnitude > 35 then
+				elseif nChild.Velocity.Magnitude > 35 and not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
 					local vName = randomString()
 					nChild.Name = vName
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
@@ -383,7 +383,7 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						end)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
-				elseif nChild.Velocity.Magnitude > 2 and nChild.Velocity.Magnitude < 5 then
+				elseif nChild.Velocity.Magnitude > 2 and nChild.Velocity.Magnitude < 5 and not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
 					local vName = randomString()
 					nChild.Name = vName
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
@@ -1595,6 +1595,21 @@ Sections.Speed:AddLabel('Enable SUI'):AddKeyPicker('SUIKeyBind', {
 			local args = {
 				[1] = "SUI"}
 			game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UseEmote"):FireServer(unpack(args))							
+		end)
+    end
+})
+Sections.Speed:AddLabel('Enable 1stP'):AddKeyPicker('1stPKeyBind', {
+    Default = 'L',
+    Mode = 'Toggle',
+	Text = '1stP',
+    NoUI = true,
+    Callback = function(Value)
+		pcall(function()
+			if Value then
+				MyPlayer.CameraMode = "LockFirstPerson"
+			else
+				MyPlayer.CameraMode = "Classic"
+			end	
 		end)
     end
 })
