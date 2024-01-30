@@ -383,7 +383,7 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 						end)
 						task.wait()
 					until not MyPlayer.Character.HumanoidRootPart:FindFirstChild(nChild.Name)
-				elseif nChild.Velocity.Magnitude > 2 and nChild.Velocity.Magnitude < 5 and not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
+				elseif nChild.Velocity.Magnitude > 24 and nChild.Velocity.Magnitude < 26 and not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
 					local vName = randomString()
 					nChild.Name = vName
 					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
@@ -1605,11 +1605,9 @@ Sections.Speed:AddLabel('Enable 1stP'):AddKeyPicker('1stPKeyBind', {
     NoUI = true,
     Callback = function(Value)
 		pcall(function()
-			if Value then
-				MyPlayer.CameraMode = "LockFirstPerson"
-			else
-				MyPlayer.CameraMode = "Classic"
-			end	
+			MyPlayer.CameraMode = "LockFirstPerson"
+			wait(0.1)
+			MyPlayer.CameraMode = "Classic"
 		end)
     end
 })
