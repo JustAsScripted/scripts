@@ -386,7 +386,7 @@ MyPlayer.Character.HumanoidRootPart.ChildAdded:Connect(function(nChild)
 				elseif nChild.Velocity.Magnitude > 24 and nChild.Velocity.Magnitude < 26 and not (nChild.Velocity.Magnitude > 44 and nChild.Velocity.Magnitude < 46) then
 					local vName = randomString()
 					nChild.Name = vName
-					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.5))
+					local newVelocity = (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity + (MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity * 0.35))
 					repeat
 						task.spawn(function()
 							MyPlayer.Character.HumanoidRootPart:WaitForChild(nChild.Name).Velocity = newVelocity
