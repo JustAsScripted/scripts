@@ -237,6 +237,17 @@ task.spawn(function()
 	MyPlayer.PlayerGui.ShiftLock.SkillDirections["-1"].Position = UDim2.new(0.49,0,0.5,-20)
 	MyPlayer.PlayerGui.ShiftLock.SkillDirections["1"].Position = UDim2.new(0.49,0,0.5,-20)
 end)
+--Remove Flow
+task.spawn(function()
+	while true do
+		for i,v in pairs(MyPlayer.Character:GetDescendants()) do
+			if string.find(tostring(v), "Aura") then
+				v:Destroy()
+			end
+		end
+		task.wait()
+	end
+end)
 function randomString()
 	local length = math.random(10,20)
 	local array = {}
