@@ -233,9 +233,9 @@ oldNameCall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
 end))]]
 --Mobile Shitlockfix
 task.spawn(function()
-	MyPlayer.PlayerGui.ShiftLock.ImageLabel.Position = UDim2.new(0.5,0,0.5,-26)
-	MyPlayer.PlayerGui.ShiftLock.SkillDirections["-1"].Position = UDim2.new(0.49,0,0.5,-26)
-	MyPlayer.PlayerGui.ShiftLock.SkillDirections["1"].Position = UDim2.new(0.49,0,0.5,-26)
+	MyPlayer.PlayerGui.ShiftLock.ImageLabel.Position = UDim2.new(0.5,0,0.5,-20)
+	MyPlayer.PlayerGui.ShiftLock.SkillDirections["-1"].Position = UDim2.new(0.49,0,0.5,-20)
+	MyPlayer.PlayerGui.ShiftLock.SkillDirections["1"].Position = UDim2.new(0.49,0,0.5,-20)
 end)
 function randomString()
 	local length = math.random(10,20)
