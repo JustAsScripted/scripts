@@ -31,10 +31,8 @@ end
 
 print("Nape Expander Loaded")
 
-local titansBasePart = workspace:FindFirstChild("Titans")
-if titansBasePart then
-    processTitans(titansBasePart)
-end
+repeat task.wait() until workspace:FindFirstChild("Titans")
+processTitans(workspace:WaitForChild("Titans"))
 local VIM = game:GetService("VirtualInputManager")
 getgenv().autoescape = true
 while task.wait(0.7) do
